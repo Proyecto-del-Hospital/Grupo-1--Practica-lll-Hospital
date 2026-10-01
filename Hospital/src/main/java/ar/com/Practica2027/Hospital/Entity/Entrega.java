@@ -13,6 +13,6 @@ public class Entrega {
 	private int id;
 	private Empleado empleado;
 	private String fecha;
-	private time hora;
+	private String hora;
 
 }

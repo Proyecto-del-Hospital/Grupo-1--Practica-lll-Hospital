@@ -14,6 +14,6 @@ private int id;
 private Proveedor proveedor;
 private Pedido pedido;
 private int num_factura;
-private date fecha_emision;
+private String fecha_emision;
 private double total; 
 }

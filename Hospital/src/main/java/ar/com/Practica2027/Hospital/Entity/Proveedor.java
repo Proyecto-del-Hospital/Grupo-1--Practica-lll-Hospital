@@ -17,7 +17,7 @@ public class Proveedor {
 	private Direccion direccion;
 	private Contacto contacto;
 	private Estado estado;
-	private String motivon
+	private String motivo;
 	
 	
 }
