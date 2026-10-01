@@ -19,4 +19,5 @@ public class Producto {
 	private int tipo;
 	private String estado;
 	private String motivo;
+	
 }

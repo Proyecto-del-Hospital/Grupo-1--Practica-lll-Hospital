@@ -21,4 +21,5 @@ public class Paciente {
 	private String fachenaci;
 	private Sala sala;
 	
+	
 }

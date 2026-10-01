@@ -20,4 +20,5 @@ public class Empleado {
 	private String motivo;
 	
 	
+	
 }

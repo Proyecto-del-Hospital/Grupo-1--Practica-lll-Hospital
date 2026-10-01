@@ -15,4 +15,5 @@ public class Solicitud {
 	private String fecha;
 	private Estado estado;
 	private String motivo;
+	
 }
