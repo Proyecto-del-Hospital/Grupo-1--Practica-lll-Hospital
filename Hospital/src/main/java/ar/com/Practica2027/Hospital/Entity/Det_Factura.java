@@ -15,4 +15,6 @@ public class Det_Factura {
 	private int cantidad;
 	private float precio_unitario;
 	private float subtotal;
+	
+	//comentario 
 }
