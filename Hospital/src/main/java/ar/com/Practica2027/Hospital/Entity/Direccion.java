@@ -10,6 +10,7 @@ import jakarta.persistence.OneToMany;
 
 @Entity
 public class Direccion {
+	
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
@@ -17,32 +18,30 @@ public class Direccion {
 	private String Barrio;
 	private String numer_calle;
 	
-	 // Relación: una dirección puede estar asociada a varios Paciente
-    @OneToMany(mappedBy = "direccion")
-    private List<Paciente> paciente;
+	
+    @OneToMany (mappedBy = "direccion")
+    private List<Paciente> pacientes;
     
-    // Relación: una dirección puede estar asociada a varios Proveedor
-    @OneToMany(mappedBy = "direccion")
-    private List<Proveedor> proveedor;
+    @OneToMany (mappedBy = "direccion")
+    private List<Proveedor> proveedores;
     
-    // Relación: una dirección puede estar asociada a varios Empleado
     @OneToMany(mappedBy = "direccion")
-    private List<Empleado> empleado;
+    private List<Empleado> empleados;
 
 	public Direccion() {
 		super();
 	}
 
-	public Direccion(int id, String calle, String barrio, String numer_calle, List<Paciente> paciente,
-			List<Proveedor> proveedor, List<Empleado> empleado) {
+	public Direccion(int id, String calle, String barrio, String numer_calle, List<Paciente> pacientes,
+			List<Proveedor> proveedores, List<Empleado> empleados) {
 		super();
 		this.id = id;
 		this.calle = calle;
 		Barrio = barrio;
 		this.numer_calle = numer_calle;
-		this.paciente = paciente;
-		this.proveedor = proveedor;
-		this.empleado = empleado;
+		this.pacientes = pacientes;
+		this.proveedores = proveedores;
+		this.empleados = empleados;
 	}
 
 	public int getId() {
@@ -77,29 +76,28 @@ public class Direccion {
 		this.numer_calle = numer_calle;
 	}
 
-	public List<Paciente> getPaciente() {
-		return paciente;
+	public List<Paciente> getPacientes() {
+		return pacientes;
 	}
 
-	public void setPaciente(List<Paciente> paciente) {
-		this.paciente = paciente;
+	public void setPacientes(List<Paciente> pacientes) {
+		this.pacientes = pacientes;
 	}
 
-	public List<Proveedor> getProveedor() {
-		return proveedor;
+	public List<Proveedor> getProveedores() {
+		return proveedores;
 	}
 
-	public void setProveedor(List<Proveedor> proveedor) {
-		this.proveedor = proveedor;
+	public void setProveedores(List<Proveedor> proveedores) {
+		this.proveedores = proveedores;
 	}
 
-	public List<Empleado> getEmpleado() {
-		return empleado;
+	public List<Empleado> getEmpleados() {
+		return empleados;
 	}
 
-	public void setEmpleado(List<Empleado> empleado) {
-		this.empleado = empleado;
+	public void setEmpleados(List<Empleado> empleados) {
+		this.empleados = empleados;
 	}
-    
-    
+	
 }
