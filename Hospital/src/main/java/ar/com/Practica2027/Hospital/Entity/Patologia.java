@@ -12,4 +12,6 @@ public class Patologia {
 	private int id;
 	private String nombre;
 	
+	
+	
 }

@@ -123,7 +123,4 @@ public class Producto {
 	public void setEstado(Estado estado) {
 		this.estado = estado;
 	}
-	
-	
-	
 }
