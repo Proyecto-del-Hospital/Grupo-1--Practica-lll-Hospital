@@ -10,12 +10,18 @@ public class Dieta {
  @Id
  @GeneratedValue(strategy = GenerationType.IDENTITY)
  private int id;
- private Paciente paciente;
- private Empleado empleado;
+
  private String fechaInicio;
  private String fechaFin;
  private String descripcion;
- private Estado estado;
  private String motivo;
+ 
+ private Paciente paciente;
+ 
+ private Sala sala;
+	
+ private Empleado empleado;
 
+ private Estado estado;
+ 
 }
