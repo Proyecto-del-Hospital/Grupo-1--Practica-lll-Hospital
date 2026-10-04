@@ -23,7 +23,61 @@ public class Entrega {
     @JoinColumn(name = "id_empleado")
     private Empleado empleado;
 	
-	@OneToMany
+	@OneToMany(mappedBy = "entrega")
     private List<Det_Entrega> det_entrega = new ArrayList<>();
+
+	public Entrega() {
+		super();
+	}
+
+	public Entrega(int id, String fecha, String hora, Empleado empleado, List<Det_Entrega> det_entrega) {
+		super();
+		this.id = id;
+		this.fecha = fecha;
+		this.hora = hora;
+		this.empleado = empleado;
+		this.det_entrega = det_entrega;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getFecha() {
+		return fecha;
+	}
+
+	public void setFecha(String fecha) {
+		this.fecha = fecha;
+	}
+
+	public String getHora() {
+		return hora;
+	}
+
+	public void setHora(String hora) {
+		this.hora = hora;
+	}
+
+	public Empleado getEmpleado() {
+		return empleado;
+	}
+
+	public void setEmpleado(Empleado empleado) {
+		this.empleado = empleado;
+	}
+
+	public List<Det_Entrega> getDet_entrega() {
+		return det_entrega;
+	}
+
+	public void setDet_entrega(List<Det_Entrega> det_entrega) {
+		this.det_entrega = det_entrega;
+	}
 	
+    
 }
