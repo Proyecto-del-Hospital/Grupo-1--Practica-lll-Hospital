@@ -53,17 +53,17 @@ public class Producto {
     @OneToMany(mappedBy = "producto")
     private List<Det_Entrega> detallesEntrega = new ArrayList<>();
 
-    @OneToMany(mappedBy = "producto")
-    private List<Det_Dieta> detallesDieta = new ArrayList<>();
     
 	public Producto() {
 		super();
 	}
 
+	
+
 	public Producto(int id, String nombre, Double stockactual, Double stockminimo, String motivo, Unidad unidad,
 			SubTipo subtipo, Tipo tipo, Estado estado, List<Det_Factura> detallesFactura,
 			List<Det_Solicitud> detallesSolicitud, List<Det_Pedido> detallesPedido, List<Det_Consumo> detallesConsumo,
-			List<Det_Entrega> detallesEntrega, List<Det_Dieta> detallesDieta) {
+			List<Det_Entrega> detallesEntrega) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
@@ -79,8 +79,9 @@ public class Producto {
 		this.detallesPedido = detallesPedido;
 		this.detallesConsumo = detallesConsumo;
 		this.detallesEntrega = detallesEntrega;
-		this.detallesDieta = detallesDieta;
 	}
+
+
 
 	public int getId() {
 		return id;
@@ -194,13 +195,7 @@ public class Producto {
 		this.detallesEntrega = detallesEntrega;
 	}
 
-	public List<Det_Dieta> getDetallesDieta() {
-		return detallesDieta;
-	}
-
-	public void setDetallesDieta(List<Det_Dieta> detallesDieta) {
-		this.detallesDieta = detallesDieta;
-	}
+	
 	
 	
 

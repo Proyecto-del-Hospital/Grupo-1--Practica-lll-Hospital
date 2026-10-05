@@ -21,20 +21,17 @@ public class Det_Dieta {
     @JoinColumn(name = "id_patologia")
 	private Patologia patologia;
 
-	@ManyToOne
-	@JoinColumn (name = "id_producto")
-	private Producto producto;
 
 	public Det_Dieta() {
 		super();
 	}
 
-	public Det_Dieta(int id, Dieta dieta, Patologia patologia, Producto producto) {
+	public Det_Dieta(int id, Dieta dieta, Patologia patologia) {
 		super();
 		this.id = id;
 		this.dieta = dieta;
 		this.patologia = patologia;
-		this.producto = producto;
+		
 	}
 
 	public int getId() {
@@ -61,13 +58,7 @@ public class Det_Dieta {
 		this.patologia = patologia;
 	}
 
-	public Producto getProducto() {
-		return producto;
-	}
 
-	public void setProducto(Producto producto) {
-		this.producto = producto;
-	}
 	
 	
 }

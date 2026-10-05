@@ -27,6 +27,14 @@
 								Paciente</a>
 						</li>
 						<li class="nav-item">
+							<a class="nav-link active" aria-current="page" th:href="@{/dieta/formulario}">Registrar
+								Dieta</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link active" aria-current="page" th:href="@{/patologia/formulario}">Registrar
+								patologia</a>
+						</li>
+						<li class="nav-item">
 							<a class="nav-link" href="#">Link</a>
 						</li>
 						<li class="nav-item dropdown">
@@ -54,6 +62,11 @@
 				</div>
 			</div>
 		</nav>
+						<div th:if="${mensaje}"
+						     class="alert alert-danger"
+						     th:text="${mensaje}">
+						</div>
 	</header>
 </body>
+
 </html>

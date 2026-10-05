@@ -22,8 +22,10 @@ public class PacienteService implements IPaciente{
 	private IPacienteRepository pacienteRepo;
 	@Autowired
 	private IContactoRepository contactoRepo;
+	
 	@Autowired
 	private IEstadoRepository estadoRepo;
+	
 	@Autowired
 	private IDireccionRepository direccionRepo;
 	
