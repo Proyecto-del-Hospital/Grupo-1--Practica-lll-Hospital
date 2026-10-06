@@ -5,7 +5,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import ar.com.Practica2027.Hospital.Entity.Empleado;
 import ar.com.Practica2027.Hospital.Entity.Rol;
 import ar.com.Practica2027.Hospital.Service.IEmpleadoService;
@@ -31,6 +30,7 @@ public class EmpleadoController {
 	    	
 	            return "redirect:/";
 	    }
+
 	    @GetMapping("/AltaRol")
 	    public String formulario(Rol rol, Model model) {
 	        model.addAttribute("rol", new Rol());
@@ -43,5 +43,4 @@ public class EmpleadoController {
 	    	empleService.CrearRol(rol);
 	    	return "redirect:/";
 	    }
-	    
 }
