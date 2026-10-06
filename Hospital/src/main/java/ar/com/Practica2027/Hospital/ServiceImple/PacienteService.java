@@ -90,5 +90,26 @@ public class PacienteService implements IPaciente{
 		
 		return pacienteRepo.findByid(id);
 	}
+
+	@Override
+	public void CambiarEstado(Paciente paciente) {
+		
+		Paciente pacienteExistente = BuscarPaciente(paciente.getId());
+		
+		Estado nuevoEstado;
+
+        if (pacienteExistente.getEstado().getNombre().equalsIgnoreCase("habilitado")) {
+
+            nuevoEstado = estadoRepo.findBynombre("inhabilitado");
+
+        } else {
+
+            nuevoEstado = estadoRepo.findBynombre("habilitado");
+        }
+
+        pacienteExistente.setEstado(nuevoEstado);
+
+        pacienteRepo.save(pacienteExistente);
+	}
 	
 }

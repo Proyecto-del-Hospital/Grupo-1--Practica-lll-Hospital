@@ -10,4 +10,5 @@ public interface IPaciente {
 	List<Paciente> ListarPacientes ();
 	void ModificarPaciente (Paciente paciente);
 	Paciente BuscarPaciente (Long id);
+	void CambiarEstado (Paciente paciente);
 }

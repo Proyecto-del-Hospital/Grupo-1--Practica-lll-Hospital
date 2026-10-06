@@ -41,4 +41,9 @@ public class PacienteController {
 		pacienteServ.ModificarPaciente(paciente);
 		return "redirect:/";
 	}
+	@GetMapping ("/paciente/cambiarEstado")
+	public String CambiarEstado (Paciente paciente) {
+		pacienteServ.CambiarEstado(paciente);
+		return "redirect:/";
+	}
 }
