@@ -31,13 +31,11 @@
 							</div>
 							<div class="col-12">
 								<label class="form-label">DNI</label>
-								<input type="number" class="form-control form-control-sm" placeholder="DNI-CUIL"
-									th:field="*{dni}">
+								<input type="text" class="form-control form-control-sm" placeholder="DNI-CUIL" th:field="*{dni}">
 							</div>
 							<div class="col-12">
 								<label class="form-label">Fecha de Nacimiento</label>
-								<input type="date" class="form-control form-control-sm" placeholder="1234 Main St"
-									th:field="*{fecha_nac}">
+								<input type="text" class="form-control form-control-sm" placeholder="1234 Main St" th:field="*{fecha_nac}">
 							</div>
 							<div class="col-md-6" th:object="${paciente.contacto}">
 								<label class="form-label">Correo</label>
@@ -66,8 +64,8 @@
 							<div class="col-12" th:object="${paciente.estado}">
 								<label class="form-label">Estado</label>
 								<select class="form-control" th:field="*{nombre}">
-									<option value="habilitado">Habilitado</option>
-									<option value="inhabilitado">Inhabilitado</option>
+									<option value="">Habilitado</option>
+									<option value="">Inhabilitado</option>
 								</select>
 							</div>
 							<div class="col-12 mt-4">

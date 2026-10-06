@@ -1,10 +1,10 @@
 package ar.com.Practica2027.Hospital.Entity;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 
 @Entity
@@ -14,9 +14,9 @@ public class Usuario {
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	private int id;
 	private String nombre_usuario;
-	private String contraseña;
+	private String contrasena;
 	
-	@OneToOne
+	@ManyToOne
 	@JoinColumn (name = "id_rol")
 	private Rol rol;
 	
@@ -27,11 +27,11 @@ public class Usuario {
 		super();
 	}
 
-	public Usuario(int id, String nombre_usuario, String contraseña, Rol rol, Empleado empleado) {
+	public Usuario(int id, String nombre_usuario, String contrasena, Rol rol, Empleado empleado) {
 		super();
 		this.id = id;
 		this.nombre_usuario = nombre_usuario;
-		this.contraseña = contraseña;
+		this.contrasena = contrasena;
 		this.rol = rol;
 		this.empleado = empleado;
 	}
@@ -52,12 +52,12 @@ public class Usuario {
 		this.nombre_usuario = nombre_usuario;
 	}
 
-	public String getContraseña() {
-		return contraseña;
+	public String getContrasena() {
+		return contrasena;
 	}
 
-	public void setContraseña(String contraseña) {
-		this.contraseña = contraseña;
+	public void setContrasena(String contrasena) {
+		this.contrasena = contrasena;
 	}
 
 	public Rol getRol() {
@@ -75,8 +75,4 @@ public class Usuario {
 	public void setEmpleado(Empleado empleado) {
 		this.empleado = empleado;
 	}
-	
-	
-	
-	
 }

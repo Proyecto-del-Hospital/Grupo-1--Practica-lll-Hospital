@@ -22,6 +22,7 @@ public class Empleado {
 	private String apellido;
 	private String DNI;
 	private String motivo;
+	private String fecha_nac;
 	
 	@OneToOne
 	@JoinColumn (name = "id_usuario")
@@ -63,8 +64,8 @@ public class Empleado {
 	}
 
 
-	public Empleado(int id, String nombre, String apellido, String dNI, String motivo, Usuario usuario,
-			Direccion direccion, Contacto contacto, Estado estado, List<Det_Sector> sectores,
+	public Empleado(int id, String nombre, String apellido, String dNI, String motivo, String fecha_nac,
+			Usuario usuario, Direccion direccion, Contacto contacto, Estado estado, List<Det_Sector> sectores,
 			List<Solicitud> solicitudesregistradas, List<Entrega> entregasregistradas, List<Pedido> pedidosregistrados,
 			List<Det_Consumo> consumosregistrados, List<DietaMovimiento> movimientosregistrados) {
 		super();
@@ -73,6 +74,7 @@ public class Empleado {
 		this.apellido = apellido;
 		DNI = dNI;
 		this.motivo = motivo;
+		this.fecha_nac = fecha_nac;
 		this.usuario = usuario;
 		this.direccion = direccion;
 		this.contacto = contacto;
@@ -133,6 +135,16 @@ public class Empleado {
 
 	public void setMotivo(String motivo) {
 		this.motivo = motivo;
+	}
+
+
+	public String getFecha_nac() {
+		return fecha_nac;
+	}
+
+
+	public void setFecha_nac(String fecha_nac) {
+		this.fecha_nac = fecha_nac;
 	}
 
 
@@ -234,10 +246,4 @@ public class Empleado {
 	public void setMovimientosregistrados(List<DietaMovimiento> movimientosregistrados) {
 		this.movimientosregistrados = movimientosregistrados;
 	}
-
-
-	
-
-	
-	
 }

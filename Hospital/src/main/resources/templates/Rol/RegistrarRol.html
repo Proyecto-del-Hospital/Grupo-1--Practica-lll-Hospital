@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Alta Rol</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Alta Rol</h1>
+        </header>
+
+        <div class="alert alert-danger" th:if="${error != null}" th:text="${error}"></div>
+
+        <form th:action="@{/GuardarRol}" th:object="${rol}" method="post">
+            <div class="row">
+                <div class="col">
+                    <label for="nombre">NOMBRE</label>
+                    <input type="text" class="form-control" id="nombre" th:field="*{nombre}" required>
+                </div>
+            </div>
+            <div class="form-group text-center mt-3">
+                <button type="submit" class="btn btn-primary">Guardar</button>
+                <a th:href="@{/menu}" class="btn btn-danger">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
