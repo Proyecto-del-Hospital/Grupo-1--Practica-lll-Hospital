@@ -10,35 +10,27 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import ar.com.Practica2027.Hospital.Entity.Dieta;
-import ar.com.Practica2027.Hospital.Entity.Paciente;
 import ar.com.Practica2027.Hospital.Entity.Patologia;
-import ar.com.Practica2027.Hospital.Repository.IEstadoRepository;
-import ar.com.Practica2027.Hospital.Repository.IPacienteRepository;
-import ar.com.Practica2027.Hospital.Repository.IPatologiaRepository;
-import ar.com.Practica2027.Hospital.Repository.ISalaRepository;
 import ar.com.Practica2027.Hospital.Service.IDietaService;
 
 @Controller
 public class DietaController {
 	@Autowired
     private IDietaService DietaService;
-
-
     @PostMapping ("dieta/crear")
 	public String GuardarDieta(Model model,Dieta dieta, @RequestParam List<Integer> patologiasIds,@RequestParam String SalaNueva,@RequestParam Integer SalaId) {
 		String mensaje = DietaService.CrearDieta(dieta,patologiasIds,SalaNueva,SalaId);
 		model.addAttribute("mensaje", mensaje);
-		return "layout/home";
+		return "redirect:/dieta/formulario";
 	}
     
     @GetMapping("dieta/formulario")
     public String FormularioDieta(Model model) {
-    	
     	model.addAttribute("dieta", new Dieta());
         model.addAttribute("listaPacientes", DietaService.ListarPacientes());
         model.addAttribute("listaPatologias", DietaService.ListarPatologias());
         model.addAttribute("listaSalas",DietaService.ListarSala());
-   
+        model.addAttribute("listaDietas", DietaService.ListarDieta());
     	return "Dieta/RegistrarDieta"; 
     }
     

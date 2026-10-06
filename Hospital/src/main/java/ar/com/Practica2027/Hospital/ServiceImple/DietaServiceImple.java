@@ -100,4 +100,10 @@ public class DietaServiceImple implements IDietaService {
 	public List<Paciente> ListarPacientes() {
 		return pacienteRep.findAll();
 	}
+
+	@Override
+	public List<Dieta> ListarDieta() {
+		return dietaRep.findAll();
+		
+	}
 }
