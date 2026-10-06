@@ -4,9 +4,8 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="CSS/bootstrap.min.css">
-	<link rel="stylesheet" href="CSS/style.css">
-	<script src="https://kit.fontawesome.com/57faba85b1.js" crossorigin="anonymous"></script>
+	<link rel="stylesheet" th:href="@{CSS/bootstrap.min.css}">
+	<link rel="stylesheet" th:href="@{CSS/style.css}">
 	<title>Registrar Paciente</title>
 </head>
 
@@ -62,10 +61,6 @@
 				</div>
 			</div>
 		</nav>
-						<div th:if="${mensaje}"
-						     class="alert alert-danger"
-						     th:text="${mensaje}">
-						</div>
 	</header>
 </body>
 
