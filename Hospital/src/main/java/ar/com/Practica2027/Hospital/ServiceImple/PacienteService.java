@@ -34,10 +34,17 @@ public class PacienteService implements IPaciente{
 		
 			Contacto contacto = contactoRepo.save(paciente.getContacto());
 			Direccion direccion = direccionRepo.save(paciente.getDireccion());
-			Estado estado = estadoRepo.save(paciente.getEstado());
+			Estado estado = estadoRepo.findBynombre(paciente.getEstado().getNombre());
+			
+			if (estado == null) {
+				estado = new Estado();
+				estado.setNombre(paciente.getEstado().getNombre());
+				estadoRepo.save(estado);
+			}
+			paciente.setEstado(estado);
 			paciente.setContacto(contacto);
 			paciente.setDireccion(direccion);
-			paciente.setEstado(estado);
+			
 			pacienteRepo.save(paciente);
 				
 		}
@@ -49,21 +56,32 @@ public class PacienteService implements IPaciente{
 	}
 
 	@Override
-	public Paciente ModificarPaciente(Paciente paciente) {
+	public void ModificarPaciente (Paciente paciente) {
 		
 		Paciente pacienteExistente = BuscarPaciente(paciente.getId());
 		
 		if (pacienteExistente != null) {
-			paciente.setNombre(paciente.getNombre());
-			paciente.setApellido(paciente.getApellido());
-			paciente.setDni(paciente.getDni());
-			paciente.setDireccion(paciente.getDireccion());
-			paciente.setContacto(paciente.getContacto());
-			paciente.setMotivo(paciente.getMotivo());
-			pacienteRepo.save(paciente);
+			
+			pacienteExistente.setNombre(paciente.getNombre());
+			pacienteExistente.setApellido(paciente.getApellido());
+			pacienteExistente.setDni(paciente.getDni());
+			pacienteExistente.setMotivo(paciente.getMotivo());
+			pacienteExistente.setFecha_nac(paciente.getFecha_nac());
+			
+			Contacto contactoExistente = pacienteExistente.getContacto();
+	        contactoExistente.setCorreo(paciente.getContacto().getCorreo());
+	        contactoExistente.setTelefono(paciente.getContacto().getTelefono());
+	        contactoRepo.save(contactoExistente);
+	        
+	        Direccion direccionExistente = pacienteExistente.getDireccion();
+	        direccionExistente.setCalle(paciente.getDireccion().getCalle());
+	        direccionExistente.setBarrio(paciente.getDireccion().getBarrio());
+	        direccionExistente.setNumer_calle(paciente.getDireccion().getNumer_calle());
+	        direccionRepo.save(direccionExistente);
+			
+			pacienteRepo.save(pacienteExistente);
 	}
 		
-		return null;
 	}
 
 	@Override

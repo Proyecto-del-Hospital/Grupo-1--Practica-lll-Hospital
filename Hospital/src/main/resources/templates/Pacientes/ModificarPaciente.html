@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" th:href="@{/CSS/bootstrap.min.css}">
+	<link rel="stylesheet" th:href="@{/CSS/style.css}">
+	<script src="https://kit.fontawesome.com/57faba85b1.js" crossorigin="anonymous"></script>
+	<title>Registrar Paciente</title>
+</head>
+
+<body>
+	<header>
+
+	</header>
+	<main>
+		<div class="container mt-5">
+			<div class="row justify-content-center">
+				<div class="col-md-8">
+					<div class="card shadow-sm p-4">
+						<h3 class="mb-4 text-center">Modificar Paciente</h3>
+						<form class="row g-2" method="post" th:action="@{/modificarpaciente}" th:object="${paciente}">
+							<input type="hidden" th:field="*{id}">
+							<div class="col-md-6">
+								<label class="form-label">Nombre</label>
+								<input type="text" class="form-control form-control-sm" id="inputEmail4"
+									th:field="*{nombre}">
+							</div>
+							<div class="col-md-6">
+								<label class="form-label">Apellido</label>
+								<input type="text" class="form-control form-control-sm" th:field="*{apellido}">
+							</div>
+							<div class="col-12">
+								<label class="form-label">DNI</label>
+								<input type="number" class="form-control form-control-sm" placeholder="DNI-CUIL"
+									th:field="*{dni}">
+							</div>
+							<div class="col-12">
+								<label class="form-label">Fecha de Nacimiento</label>
+								<input type="date" class="form-control form-control-sm" placeholder="1234 Main St"
+									th:field="*{fecha_nac}">
+							</div>
+							<div class="col-md-6" th:object="${paciente.contacto}">
+								<label class="form-label">Correo</label>
+								<input type="email" class="form-control form-control-sm" th:field="*{correo}">
+							</div>
+							<div class="col-md-6" th:object="${paciente.contacto}">
+								<label class="form-label">Telefono</label>
+								<input type="number" class="form-control form-control-sm" th:field="*{telefono}">
+							</div>
+							<div class="col-md-6" th:object="${paciente.direccion}">
+								<label class="form-label">Calle</label>
+								<input type="text" class="form-control form-control-sm" th:field="*{calle}">
+							</div>
+							<div class="col-md-6" th:object="${paciente.direccion}">
+								<label class="form-label">Barrio</label>
+								<input type="text" class="form-control form-control-sm" th:field="*{barrio}">
+							</div>
+							<div class="col-md-6" th:object="${paciente.direccion}">
+								<label class="form-label">Numero de calle</label>
+								<input type="text" class="form-control form-control-sm" th:field="*{numer_calle}">
+							</div>
+							<div class="col-md-6">
+								<label class="form-label">motivo</label>
+								<input type="text" class="form-control form-control-sm" th:field="*{motivo}">
+							</div>
+							<div class="col-12 mt-4">
+								<button type="submit" class="btn btn-primary w-100">Modificar</button>
+							</div>
+							<div class="col-12 mt-2">
+								<a class="btn btn-danger w-100" th:href="@{/paciente/formulario}">Cancelar</a>
+							</div>
+						</form>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</main>
+</body>
+
+</html>

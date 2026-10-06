@@ -8,6 +8,6 @@ public interface IPaciente {
 	
 	void CrearPaciente (Paciente paciente);
 	List<Paciente> ListarPacientes ();
-	Paciente ModificarPaciente (Paciente paciente);
+	void ModificarPaciente (Paciente paciente);
 	Paciente BuscarPaciente (Long id);
 }
