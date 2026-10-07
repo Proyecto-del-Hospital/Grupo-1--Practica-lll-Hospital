@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" th:href="@{/CSS/bootstrap.min.css}">
+	<link rel="stylesheet" th:href="@{/CSS/style.css}">
+	<script src="https://kit.fontawesome.com/57faba85b1.js" crossorigin="anonymous"></script>
+	<title>Registrar Paciente</title>
+</head>
+
+<body>
+	<header>
+		<nav class="navbar navbar-expand-lg bg-body-tertiary">
+			<div class="container-fluid">
+				<a class="navbar-brand" href="#">Navbar</a>
+				<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+					data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+					aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+						<li class="nav-item">
+							<a class="nav-link active" aria-current="page" th:href="@{/paciente/formulario}">Registrar
+								Paciente</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link active" aria-current="page" th:href="@{/dieta/formulario}">Registrar
+								Dieta</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link active" aria-current="page" th:href="@{/patologia/formulario}">Registrar
+								patologia</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="#">Link</a>
+						</li>
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+								aria-expanded="false">
+								Dropdown
+							</a>
+							<ul class="dropdown-menu">
+								<li><a class="dropdown-item" href="#">Action</a></li>
+								<li><a class="dropdown-item" href="#">Another action</a></li>
+								<li>
+									<hr class="dropdown-divider">
+								</li>
+								<li><a class="dropdown-item" href="#">Something else here</a></li>
+							</ul>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link disabled" aria-disabled="true">Disabled</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+	</header>
+	<main>
+
+		<section>
+			<div class="justify-content-center w-100 p-5">
+				<article>
+					<div class="row justify-content-center">
+						<div class="col-md-8">
+							<div class="card shadow-sm p-4">
+								<h3 class="mb-4 text-center">Registrar Paciente</h3>
+								<form class="row g-2" method="post" th:action="@{/Pacientes/Crear}"
+									th:object="${paciente}">
+									<div class="col-md-6">
+										<label class="form-label">Nombre</label>
+										<input type="text" class="form-control form-control-sm" id="inputEmail4"
+											th:field="*{nombre}" required>
+									</div>
+									<div class="col-md-6">
+										<label class="form-label">Apellido</label>
+										<input type="text" class="form-control form-control-sm" th:field="*{apellido}"
+											required>
+									</div>
+									<div class="col-12">
+										<label class="form-label">DNI</label>
+										<input type="number" class="form-control form-control-sm" placeholder="DNI-CUIL"
+											th:field="*{dni}" required>
+									</div>
+									<div class="col-12">
+										<label class="form-label">Fecha de Nacimiento</label>
+										<input type="date" class="form-control form-control-sm"
+											placeholder="1234 Main St" th:field="*{fecha_nac}" required>
+									</div>
+									<div class="col-md-6" th:object="${paciente.contacto}">
+										<label class="form-label">Correo</label>
+										<input type="email" class="form-control form-control-sm" th:field="*{correo}"
+											required>
+									</div>
+									<div class="col-md-6" th:object="${paciente.contacto}">
+										<label class="form-label">Telefono</label>
+										<input type="number" class="form-control form-control-sm"
+											th:field="*{telefono}" required>
+									</div>
+									<div class="col-md-6" th:object="${paciente.direccion}">
+										<label class="form-label">Calle</label>
+										<input type="text" class="form-control form-control-sm" th:field="*{calle}" required>
+									</div>
+									<div class="col-md-6" th:object="${paciente.direccion}">
+										<label class="form-label">Barrio</label>
+										<input type="text" class="form-control form-control-sm" th:field="*{barrio}" required>
+									</div>
+									<div class="col-md-6" th:object="${paciente.direccion}">
+										<label class="form-label">Numero de calle</label>
+										<input type="number" class="form-control form-control-sm"
+											th:field="*{numer_calle}" required>
+									</div>
+									<div class="col-md-6">
+										<label class="form-label">motivo</label>
+										<input type="text" class="form-control form-control-sm" th:field="*{motivo}" required>
+									</div>
+									<div class="col-12" th:object="${paciente.estado}">
+										<label class="form-label">Estado</label>
+										<select class="form-control" th:field="*{nombre}" required>
+											<option value="habilitado">Habilitado</option>
+											<option value="inhabilitado">Inhabilitado</option>
+										</select>
+									</div>
+									<div class="col-12 mt-4">
+										<button type="submit" class="btn btn-primary w-100">Registrar</button>
+									</div>
+								</form>
+							</div>
+
+
+						</div>
+				</article>
+			</div>
+			<article>
+				<div class="align-items-center shadow-lg p-3 mb-5 bg-body-tertiary rounded">
+					<form class="d-flex shadow p-3 mb-5 bg-white rounded" role="search">
+						<input class="form-control me-2" type="search" placeholder="Buscar Paciente" aria-label="Search" />
+						<button class="btn btn-outline-success" type="submit">Buscar</button>
+					</form>
+					<div class="table-responsive">
+						<table class="table table-bordered table-striped table-hover tabla-pacientes mb-0">
+
+							<thead class="table-dark">
+								<tr class="text-center">
+									<th>ID</th>
+									<th>Nombre</th>
+									<th>Apellido</th>
+									<th>DNI</th>
+									<th>Fecha de Nacimiento</th>
+									<th>Calle</th>
+									<th>Barrio</th>
+									<th>Número de Calle</th>
+									<th>Correo</th>
+									<th>Teléfono</th>
+									<th>Estado</th>
+									<th>Motivo</th>
+									<th>Acción</th>
+								</tr>
+							</thead>
+
+							<tbody>
+								<tr th:each="p : ${ListaPacientes}">
+									<td th:text="${p.id}"></td>
+									<td th:text="${p.nombre}"></td>
+									<td th:text="${p.apellido}"></td>
+									<td th:text="${p.dni}"></td>
+									<td th:text="${p.fecha_nac}"></td>
+									<td th:text="${p.direccion.calle}"></td>
+									<td th:text="${p.direccion.barrio}"></td>
+									<td th:text="${p.direccion.numer_calle}"></td>
+									<td th:text="${p.contacto.correo}"></td>
+									<td th:text="${p.contacto.telefono}"></td>
+									<td th:text="${p.estado.nombre}"></td>
+									<td th:text="${p.motivo}"></td>
+									<td><a class="btn btn-primary btn-sm"
+											th:href="@{/FormularioModificar(id=${p.id})}">Modificar</a>
+										<a class="btn btn-warning btn-sm"
+											th:href="@{/paciente/cambiarEstado(id=${p.id})}">Cambiar Estado</a>
+									</td>
+
+								</tr>
+							</tbody>
+
+						</table>
+					</div>
+				</div>
+				</div>
+			</article>
+		</section>
+		</div>
+	</main>
+</body>
+
+</html>
