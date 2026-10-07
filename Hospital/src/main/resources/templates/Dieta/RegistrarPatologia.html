@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<link rel="stylesheet" th:href="@{/CSS/bootstrap.min.css}">
+	<link rel="stylesheet" th:href="@{/CSS/style.css}">
+
+	<title>Registrar Patología</title>
+</head>
+
+<body class="bg-light">
+
+	<main>
+
+		<div class="container mt-5">
+
+			<div class="row justify-content-center">
+
+				<div class="col-md-6">
+
+					<div class="card shadow-sm p-4">
+
+						<h3 class="mb-4 text-center text-primary">
+							Registrar Patología
+						</h3>
+
+						<form method="post" th:action="@{/patologia/crear}" th:object="${patologia}">
+
+							<div class="mb-3">
+
+								<label class="form-label">
+									Nombre de la Patología
+								</label>
+
+								<input type="text" class="form-control" th:field="*{nombre}" placeholder="Ej: Diabetes"
+									required>
+
+							</div>
+
+							<button type="submit" class="btn btn-primary w-100">
+								Registrar Patología
+							</button>
+
+						</form>
+
+					</div>
+
+				</div>
+
+			</div>
+
+		</div>
+
+	</main>
+
+</body>
+
+</html>
+```
