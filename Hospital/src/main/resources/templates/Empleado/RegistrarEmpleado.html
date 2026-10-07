@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" th:href="@{/CSS/bootstrap.min.css}">
+	<link rel="stylesheet" th:href="@{/CSS/style.css}">
+	<title>Registrar Empleado</title>
+</head>
+
+<body>
+	<main>
+		<div class="container mt-5">
+			<div class="row justify-content-center">
+				<div class="col-md-8">
+					<div class="card shadow-sm p-4">
+						<h3 class="mb-4 text-center">Registrar Empleado</h3>
+
+						<div class="alert alert-danger" th:if="${error}" th:text="${error}"></div>
+
+						<form class="row g-2" method="post" th:action="@{/GuardarEmpleado}" th:object="${empleado}">
+
+							<div class="col-md-6">
+								<label class="form-label">Nombre</label>
+								<input type="text" class="form-control form-control-sm" th:field="*{nombre}" required>
+							</div>
+							<div class="col-md-6">
+								<label class="form-label">Apellido</label>
+								<input type="text" class="form-control form-control-sm" th:field="*{apellido}" required>
+							</div>
+
+							<div class="col-md-6">
+								<label class="form-label">DNI</label>
+								<input type="number" class="form-control form-control-sm" placeholder="DNI" th:field="*{DNI}" required>
+							</div>
+							<div class="col-md-6">
+								<label class="form-label">Fecha de Nacimiento</label>
+								<input type="date" class="form-control form-control-sm" th:field="*{fecha_nac}" required>
+							</div>
+
+							<div class="col-md-6">
+								<label class="form-label">Correo</label>
+								<input type="email" class="form-control form-control-sm" th:field="*{contacto.correo}">
+							</div>
+							<div class="col-md-6">
+								<label class="form-label">Teléfono</label>
+								<input type="text" class="form-control form-control-sm" th:field="*{contacto.telefono}">
+							</div>
+
+							<div class="col-md-4">
+								<label class="form-label">Calle</label>
+								<input type="text" class="form-control form-control-sm" th:field="*{direccion.calle}" required>
+							</div>
+							<div class="col-md-4">
+								<label class="form-label">Barrio</label>
+								<input type="text" class="form-control form-control-sm" th:field="*{direccion.barrio}">
+							</div>
+							<div class="col-md-4">
+								<label class="form-label">Número de calle</label>
+								<input type="text" class="form-control form-control-sm" th:field="*{direccion.numer_calle}" required>
+							</div>
+
+							<div class="col-md-6">
+								<label class="form-label">Usuario</label>
+								<input type="text" class="form-control form-control-sm" th:field="*{usuario.nombre_usuario}" required>
+							</div>
+							<div class="col-md-6">
+								<label class="form-label">Contraseña</label>
+								<input type="password" class="form-control form-control-sm" th:field="*{usuario.contrasena}" required>
+							</div>
+
+							<div class="col-md-6">
+								<label class="form-label">Rol</label>
+								<select class="form-select form-select-sm" name="usuario.rol.id" required>
+									<option value="">Seleccione un rol...</option>
+									<option th:each="r : ${listaroles}" th:value="${r.id}" th:text="${r.nombre}"></option>
+								</select>
+							</div>
+							<div class="col-md-6">
+								<label class="form-label">Estado</label>
+								<select class="form-select form-select-sm" th:field="*{estado.nombre}" required>
+									<option value="Habilitado">Habilitado</option>
+									<option value="Inhabilitado">Inhabilitado</option>
+								</select>
+							</div>
+
+							<div class="col-12">
+								<label class="form-label">Motivo</label>
+								<input type="text" class="form-control form-control-sm" th:field="*{motivo}">
+							</div>
+
+							<div class="col-12 mt-4">
+								<button type="submit" class="btn btn-primary w-100">Registrar</button>
+							</div>
+							<div class="col-12 text-center">
+								<a th:href="@{/}" class="btn btn-danger w-100">Cancelar</a>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+</body>
+
+</html>
