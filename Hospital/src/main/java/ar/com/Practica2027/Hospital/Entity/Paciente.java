@@ -137,6 +137,4 @@ public class Paciente {
 	public void setDietas(List<Dieta> dietas) {
 		this.dietas = dietas;
 	}
-
-	
 }
