@@ -91,13 +91,6 @@
 										<input type="text" class="form-control form-control-sm" th:field="*{motivo}"
 											required>
 									</div>
-									<div class="col-12" th:object="${paciente.estado}">
-										<label class="form-label">Estado</label>
-										<select class="form-control" th:field="*{nombre}" required>
-											<option value="habilitado">Habilitado</option>
-											<option value="inhabilitado">Inhabilitado</option>
-										</select>
-									</div>
 									<div class="col-12 mt-4">
 										<button type="submit" class="btn btn-primary w-100">Registrar</button>
 									</div>

@@ -47,11 +47,11 @@ public class PacienteService implements IPaciente {
 		if (encontrado == false) {
 			Contacto contacto = contactoRepo.save(paciente.getContacto());
 			Direccion direccion = direccionRepo.save(paciente.getDireccion());
-			Estado estado = estadoRepo.findBynombre(paciente.getEstado().getNombre());
+			Estado estado = estadoRepo.findBynombre("Habilitado");
 
 			if (estado == null) {
 				estado = new Estado();
-				estado.setNombre(paciente.getEstado().getNombre());
+				estado.setNombre("Habilitado");
 				estadoRepo.save(estado);
 			}
 			
