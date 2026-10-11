@@ -1,10 +1,7 @@
 package ar.com.Practica2027.Hospital.ServiceImple;
-
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import ar.com.Practica2027.Hospital.Entity.Contacto;
 import ar.com.Practica2027.Hospital.Entity.Direccion;
 import ar.com.Practica2027.Hospital.Entity.Estado;
@@ -67,6 +64,11 @@ public class PacienteService implements IPaciente {
 	public List<Paciente> ListarPacientes() {
 		
 		return pacienteRepo.findAll();
+	}
+	@Override
+	public List<Paciente> buscarPaciente(String dni) {
+		
+		return pacienteRepo.findByDni(dni);
 	}
 
 }

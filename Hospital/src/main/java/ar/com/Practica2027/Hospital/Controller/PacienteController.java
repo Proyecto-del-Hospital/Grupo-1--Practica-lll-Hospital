@@ -1,5 +1,7 @@
 package ar.com.Practica2027.Hospital.Controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,6 +29,13 @@ public class PacienteController {
 		model.addAttribute("paciente", new Paciente());
 		model.addAttribute("ListaPacientes", pacienteServ.ListarPacientes());
 		
+		return "Paciente/ControlPaciente";
+	}
+	@PostMapping ("/paciente/buscar")
+	public String BuscarPaciente (String dni, Model model) {
+		List<Paciente> p = pacienteServ.buscarPaciente(dni);
+		model.addAttribute("paciente", new Paciente());
+		model.addAttribute("ListaPacientes", p);
 		return "Paciente/ControlPaciente";
 	}
 }
