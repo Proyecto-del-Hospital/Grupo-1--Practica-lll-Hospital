@@ -63,5 +63,10 @@ public class PacienteService implements IPaciente {
 		}
 
 	}
+	@Override
+	public List<Paciente> ListarPacientes() {
+		
+		return pacienteRepo.findAll();
+	}
 
 }

@@ -25,7 +25,7 @@ public class PacienteController {
 	public String FormularioPaciente (Model model) {
 		
 		model.addAttribute("paciente", new Paciente());
-		//model.addAttribute("ListaPacientes", pacienteServ.ListarPacientes());
+		model.addAttribute("ListaPacientes", pacienteServ.ListarPacientes());
 		
 		return "Paciente/ControlPaciente";
 	}
