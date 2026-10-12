@@ -122,4 +122,33 @@ public class PacienteService implements IPaciente {
 		return pacienteRepo.findByid(id);
 	}
 
+	@Override
+	public void CambiarEstado(Paciente paciente) {
+
+		Paciente pacienteExistente = BuscarPacienteXid(paciente.getId());
+		Estado nuevoEstado;
+
+		if (pacienteExistente.getEstado().getNombre().equalsIgnoreCase("Habilitado")) {
+			nuevoEstado = estadoRepo.findBynombre("Inhabilitado");
+
+			if (nuevoEstado == null) {
+				nuevoEstado = new Estado();
+				nuevoEstado.setNombre("Inhabilitado");
+				nuevoEstado = estadoRepo.save(nuevoEstado);
+			}
+		} else {
+			nuevoEstado = estadoRepo.findBynombre("Habilitado");
+
+			if (nuevoEstado == null) {
+				nuevoEstado = new Estado();
+				nuevoEstado.setNombre("Habilitado");
+				nuevoEstado = estadoRepo.save(nuevoEstado);
+			}
+		}
+
+		pacienteExistente.setEstado(nuevoEstado);
+
+		pacienteRepo.save(pacienteExistente);
+
+	}
 }

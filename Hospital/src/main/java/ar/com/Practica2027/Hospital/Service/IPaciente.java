@@ -10,4 +10,5 @@ public interface IPaciente {
 	List<Paciente> buscarPaciente (String dni);
 	void ModificarPaciente (Paciente paciente);
 	Paciente BuscarPacienteXid (int id);
+	void CambiarEstado (Paciente paciente);
 }
