@@ -7,4 +7,5 @@ import ar.com.Practica2027.Hospital.Entity.Paciente;
 @Repository
 public interface IPacienteRepository extends JpaRepository<Paciente, Integer>{
 	List<Paciente> findByDni(String dni);
+	Paciente findByid (int id);
 }
