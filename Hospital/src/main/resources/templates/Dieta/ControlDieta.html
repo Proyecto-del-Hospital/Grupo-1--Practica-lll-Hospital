@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" th:href="@{/CSS/bootstrap.min.css}">
+	<link rel="stylesheet" th:href="@{/CSS/style.css}">
+	<script src="https://kit.fontawesome.com/57faba85b1.js" crossorigin="anonymous"></script>
+	<title>Control de Dieta</title>
+</head>
+
+<body>
+	<header>
+		<div th:replace="Inicio/Home::navbar"></div>
+	</header>
+	<main>
+		<section>
+			<div class="justify-content-center w-100 p-5">
+				<article>
+					<div class="justify-content-center w-100 p-5">
+						<div>
+							<a th:href="@{/}" class="btn btn-secondary mb-3">
+								← Volver al inicio
+							</a>
+							<div class="shadow-lg p-2 bg-body-tertiary rounded">
+								<h1 class="mb-4 text-center text-primary">Registrar Dieta, Sala y Patologías</h1>
+								<form class="row g-2" method="post" th:action="@{/dieta/crear}" th:object="${dieta}">
+									<!--Seleccion de Paciente-->
+									<div class="col-12 mb-2">
+										<label class="form-label fw-bold">Paciente</label>
+										<select class="form-select form-select-sm" th:field="*{paciente.id}" required>
+											<option value="0">Seleccione un paciente...</option>
+											<option th:each="p : ${ListaPacientes}" th:value="${p.id}"
+												th:text="${p.nombre + ' ' + p.apellido + ' (DNI: ' + p.dni + ')'}">
+											</option>
+										</select>
+									</div>
+
+									<!--Apartado de Dieta-->
+									<div class="col-md-6">
+										<label class="form-label">Fecha Inicial</label>
+										<input type="date" class="form-control form-control-sm"
+											th:field="*{fechaInicio}" required>
+									</div>
+									<div class="col-md-6">
+										<label class="form-label">Fecha Fin</label>
+										<input type="date" class="form-control form-control-sm" th:field="*{fechaFin}">
+									</div>
+
+									<!--Seleccion De Sala-->
+									<div class="col-md-6">
+										<br>
+										<label class="form-label">
+											Sala Existente
+											
+										</label>
+										<select class="form-select form-select-sm" name="SalaId">
+											<option value="">
+												Seleccione una sala...
+											</option>
+											<option th:each="s : ${listaSalas}" th:value="${s.id}"
+												th:text="${s.nombre}">
+											</option>
+										</select>
+									</div>
+									<div class="col-md-6">
+										<label class="form-label">
+											O Nueva Sala
+										</label>
+										<input type="text" class="form-control form-control-sm" name="SalaNueva"
+											placeholder="Ej: Sala 3B">
+									</div>
+
+									<div class="col-12">
+										<label class="form-label">Motivo</label>
+										<input type="text" class="form-control form-control-sm" th:field="*{motivo}"
+											placeholder="Ej: Control general" required>
+									</div>
+
+									<div class="col-12">
+										<label class="form-label">Descripción</label>
+										<textarea class="form-control form-control-sm" rows="2"
+											th:field="*{descripcion}" placeholder="Detalles..."></textarea>
+									</div>
+
+									<div class="col-12 mt-4 border-top pt-3">
+										<label class="form-label fw-bold text-secondary">Patologías Asociadas</label>
+										<p>Marque las patologías existentes o escriba una nueva:</p>
+
+										<!--Seleccion De Patologia -->
+										<div class="d-flex flex-row">
+											<div class="form-check form-check-inline"
+												th:each="patologia : ${listaPatologias}">
+												<input class="form-check-input" type="checkbox" name="patologiasIds"
+													th:value="${patologia.id}" th:id="${patologia.id}">
+												<label class="form-check-label" th:for="${patologia.id}"
+													th:text="${patologia.nombre}">
+													Patología
+												</label>
+											</div>
+										</div>
+										<div>
+											<a th:href="@{/patologia/formulario}">
+												Registre primero una patología.
+											</a>
+
+										</div>
+									</div>
+									<div class="col-12 mt-4">
+										<button type="submit" class="btn btn-primary btn-sm w-100">Registrar
+											Dieta</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+			</div>
+			</article>
+
+			<article>
+
+			</article>
+			</div>
+		</section>
+	</main>
+</body>
+
+</html>
