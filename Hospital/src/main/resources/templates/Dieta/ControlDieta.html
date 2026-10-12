@@ -31,7 +31,8 @@
 										<label class="form-label fw-bold">Paciente</label>
 										<select class="form-select form-select-sm" th:field="*{paciente.id}" required>
 											<option value="0">Seleccione un paciente...</option>
-											<option th:each="p : ${ListaPacientes}" th:value="${p.id}"
+											<option th:each="p : ${ListaPacientes}"
+												th:if="${p.estado.nombre == 'Habilitado'}" th:value="${p.id}"
 												th:text="${p.nombre + ' ' + p.apellido + ' (DNI: ' + p.dni + ')'}">
 											</option>
 										</select>
@@ -53,7 +54,7 @@
 										<br>
 										<label class="form-label">
 											Sala Existente
-											
+
 										</label>
 										<select class="form-select form-select-sm" name="SalaId">
 											<option value="">

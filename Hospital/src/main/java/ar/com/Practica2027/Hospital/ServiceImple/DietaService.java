@@ -14,7 +14,6 @@ import ar.com.Practica2027.Hospital.Entity.Sala;
 import ar.com.Practica2027.Hospital.Repository.IDetDietaRepository;
 import ar.com.Practica2027.Hospital.Repository.IDietaRepository;
 import ar.com.Practica2027.Hospital.Repository.IEstadoRepository;
-import ar.com.Practica2027.Hospital.Repository.IPacienteRepository;
 import ar.com.Practica2027.Hospital.Repository.IPatologiaRepository;
 import ar.com.Practica2027.Hospital.Repository.ISalaRepository;
 import ar.com.Practica2027.Hospital.Service.IDieta;
@@ -71,6 +70,10 @@ public class DietaService implements IDieta {
 		} else {
 		    return "No seleccionaste o agregaste una sala al paciente";
 		}	
+		
+		if (dieta.getFechaFin() != null && dieta.getFechaFin().isEmpty()) {
+			dieta.setFechaFin("en tratamiento");
+		}
 		
 		Estado estado = estadoRep.findBynombre("Habilitado");
 		if (estado == null) {
