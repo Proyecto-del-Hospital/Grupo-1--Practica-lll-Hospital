@@ -78,14 +78,14 @@ public class PacienteService implements IPaciente {
 	public void ModificarPaciente(Paciente paciente) {
 
 		Paciente pacienteExistente = pacienteRepo.findByid(paciente.getId());
-
+		
 		if (pacienteExistente != null) {
 
 			List<Paciente> pacientes = pacienteRepo.findAll();
 			boolean encontrado = false;
 
 			for (Paciente p : pacientes) {
-				if (p.getDni().equalsIgnoreCase(paciente.getDni())) {
+				if (p.getId() != pacienteExistente.getId() && p.getDni().equalsIgnoreCase(paciente.getDni())) {
 					encontrado = true;
 					break;
 				}
@@ -111,9 +111,7 @@ public class PacienteService implements IPaciente {
 
 				pacienteRepo.save(pacienteExistente);
 			}
-
 		}
-
 	}
 
 	@Override
