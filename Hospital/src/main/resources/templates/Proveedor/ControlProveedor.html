@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" th:href="@{/CSS/bootstrap.min.css}">
+	<link rel="stylesheet" th:href="@{/CSS/style.css}">
+	<script src="https://kit.fontawesome.com/57faba85b1.js" crossorigin="anonymous"></script>
+	<title>Control de Proveedor</title>
+</head>
+<body>
+	<header>
+		<div th:replace="Inicio/Home::navbar"></div>
+	</header>
+	<main>
+		<section>
+			<div class="justify-content-center w-100 p-5">
+				<article>
+					<div class="row justify-content-center">
+						<div class="col-md-8">
+							<div class="card shadow-sm p-4">
+								<h3 class="mb-4 text-center">Registrar Proveedor</h3>
+								<form class="row g-2" method="post" th:action="@{/proveedor/crear}"
+									th:object="${proveedor}">
+									<div class="col-md-6">
+										<label class="form-label">Nombre</label>
+										<input type="text" class="form-control form-control-sm" th:field="*{nombre}"
+											required placeholder="Nombre Completo">
+									</div>
+									<div class="col-md-6">
+										<label class="form-label">Apellido</label>
+										<input type="text" class="form-control form-control-sm" th:field="*{apellido}"
+											required placeholder="Apellido">
+									</div>
+									<div class="col-12">
+										<label class="form-label">DNI</label>
+										<input type="number" class="form-control form-control-sm" placeholder="DNI-CUIL"
+											th:field="*{dni}" required>
+									</div>
+									
+									<div class="col-md-6" th:object="${proveedor.contacto}">
+										<label class="form-label">Correo</label>
+										<input type="email" class="form-control form-control-sm" th:field="*{correo}"
+											placeholder="Correo Electrónico">
+									</div>
+									<div class="col-md-6" th:object="${proveedor.contacto}">
+										<label class="form-label">Telefono</label>
+										<input type="number" class="form-control form-control-sm" th:field="*{telefono}"
+											placeholder="Teléfono Celular">
+									</div>
+									<div class="col-md-6" th:object="${proveedor.direccion}">
+										<label class="form-label">Calle</label>
+										<input type="text" class="form-control form-control-sm" th:field="*{calle}"
+											required placeholder="Calle">
+									</div>
+									<div class="col-md-6" th:object="${proveedor.direccion}">
+										<label class="form-label">Barrio</label>
+										<input type="text" class="form-control form-control-sm" th:field="*{barrio}"
+											required placeholder="Barrio">
+									</div>
+									<div class="col-md-6" th:object="${proveedor.direccion}">
+										<label class="form-label">Numero de calle</label>
+										<input type="number" class="form-control form-control-sm"
+											th:field="*{numer_calle}" required placeholder="Numero de Calle">
+									</div>
+									<div class="col-md-6">
+										<label class="form-label">motivo</label>
+										<input type="text" class="form-control form-control-sm" th:field="*{motivo}"
+											placeholder="Motivo (Opcional: - )">
+									</div>
+									<div class="col-12 mt-4">
+										<button type="submit" class="btn btn-primary w-100">Registrar</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</article>
+				<br><br>
+				
+			</div>
+		</section>
+	</main>
+</body>
+</html>
