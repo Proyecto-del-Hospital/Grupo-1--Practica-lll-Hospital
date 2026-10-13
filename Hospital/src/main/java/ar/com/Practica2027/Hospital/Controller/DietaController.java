@@ -25,7 +25,7 @@ public class DietaController {
 	private IPaciente pacienteService;
 
 	@PostMapping("/dieta/crear")
-	public String GuardarDieta(Model model, Dieta dieta, @RequestParam List<Integer> patologiasIds,
+	public String GuardarDieta(Model model, Dieta dieta, @RequestParam(required=false) List<Integer> patologiasIds,
 			@RequestParam(required = false) String SalaNueva, @RequestParam(required = false) Integer SalaId) {
 		String mensaje = dietaService.CrearDieta(dieta, patologiasIds, SalaNueva, SalaId);
 		model.addAttribute("mensaje", mensaje);
@@ -62,6 +62,36 @@ public class DietaController {
 		return "Dieta/ControlDieta";
 	}
 
+	@GetMapping("/dieta/editar")
+	public String FormularioModificarDieta(@RequestParam("id") int id, Model model) {
+		Dieta dieta = dietaService.BuscarDietaXid(id); 
+		
+		model.addAttribute("dieta", dieta);
+		model.addAttribute("ListaPacientes", pacienteService.ListarPacientes());
+		model.addAttribute("listaPatologias", dietaService.ListarPatologias());
+		model.addAttribute("listaSalas", dietaService.ListarSala());
+		model.addAttribute("listaDietas", dietaService.ListarDieta());
+		return "Dieta/ControlDieta"; 
+	}
+
+	@PostMapping("/dieta/editar/crear")
+	public String ModificarDieta(Model model,Dieta dieta, 
+			@RequestParam(required = false) List<Integer> patologiasIds,
+			@RequestParam(required = false) String SalaNueva, 
+			@RequestParam(required = false) Integer SalaId) {
+		
+		
+		String mensaje=dietaService.ModificarDieta(dieta, patologiasIds, SalaNueva, SalaId);
+		model.addAttribute("dieta", new Dieta());
+		
+		model.addAttribute("ListaPacientes", pacienteService.ListarPacientes());
+		model.addAttribute("listaPatologias", dietaService.ListarPatologias());
+		model.addAttribute("listaSalas", dietaService.ListarSala());
+		model.addAttribute("listaDietas", dietaService.ListarDieta());
+		model.addAttribute("mensaje", mensaje);
+		return "Dieta/ControlDieta"; 
+	}
+	
 	@GetMapping("patologia/formulario")
 	public String FormularioPatologia(Model model) {
 

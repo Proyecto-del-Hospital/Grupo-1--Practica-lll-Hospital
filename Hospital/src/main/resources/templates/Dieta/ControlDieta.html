@@ -5,8 +5,6 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" th:href="@{/CSS/bootstrap.min.css}">
-	<link rel="stylesheet" th:href="@{/CSS/style.css}">
-	<script src="https://kit.fontawesome.com/57faba85b1.js" crossorigin="anonymous"></script>
 	<title>Control de Dieta</title>
 </head>
 
@@ -25,7 +23,11 @@
 							</a>
 							<div class="shadow-lg p-2 bg-body-tertiary rounded">
 								<h1 class="mb-4 text-center text-primary">Registrar Dieta, Sala y Patologías</h1>
-								<form class="row g-2" method="post" th:action="@{/dieta/crear}" th:object="${dieta}">
+								<form class="row g-2" method="post"
+									th:action="${dieta.id == null} ? @{/dieta/crear} : @{/dieta/editar/crear}"
+									th:object="${dieta}">
+									<input type="hidden" th:field="*{id}" />
+
 									<!--Seleccion de Paciente-->
 									<div class="col-12 mb-2">
 										<label class="form-label fw-bold">Paciente</label>
@@ -73,6 +75,16 @@
 											placeholder="Ej: Sala 3B">
 									</div>
 
+									<div class="col-12 mb-2" th:if="${dieta.id != null and dieta.id > 0}">
+										<label class="form-label fw-bold text-secondary">Estado de la Dieta</label>
+										<select class="form-select" th:field="*{estado.nombre}">
+											<option value="">-- Seleccione un estado --</option>
+											<option value="Habilitada">Habilitada</option>
+											<option value="Finalizada">Finalizada</option>
+											<option value="Suspendida">Suspendida</option>
+										</select>
+									</div>
+
 									<div class="col-12">
 										<label class="form-label">Motivo</label>
 										<input type="text" class="form-control form-control-sm" th:field="*{motivo}"
@@ -109,8 +121,7 @@
 										</div>
 									</div>
 									<div class="col-12 mt-4">
-										<button type="submit" class="btn btn-primary btn-sm w-100">Registrar
-											Dieta</button>
+										<button type="submit" class="btn btn-primary btn-sm w-100">Guardar</button>
 									</div>
 								</form>
 							</div>
@@ -125,12 +136,13 @@
 				<article>
 
 					<div class="align-items-center shadow-lg p-3 mb-5 bg-body-tertiary rounded">
-						
+
 						<form class="d-flex me-2" th:action="@{/dieta/buscar}" method="post">
-							<input class="form-control me-2" type="text" name="dni" placeholder="Buscar la dieta del Paciente por su DNI">
+							<input class="form-control me-2" type="text" name="dni"
+								placeholder="Buscar la dieta del Paciente por su DNI">
 							<button class="btn btn-outline-success" type="submit">Buscar</button>
 						</form>
-								
+
 						<br>
 						<div class="table-responsive">
 							<table class="table table-bordered table-striped table-hover mb-0 ">
@@ -139,10 +151,13 @@
 										<th>#</th>
 										<th>Paciente</th>
 										<th>dni</th>
+										<th>sala Asignada</th>
 										<th>fechaInicio</th>
 										<th>fechaFin</th>
-										<th>motivo del estado</th>
+										<th>Patologías</th>
+
 										<th>Estado</th>
+										<th>motivo del estado</th>
 										<th>Acción</th>
 									</tr>
 								</thead>
@@ -151,20 +166,30 @@
 										<td th:text="${d.id}"></td>
 										<td th:text=${d.paciente.nombre}></td>
 										<td th:text=${d.paciente.dni}></td>
+										<td th:text=${d.sala.nombre}></td>
 										<td th:text=${d.fechaInicio}></td>
 										<td th:text=${d.fechaFin}></td>
-										<td th:text=${d.motivo}></td>
+										<td>
+											<span class="badge bg-info text-dark me-1" th:each="det : ${d.detdietas}"
+												th:text="${det.patologia.nombre}">
+											</span>
+											<span th:if="${d.detdietas == null or d.detdietas.isEmpty()}"
+												class="text-muted small">Sin patologías</span>
+										</td>
 										<td>
 											<span class="badge estado-badge"
-												th:classappend="${d.estado.nombre == 'Habilitado'} ? ' bg-success' : ' bg-danger'"
+												th:classappend="${d.estado.nombre == 'Habilitada'} ? ' bg-success' : (${d.estado.nombre == 'Finalizada'} ? ' bg-warning text-dark' : ' bg-danger')"
 												th:text="${d.estado.nombre}">
 											</span>
 										</td>
+										<td th:text=${d.motivo}></td>
 										<!--Botones-->
 										<td>
 											<div>
 												<a class="btn btn-warning btn-sm"
-													th:href="@{/editar(id=${d.id})}">Editar</a>
+													th:href="@{/dieta/editar(id=${d.id})}">
+													Editar
+												</a>
 												<a class="btn btn-danger btn-sm"
 													th:href="@{/CambiarEstado(id=${d.id})}">
 													Canbiar Estado

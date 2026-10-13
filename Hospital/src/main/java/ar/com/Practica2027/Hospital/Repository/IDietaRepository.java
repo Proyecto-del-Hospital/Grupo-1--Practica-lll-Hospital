@@ -11,4 +11,6 @@ import ar.com.Practica2027.Hospital.Entity.Dieta;
 @Repository
 public interface IDietaRepository extends JpaRepository<Dieta, Integer> {
 	List<Dieta> findByPacienteDni(String dni);
+	
+	Dieta findByid(int id);
 }
