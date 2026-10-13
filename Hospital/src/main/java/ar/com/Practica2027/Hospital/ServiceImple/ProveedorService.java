@@ -59,4 +59,10 @@ public class ProveedorService implements IProveedor {
 
 	}
 
+	@Override
+	public List<Proveedor> ListarProveedores() {
+
+		return proveedorRepo.findAll();
+	}
+
 }

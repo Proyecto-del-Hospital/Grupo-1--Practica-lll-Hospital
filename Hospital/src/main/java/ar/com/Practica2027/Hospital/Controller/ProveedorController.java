@@ -9,22 +9,24 @@ import org.springframework.web.bind.annotation.PostMapping;
 import ar.com.Practica2027.Hospital.Entity.Proveedor;
 import ar.com.Practica2027.Hospital.Service.IProveedor;
 
-
-
 @Controller
 
 public class ProveedorController {
-@Autowired
-private IProveedor proveedorService;
-@GetMapping("/proveedor/control")
-public String controlProveedor(Model model) {
-	
-	model.addAttribute("proveedor", new Proveedor());
-	return "Proveedor/ControlProveedor";
-}
-@PostMapping("/proveedor/crear")
-public String crearProveedor(Proveedor prov) {
-	proveedorService.CrearProveedor(prov);
-	return "redirect:/proveedor/control";
-}
+	@Autowired
+	private IProveedor proveedorService;
+
+	@GetMapping("/proveedor/control")
+	public String controlProveedor(Model model) {
+
+		model.addAttribute("proveedor", new Proveedor());
+		model.addAttribute("ListaProveedores", proveedorService.ListarProveedores());
+		return "Proveedor/ControlProveedor";
+	}
+
+	@PostMapping("/proveedor/crear")
+	public String crearProveedor(Proveedor prov) {
+		proveedorService.CrearProveedor(prov);
+		return "redirect:/proveedor/control";
+	}
+    
 }
