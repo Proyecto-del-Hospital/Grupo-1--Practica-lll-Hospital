@@ -65,4 +65,12 @@ public class ProveedorService implements IProveedor {
 		return proveedorRepo.findAll();
 	}
 
+	@Override
+	public List<Proveedor> BuscarProveedor(String dni) {
+		
+		return proveedorRepo.findByDni(dni);
+	}
+
+	
+
 }

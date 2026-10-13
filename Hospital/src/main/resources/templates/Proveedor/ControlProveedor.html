@@ -79,6 +79,11 @@
 				<br><br>
 				<article>
 					<div class="align-items-center shadow-lg p-3 mb-5 bg-body-tertiary rounded">
+						<form class="d-flex me-2" th:action="@{/proveedor/buscar}" method="post">
+													<input class="form-control me-2" type="text" name="dni" placeholder="Buscar por DNI">
+													<button class="btn btn-outline-success" type="submit">Buscar</button>
+												</form>
+												<br>
 										<div class="table-responsive">
 											<table class="table table-bordered table-striped table-hover tabla-pacientes mb-0">
 												<thead class="table-dark">
