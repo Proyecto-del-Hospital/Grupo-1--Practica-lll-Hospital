@@ -12,6 +12,7 @@ public interface IDieta {
 	List<Patologia>ListarPatologias();
 	void CrearPatologia(Patologia patologia);
 	List<Sala>ListarSala();
-
+	public List<Dieta>ListarDieta();
 	public String CrearDieta (Dieta dieta,List<Integer> patologiasid,String SalaNueva,Integer SalaId);
+	List<Dieta> BuscarDietaPorDni(String dni);
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 import ar.com.Practica2027.Hospital.Entity.Det_Dieta;
 import ar.com.Practica2027.Hospital.Entity.Dieta;
 import ar.com.Practica2027.Hospital.Entity.Estado;
@@ -97,5 +98,15 @@ public class DietaService implements IDieta {
 		return "Dieta registrada correctamente.";
 	}
 
+	@Override
+	public List<Dieta> ListarDieta() {
+		return dietaRep.findAll();
+	}
 
+	@Override
+	public List<Dieta> BuscarDietaPorDni(String dni) {
+		 return dietaRep.findByPacienteDni(dni);
+	}
+
+	
 }
