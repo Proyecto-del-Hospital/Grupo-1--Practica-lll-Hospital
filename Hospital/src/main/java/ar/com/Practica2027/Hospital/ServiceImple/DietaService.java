@@ -74,11 +74,11 @@ public class DietaService implements IDieta {
 				sala.setNombre(SalaNueva);
 				salaRep.save(sala);
 			}
-
 			dieta.setSala(sala);
-
+		}else {
 			return "No seleccionaste o agregaste una sala al paciente";
-		}
+			}
+		
 
 		if (dieta.getFechaFin() != null && dieta.getFechaFin().isEmpty()) {
 			dieta.setFechaFin("en tratamiento");
