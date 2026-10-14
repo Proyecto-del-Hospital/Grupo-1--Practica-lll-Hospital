@@ -14,9 +14,11 @@ import ar.com.Practica2027.Hospital.Entity.Sala;
 import ar.com.Practica2027.Hospital.Repository.IDetDietaRepository;
 import ar.com.Practica2027.Hospital.Repository.IDietaRepository;
 import ar.com.Practica2027.Hospital.Repository.IEstadoRepository;
+import ar.com.Practica2027.Hospital.Repository.IPacienteRepository;
 import ar.com.Practica2027.Hospital.Repository.IPatologiaRepository;
 import ar.com.Practica2027.Hospital.Repository.ISalaRepository;
 import ar.com.Practica2027.Hospital.Service.IDieta;
+import ar.com.Practica2027.Hospital.Service.IPaciente;
 
 @Service
 public class DietaService implements IDieta {
@@ -30,7 +32,8 @@ public class DietaService implements IDieta {
 	private ISalaRepository salaRep;
 	@Autowired
 	private IEstadoRepository estadoRep;
-
+	@Autowired
+	private IPacienteRepository pacienteRep;
 	@Override
 	public List<Patologia> ListarPatologias() {
 		return patologiaRep.findAll();
@@ -48,7 +51,14 @@ public class DietaService implements IDieta {
 
 	@Override
 	public String CrearDieta(Dieta dieta, List<Integer> patologiasid, String SalaNueva, Integer SalaId) {
-
+		
+		if (dieta.getPaciente() == null || dieta.getPaciente().getId() == 0) {
+	        return "Debe seleccionar un paciente válido.";
+	    }
+		if (patologiasid == null || patologiasid.isEmpty()) {
+			return "No seleccionaste una patología/enfermedad";
+		}
+		
 		if (SalaId != null && SalaNueva != null && !SalaNueva.isEmpty()) {
 			return "No puede seleccionar una sala y escribir una nueva al mismo tiempo";
 		}
@@ -67,7 +77,6 @@ public class DietaService implements IDieta {
 
 			dieta.setSala(sala);
 
-		} else {
 			return "No seleccionaste o agregaste una sala al paciente";
 		}
 
@@ -87,14 +96,16 @@ public class DietaService implements IDieta {
 		dieta.setEstado(estado);
 		dietaRep.save(dieta);
 
-		for (Integer id : patologiasid) {
+		for (int id : patologiasid) {
 			Patologia patologia = patologiaRep.findByid(id);
 			Det_Dieta detalle = new Det_Dieta();
 			detalle.setDieta(dieta);
 			detalle.setPatologia(patologia);
 			detdietaRep.save(detalle);
 		}
+
 		return "Dieta registrada correctamente.";
+
 	}
 
 	@Override
@@ -116,11 +127,16 @@ public class DietaService implements IDieta {
 	public String ModificarDieta(Dieta dieta, List<Integer> patologiasid, String SalaNueva, Integer SalaId) {
 		Dieta dietaExistente = dietaRep.findByid(dieta.getId());
 		if (dietaExistente != null) {
-
+			
+			if (dieta.getPaciente() == null || dieta.getPaciente().getId() == 0) {
+		        return "Debe seleccionar un paciente válido.";
+		    }
+			Paciente paciente = dieta.getPaciente();
+			dietaExistente.setPaciente(paciente);
 			if (SalaId != null && SalaNueva != null && !SalaNueva.isEmpty()) {
 				return "No puede seleccionar una sala y escribir una nueva al mismo tiempo";
 			}
-
+			
 			if (SalaId != null) {
 				Sala sala = salaRep.findByid(SalaId);
 				dietaExistente.setSala(sala);
@@ -143,7 +159,7 @@ public class DietaService implements IDieta {
 
 			if (dieta.getEstado() != null && dieta.getEstado().getNombre() != null
 					&& !dieta.getEstado().getNombre().isEmpty()) {
-				String nombreEstado = dieta.getEstado().getNombre(); 
+				String nombreEstado = dieta.getEstado().getNombre();
 				Estado estadoExistente = estadoRep.findBynombre(nombreEstado);
 				if (estadoExistente == null) {
 					estadoExistente = new Estado();
@@ -157,22 +173,22 @@ public class DietaService implements IDieta {
 			dietaRep.save(dietaExistente);
 
 			if (patologiasid != null && !patologiasid.isEmpty()) {
-			List<Det_Dieta> detallesAnteriores = detdietaRep.findByDietaId(dietaExistente.getId());
-			if (detallesAnteriores != null && !detallesAnteriores.isEmpty()) {
-				detdietaRep.deleteAll(detallesAnteriores);
-			}
+				List<Det_Dieta> detallesAnteriores = detdietaRep.findByDietaId(dietaExistente.getId());
+				if (detallesAnteriores != null && !detallesAnteriores.isEmpty()) {
+					detdietaRep.deleteAll(detallesAnteriores);
+				}
 
-			if (patologiasid != null && !patologiasid.isEmpty()) {
-				for (Integer id : patologiasid) {
-					Patologia patologia = patologiaRep.findByid(id);
-					if (patologia != null) {
-						Det_Dieta detalle = new Det_Dieta();
-						detalle.setDieta(dietaExistente);
-						detalle.setPatologia(patologia);
-						detdietaRep.save(detalle);
+				if (patologiasid != null && !patologiasid.isEmpty()) {
+					for (Integer id : patologiasid) {
+						Patologia patologia = patologiaRep.findByid(id);
+						if (patologia != null) {
+							Det_Dieta detalle = new Det_Dieta();
+							detalle.setDieta(dietaExistente);
+							detalle.setPatologia(patologia);
+							detdietaRep.save(detalle);
+						}
 					}
 				}
-			}
 			}
 			return "Dieta modificada correctamente.";
 		}

@@ -24,7 +24,7 @@
 							<div class="shadow-lg p-2 bg-body-tertiary rounded">
 								<h1 class="mb-4 text-center text-primary">Registrar Dieta, Sala y Patologías</h1>
 								<form class="row g-2" method="post"
-									th:action="${dieta.id == null} ? @{/dieta/crear} : @{/dieta/editar/crear}"
+									th:action="${Editar == null} ? @{/dieta/crear} : @{/dieta/editar/crear}"
 									th:object="${dieta}">
 									<input type="hidden" th:field="*{id}" />
 
@@ -32,7 +32,7 @@
 									<div class="col-12 mb-2">
 										<label class="form-label fw-bold">Paciente</label>
 										<select class="form-select form-select-sm" th:field="*{paciente.id}" required>
-											<option value="0">Seleccione un paciente...</option>
+											<option value="0"selected>Seleccione un paciente...</option>
 											<option th:each="p : ${ListaPacientes}"
 												th:if="${p.estado.nombre == 'Habilitado'}" th:value="${p.id}"
 												th:text="${p.nombre + ' ' + p.apellido + ' (DNI: ' + p.dni + ')'}">
@@ -75,7 +75,7 @@
 											placeholder="Ej: Sala 3B">
 									</div>
 
-									<div class="col-12 mb-2" th:if="${dieta.id != null and dieta.id > 0}">
+									<div class="col-12 mb-2" th:if="${Editar != null}">
 										<label class="form-label fw-bold text-secondary">Estado de la Dieta</label>
 										<select class="form-select" th:field="*{estado.nombre}">
 											<option value="">-- Seleccione un estado --</option>
