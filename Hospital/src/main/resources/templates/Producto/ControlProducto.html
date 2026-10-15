@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" th:href="@{/CSS/bootstrap.min.css}">
+	<link rel="stylesheet" th:href="@{/CSS/style.css}">
+	<script src="https://kit.fontawesome.com/57faba85b1.js" crossorigin="anonymous"></script>
+	<title>Control de Producto</title>
+</head>
+
+<body>
+	<header>
+		<div th:replace="Inicio/Home::navbar"></div>
+	</header>
+	<main>
+		<section>
+			<div class="justify-content-center w-100 p-5">
+				<article>
+					<div class="row justify-content-center">
+						<div class="col-md-8">
+							<div class="card shadow-sm p-4">
+								<h3 class="mb-4 text-center">Registrar Producto</h3>
+								<form class="row g-2" method="post" th:action="@{/Pacientes/Crear}"
+									th:object="${paciente}">
+									<div class="col-md-6">
+										<label class="form-label">Nombre</label>
+										<input type="text" class="form-control form-control-sm" th:field="*{nombre}"
+											required placeholder="Nombre Completo">
+									</div>
+									<div class="col-md-6">
+										<label class="form-label" th:object="${producto.tipo}">Tipo del Producto</label>
+										<input type="text" class="form-control form-control-sm" th:field="*{nombre}"
+											required placeholder="Ingrese el tipo del producto">
+									</div>
+									<div class="col-12">
+										<label class="form-label" th:object="${producto.subtipo}">SubTipo del Producto</label>
+										<input type="text" class="form-control form-control-sm" placeholder="Ingrese el subtipo del producto"
+											th:field="*{nombre}" required>
+									</div>
+									<div class="col-12" th:object="${producto.unidad}">
+										<label class="form-label">Unidad del Producto</label>
+										<input type="number" class="form-control form-control-sm"
+											placeholder="Ingrese la unidad del producto" th:field="*{nombre}" required>
+									</div>
+									<div class="col-md-6">
+										<label class="form-label">Motivo</label>
+										<input type="text" class="form-control form-control-sm" th:field="*{motivo}"
+											placeholder="Ingrese el motivo">
+									</div>
+									<div class="col-md-6">
+										<label class="form-label">Stock actual</label>
+										<input type="number" class="form-control form-control-sm" th:field="*{stockactual}"
+											placeholder="Ingrese el stock actual">
+									</div>
+									<div class="col-md-6">
+										<label class="form-label">Stock mínimo</label>
+										<input type="text" class="form-control form-control-sm" th:field="*{stockminimo}"
+											required placeholder="Ingres el stock mínimo">
+									</div>
+									<div class="col-12 mt-4">
+										<button type="submit" class="btn btn-primary w-100">Registrar</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</article>
+			</div>
+		</section>
+	</main>
+</body>
+</html>
