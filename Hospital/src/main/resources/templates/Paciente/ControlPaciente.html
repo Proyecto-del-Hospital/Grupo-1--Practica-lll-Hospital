@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +9,7 @@
 	<script src="https://kit.fontawesome.com/57faba85b1.js" crossorigin="anonymous"></script>
 	<title>Control de Paciente</title>
 </head>
+
 <body>
 	<header>
 		<div th:replace="Inicio/Home::navbar"></div>
@@ -53,10 +55,16 @@
 											placeholder="Teléfono Celular">
 									</div>
 									<div class="col-md-6" th:object="${paciente.direccion}">
+										<label class="form-label">Localidad</label>
+										<input type="text" class="form-control form-control-sm" th:field="*{localidad}"
+											required placeholder="localidad">
+									</div>
+									<div class="col-md-6" th:object="${paciente.direccion}">
 										<label class="form-label">Calle</label>
 										<input type="text" class="form-control form-control-sm" th:field="*{calle}"
 											required placeholder="Calle">
 									</div>
+
 									<div class="col-md-6" th:object="${paciente.direccion}">
 										<label class="form-label">Barrio</label>
 										<input type="text" class="form-control form-control-sm" th:field="*{barrio}"
@@ -97,6 +105,7 @@
 										<th>Apellido</th>
 										<th>DNI</th>
 										<th>Fecha de Nacimiento</th>
+										<th>Localidad</th>
 										<th>Calle</th>
 										<th>Barrio</th>
 										<th>Número de Calle</th>
@@ -114,6 +123,7 @@
 										<td th:text="${p.apellido}"></td>
 										<td th:text="${p.dni}"></td>
 										<td th:text="${p.fecha_nac}"></td>
+										<td th:text="${p.direccion.localidad}"></td>
 										<td th:text="${p.direccion.calle}"></td>
 										<td th:text="${p.direccion.barrio}"></td>
 										<td th:text="${p.direccion.numer_calle}"></td>
@@ -139,4 +149,5 @@
 		</section>
 	</main>
 </body>
+
 </html>

@@ -104,6 +104,7 @@ public class PacienteService implements IPaciente {
 				contactoRepo.save(contactoExistente);
 
 				Direccion direccionExistente = pacienteExistente.getDireccion();
+				direccionExistente.setLocalidad(paciente.getDireccion().getLocalidad());
 				direccionExistente.setCalle(paciente.getDireccion().getCalle());
 				direccionExistente.setBarrio(paciente.getDireccion().getBarrio());
 				direccionExistente.setNumer_calle(paciente.getDireccion().getNumer_calle());
