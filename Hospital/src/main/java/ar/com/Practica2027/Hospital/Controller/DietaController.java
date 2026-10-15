@@ -8,6 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import ar.com.Practica2027.Hospital.Entity.Dieta;
 import ar.com.Practica2027.Hospital.Entity.Patologia;
 import ar.com.Practica2027.Hospital.Service.IDieta;
@@ -24,10 +26,12 @@ public class DietaController {
 
 	@PostMapping("/dieta/crear")
 	public String GuardarDieta(Model model, Dieta dieta,@RequestParam(name = "patologiasIds", required = false) List<Integer> patologiasIds,
-			@RequestParam(required = false) String SalaNueva, @RequestParam(required = false) Integer SalaId) {
+			@RequestParam(required = false) String SalaNueva, @RequestParam(required = false) Integer SalaId, RedirectAttributes redirect) {
 		String mensaje = dietaService.CrearDieta(dieta, patologiasIds, SalaNueva, SalaId);
-		model.addAttribute("mensaje", mensaje);
-		return "Inicio/Home";
+		
+		redirect.addFlashAttribute("mensaje", mensaje);
+		
+		return "redirect:/dieta/ControlDieta";
 	}
  
 	@GetMapping("/dieta/ControlDieta")

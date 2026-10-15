@@ -1,10 +1,8 @@
 package ar.com.Practica2027.Hospital.ServiceImple;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import ar.com.Practica2027.Hospital.Entity.Det_Dieta;
 import ar.com.Practica2027.Hospital.Entity.Dieta;
 import ar.com.Practica2027.Hospital.Entity.Estado;
@@ -14,11 +12,10 @@ import ar.com.Practica2027.Hospital.Entity.Sala;
 import ar.com.Practica2027.Hospital.Repository.IDetDietaRepository;
 import ar.com.Practica2027.Hospital.Repository.IDietaRepository;
 import ar.com.Practica2027.Hospital.Repository.IEstadoRepository;
-import ar.com.Practica2027.Hospital.Repository.IPacienteRepository;
 import ar.com.Practica2027.Hospital.Repository.IPatologiaRepository;
 import ar.com.Practica2027.Hospital.Repository.ISalaRepository;
 import ar.com.Practica2027.Hospital.Service.IDieta;
-import ar.com.Practica2027.Hospital.Service.IPaciente;
+
 
 @Service
 public class DietaService implements IDieta {
@@ -32,8 +29,7 @@ public class DietaService implements IDieta {
 	private ISalaRepository salaRep;
 	@Autowired
 	private IEstadoRepository estadoRep;
-	@Autowired
-	private IPacienteRepository pacienteRep;
+
 	@Override
 	public List<Patologia> ListarPatologias() {
 		return patologiaRep.findAll();
