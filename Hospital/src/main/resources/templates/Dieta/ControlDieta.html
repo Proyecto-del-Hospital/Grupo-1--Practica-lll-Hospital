@@ -143,88 +143,81 @@
 								placeholder="Buscar la dieta del Paciente por su DNI">
 							<button class="btn btn-outline-success" type="submit">Buscar</button>
 						</form>
-						<div class="d-flex flex-row justify-content-center">
-
-							<form th:action="@{/dieta/filtrar}" method="get">
-								<input type="hidden" name="estado" value="Habilitada">
-								<button class="btn btn-success m-2" type="submit">Habilitada</button>
-							</form>
-
-							<form th:action="@{/dieta/filtrar}" method="get">
-								<input type="hidden" name="estado" value="Finalizada">
-								<button class="btn btn-warning text-dark m-2" type="submit">Finalizado</button>
-							</form>
-
-							<form th:action="@{/dieta/filtrar}" method="get">
-								<input type="hidden" name="estado" value="Suspendida">
-								<button class="btn btn-danger m-2" type="submit">Suspendida</button>
-							</form>
+						
+						<div class="row justify-content-center ">
+							<a class="btn btn-success m-2" th:href="@{/dieta/filtrar(estado='Habilitada')}">
+								Habilitada
+							</a>
+							<a class="btn btn-warning text-dark m-2" th:href="@{/dieta/filtrar(estado='Finalizada')}">
+								Finalizado
+							</a>
+							<a class="btn btn-danger m-2" th:href="@{/dieta/filtrar(estado='Suspendido')}">
+								Suspendido
+							</a>
 							<a class="btn btn-secondary m-2" th:href="@{/dieta/ControlDieta}">Todas</a>
 						</div>
-							<div class="table-responsive">
-								<table class="table table-bordered table-striped table-hover mb-0 ">
-									<thead class="table-dark">
-										<tr class="text-center">
-											<th>#</th>
-											<th>Paciente</th>
-											<th>dni</th>
-											<th>sala Asignada</th>
-											<th>fechaInicio</th>
-											<th>fechaFin</th>
-											<th>Patologías</th>
+						
+					<div class="table-responsive">
+						<table class="table table-bordered table-striped table-hover mb-0 ">
+							<thead class="table-dark">
+								<tr class="text-center">
+									<th>#</th>
+									<th>Paciente</th>
+									<th>dni</th>
+									<th>sala Asignada</th>
+									<th>fechaInicio</th>
+									<th>fechaFin</th>
+									<th>Patologías</th>
 
-											<th>Estado</th>
-											<th>motivo del estado</th>
-											<th>Acción</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr class="text-center" th:each="d : ${listaDietas}">
-											<td th:text="${d.id}"></td>
-											<td th:text=${d.paciente.nombre}></td>
-											<td th:text=${d.paciente.dni}></td>
-											<td th:text=${d.sala.nombre}></td>
-											<td th:text=${d.fechaInicio}></td>
-											<td th:text=${d.fechaFin}></td>
-											<td>
-												<span class="badge bg-info text-dark me-1"
-													th:each="det : ${d.detdietas}" th:text="${det.patologia.nombre}">
-												</span>
-												<span th:if="${d.detdietas == null or d.detdietas.isEmpty()}"
-													class="text-muted small">Sin patologías</span>
-											</td>
-											<td>
-												<span class="badge estado-badge"
-													th:classappend="${d.estado.nombre == 'Habilitada'} ? ' bg-success' : (${d.estado.nombre == 'Finalizada'} ? ' bg-warning text-dark' : ' bg-danger')"
-													th:text="${d.estado.nombre}">
-												</span>
-											</td>
-											<td th:text=${d.motivo}></td>
-											<!--Botones-->
-											<td>
-												<div>
-													<a class="btn btn-warning btn-sm"
-														th:href="@{/dieta/editar(id=${d.id})}">
-														Editar
-													</a>
-													<a class="btn btn-danger btn-sm"
-														th:href="@{/CambiarEstado(id=${d.id})}">
-														Canbiar Estado
-													</a>
-													<a class="btn btn-success btn-sm"
-														th:href="@{/CambiarEstado(id=${d.id})}">
-														Ver
-													</a>
-												</div>
-											</td>
-										</tr>
+									<th>Estado</th>
+									<th>motivo del estado</th>
+									<th>Acción</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr class="text-center" th:each="d : ${listaDietas}">
+									<td th:text="${d.id}"></td>
+									<td th:text=${d.paciente.nombre}></td>
+									<td th:text=${d.paciente.dni}></td>
+									<td th:text=${d.sala.nombre}></td>
+									<td th:text=${d.fechaInicio}></td>
+									<td th:text=${d.fechaFin}></td>
+									<td>
+										<span class="badge bg-info text-dark me-1" th:each="det : ${d.detdietas}"
+											th:text="${det.patologia.nombre}">
+										</span>
+										<span th:if="${d.detdietas == null or d.detdietas.isEmpty()}"
+											class="text-muted small">Sin patologías</span>
+									</td>
+									<td>
+										<span class="badge estado-badge"
+											th:classappend="${d.estado.nombre == 'Habilitada'} ? ' bg-success' : (${d.estado.nombre == 'Finalizada'} ? ' bg-warning text-dark' : ' bg-danger')"
+											th:text="${d.estado.nombre}">
+										</span>
+									</td>
+									<td th:text=${d.motivo}></td>
+									<!--Botones-->
+									<td>
+										<div>
+											<a class="btn btn-warning btn-sm" th:href="@{/dieta/editar(id=${d.id})}">
+												Editar
+											</a>
+											<a class="btn btn-danger btn-sm" th:href="@{/CambiarEstado(id=${d.id})}">
+												Canbiar Estado
+											</a>
+											<a class="btn btn-success btn-sm" th:href="@{/CambiarEstado(id=${d.id})}">
+												Ver
+											</a>
+										</div>
+									</td>
+								</tr>
 
-									</tbody>
-								</table>
-							</div>
-						</div>
+							</tbody>
+						</table>
+					</div>
+			</div>
 
-				</article>
+			</article>
 			</div>
 		</section>
 	</main>
