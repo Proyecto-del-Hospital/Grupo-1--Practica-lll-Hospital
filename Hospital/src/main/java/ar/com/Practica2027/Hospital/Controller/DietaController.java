@@ -73,12 +73,12 @@ public class DietaController {
 	public String ModificarDieta(Model model,Dieta dieta, 
 			@RequestParam(required = false) List<Integer> patologiasIds,
 			@RequestParam(required = false) String SalaNueva, 
-			@RequestParam(required = false) Integer SalaId) {
+			@RequestParam(required = false) Integer SalaId,RedirectAttributes redirect) {
 		
 		String mensaje=dietaService.ModificarDieta(dieta, patologiasIds, SalaNueva, SalaId);
-		model.addAttribute("mensaje", mensaje);
+		redirect.addFlashAttribute("mensaje", mensaje);
 		
-		return "Inicio/Home"; 
+		return "redirect:/dieta/ControlDieta"; 
 	}
 	
 	@GetMapping("patologia/formulario")
@@ -91,5 +91,16 @@ public class DietaController {
 	public String GuardarPatologia(Patologia patologia) {
 		dietaService.CrearPatologia(patologia);
 		return "redirect:/patologia/formulario";
+	}
+	
+	@GetMapping("/dieta/filtrar")
+	public String FiltrarDieta(Model model,@RequestParam String estado) {
+		List<Dieta> listarDietas = dietaService.BuscarPorEstado(estado);
+		model.addAttribute("dieta", new Dieta());
+		model.addAttribute("listaDietas", listarDietas);
+		model.addAttribute("ListaPacientes", pacienteService.ListarPacientes());
+		model.addAttribute("listaPatologias", dietaService.ListarPatologias());
+		model.addAttribute("listaSalas", dietaService.ListarSala());
+		return "Dieta/ControlDieta";
 	}
 }

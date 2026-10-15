@@ -191,4 +191,11 @@ public class DietaService implements IDieta {
 		return "No se encontró la dieta a modificar.";
 	}
 
+	@Override
+	public List<Dieta> BuscarPorEstado(String estado) {
+		return dietaRep.findByEstadoNombre(estado);
+	}
+
+	
+
 }

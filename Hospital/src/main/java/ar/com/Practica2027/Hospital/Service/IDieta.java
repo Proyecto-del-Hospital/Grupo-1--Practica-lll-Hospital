@@ -15,4 +15,5 @@ public interface IDieta {
 	List<Dieta> BuscarDietaPorDni(String dni);
 	Dieta BuscarDietaXid(int id);
 	String ModificarDieta(Dieta dieta,List<Integer> patologiasid,String SalaNueva,Integer SalaId);
+	List<Dieta> BuscarPorEstado(String estado);
 }

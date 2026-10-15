@@ -13,4 +13,6 @@ public interface IDietaRepository extends JpaRepository<Dieta, Integer> {
 	List<Dieta> findByPacienteDni(String dni);
 	
 	Dieta findByid(int id);
+	
+	List<Dieta> findByEstadoNombre(String nombre);
 }
