@@ -1,5 +1,7 @@
 package ar.com.Practica2027.Hospital.ServiceImple;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,6 +43,13 @@ public class ProductoService implements IProducto{
 		Unidad unidad = unidadRepo.findBynombre(producto.getUnidad().getNombre());
 		Estado estado = estadoRepo.findBynombre("Disponible");
 		
+		List<Producto> productos = productoRepo.findAll();
+		
+		for (Producto p : productos) {
+			if (producto.getNombre().equalsIgnoreCase(p.getNombre())) {
+				return "El producto ya existe";
+			}
+		}
 		if (estado == null) {
 			estado = new Estado();
 			estado.setNombre("Disponible");
