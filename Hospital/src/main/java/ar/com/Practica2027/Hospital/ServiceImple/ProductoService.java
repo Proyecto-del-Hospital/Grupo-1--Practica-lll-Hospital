@@ -34,11 +34,11 @@ public class ProductoService implements IProducto{
 	private IEstadoRepository estadoRepo;
 
 	@Override
-	public void CrearProducto(Producto producto) {
+	public String CrearProducto(Producto producto) {
 		
-		Tipo tipo = tipoRepo.save(producto.getTipo());
-		SubTipo subtipo = subtipoRepo.save(producto.getSubtipo());
-		Unidad unidad = unidadRepo.save(producto.getUnidad());
+		Tipo tipo = tipoRepo.findBynombre(producto.getTipo().getNombre());
+		SubTipo subtipo = subtipoRepo.findBynombre(producto.getSubtipo().getNombre());
+		Unidad unidad = unidadRepo.findBynombre(producto.getUnidad().getNombre());
 		Estado estado = estadoRepo.findBynombre("Disponible");
 		
 		if (estado == null) {
@@ -46,7 +46,22 @@ public class ProductoService implements IProducto{
 			estado.setNombre("Disponible");
 			estadoRepo.save(estado);
 		}
-		
+		if (unidad == null) {
+			unidad = new Unidad();
+			unidad.setNombre(producto.getUnidad().getNombre());
+			unidadRepo.save(unidad);
+		}
+		if (subtipo == null) {
+			subtipo = new SubTipo();
+			subtipo.setNombre(producto.getSubtipo().getNombre());
+			subtipoRepo.save(subtipo);
+		}
+		if (tipo == null) {
+			tipo = new Tipo();
+			tipo.setNombre(producto.getTipo().getNombre());
+			tipoRepo.save(tipo);
+		}
+		producto.setMotivo("-");
 		producto.setTipo(tipo);
 		producto.setSubtipo(subtipo);
 		producto.setUnidad(unidad);
@@ -54,6 +69,7 @@ public class ProductoService implements IProducto{
 		
 		productoRepo.save(producto);
 		
+		return "Producto creado correctamente";
 	}
 
 }

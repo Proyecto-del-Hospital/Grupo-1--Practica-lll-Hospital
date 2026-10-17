@@ -7,5 +7,5 @@ import ar.com.Practica2027.Hospital.Entity.Unidad;
 
 @Repository
 public interface IUnidadRepository extends JpaRepository<Unidad, Integer>{
-
+	Unidad findBynombre (String nombre);
 }

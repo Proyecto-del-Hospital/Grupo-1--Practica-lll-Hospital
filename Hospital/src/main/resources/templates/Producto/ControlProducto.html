@@ -17,47 +17,60 @@
 	<main>
 		<section>
 			<div class="justify-content-center w-100 p-5">
+				<div th:if="${exito}" class="alert alert-success">
+					<p th:text="${exito}"></p>
+				</div>
 				<article>
 					<div class="row justify-content-center">
 						<div class="col-md-8">
 							<div class="card shadow-sm p-4">
 								<h3 class="mb-4 text-center">Registrar Producto</h3>
-								<form class="row g-2" method="post" th:action="@{/Pacientes/Crear}"
-									th:object="${paciente}">
+								<form class="row g-2" method="post" th:action="@{/guardarproducto}"
+									th:object="${producto}">
 									<div class="col-md-6">
-										<label class="form-label">Nombre</label>
+										<label class="form-label">Nombre del Producto</label>
 										<input type="text" class="form-control form-control-sm" th:field="*{nombre}"
-											required placeholder="Nombre Completo">
+											required placeholder="Ingrese el nombre del producto">
 									</div>
 									<div class="col-md-6">
-										<label class="form-label" th:object="${producto.tipo}">Tipo del Producto</label>
-										<input type="text" class="form-control form-control-sm" th:field="*{nombre}"
-											required placeholder="Ingrese el tipo del producto">
+										<label class="form-label">Tipo del Producto</label>
+										<select class="form-control form-control-sm" th:field="*{tipo.nombre}" required>
+											<option value="">Seleccione un Tipo</option>
+											<option value="Alimenticio">Alimenticio</option>
+											<option value="Limpieza">Limpieza</option>
+										</select>
 									</div>
-									<div class="col-12">
-										<label class="form-label" th:object="${producto.subtipo}">SubTipo del Producto</label>
-										<input type="text" class="form-control form-control-sm" placeholder="Ingrese el subtipo del producto"
-											th:field="*{nombre}" required>
+									<div class="col-md-6">
+										<label class="form-label">SubTipo del Producto</label>
+										<select class="form-control form-control-sm" th:field="*{subtipo.nombre}"
+											required>
+											<option value="">Seleccione el subtipo</option>
+											<option value="Fresco">Fresco</option>
+											<option value="Seco">Seco</option>
+											<option value="Ninguno">Ninguno</option>
+										</select>
 									</div>
-									<div class="col-12" th:object="${producto.unidad}">
+									<div class="col-md-6">
 										<label class="form-label">Unidad del Producto</label>
-										<input type="number" class="form-control form-control-sm"
-											placeholder="Ingrese la unidad del producto" th:field="*{nombre}" required>
-									</div>
-									<div class="col-md-6">
-										<label class="form-label">Motivo</label>
-										<input type="text" class="form-control form-control-sm" th:field="*{motivo}"
-											placeholder="Ingrese el motivo">
+										<select class="form-control form-control-sm" th:field="*{unidad.nombre}"
+											required>
+											<option value="">Seleccione una unidad</option>
+											<option value="Litro">Litro (L)</option>
+											<option value="Mililitro">Mililitro (ml)</option>
+											<option value="Gramo">Gramo (g)</option>
+											<option value="Kilogramo">Kilogramo (kg)</option>
+											<option value="Unidad">Unidad (Ud)</option>
+										</select>
 									</div>
 									<div class="col-md-6">
 										<label class="form-label">Stock actual</label>
-										<input type="number" class="form-control form-control-sm" th:field="*{stockactual}"
-											placeholder="Ingrese el stock actual">
+										<input type="number" class="form-control form-control-sm"
+											th:field="*{stockactual}" placeholder="Ingrese el stock actual">
 									</div>
 									<div class="col-md-6">
 										<label class="form-label">Stock mínimo</label>
-										<input type="text" class="form-control form-control-sm" th:field="*{stockminimo}"
-											required placeholder="Ingres el stock mínimo">
+										<input type="number" class="form-control form-control-sm"
+											th:field="*{stockminimo}" required placeholder="Ingres el stock mínimo">
 									</div>
 									<div class="col-12 mt-4">
 										<button type="submit" class="btn btn-primary w-100">Registrar</button>
@@ -71,4 +84,5 @@
 		</section>
 	</main>
 </body>
+
 </html>

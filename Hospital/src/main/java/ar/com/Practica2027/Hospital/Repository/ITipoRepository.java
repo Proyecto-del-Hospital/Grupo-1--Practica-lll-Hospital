@@ -7,5 +7,5 @@ import ar.com.Practica2027.Hospital.Entity.Tipo;
 
 @Repository
 public interface ITipoRepository extends JpaRepository<Tipo, Integer>{
-
+	Tipo findBynombre (String nombre);
 }
