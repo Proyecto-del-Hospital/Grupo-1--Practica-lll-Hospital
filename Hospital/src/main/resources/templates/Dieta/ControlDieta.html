@@ -14,13 +14,14 @@
 	</header>
 	<main>
 		<section>
-			<div class="justify-content-center w-100 p-5">
+			<div class="justify-content-center pt-3 pl-5 pr-5">
 
-				<div th:if="${mensaje}" class="alert alert-danger">
-					<p th:text="${mensaje}"></p>
+				<div th:if="${mensaje}" class="alert alert-success text-center">
+					<p th:text="${mensaje}">						
+				</p>
 				</div>
 				<article>
-					<div class="justify-content-center w-100 p-5">
+					<div class="justify-content-center pr-5 pl-5 ">
 						<div>
 							<a th:href="@{/}" class="btn btn-secondary mb-3">
 								← Volver al inicio
@@ -134,7 +135,7 @@
 				</article>
 
 				<!--Lista de dieta-->
-				<article>
+				<article class="pt-3">
 
 					<div class="align-items-center shadow-lg p-3 mb-5 bg-body-tertiary rounded">
 
@@ -168,14 +169,13 @@
 									<th>fechaInicio</th>
 									<th>fechaFin</th>
 									<th>Patologías</th>
-
 									<th>Estado</th>
 									<th>motivo del estado</th>
 									<th>Acción</th>
 								</tr>
 							</thead>
 							<tbody>
-								<tr class="text-center" th:each="d : ${listaDietas}">
+								<tr class="text-center " th:each="d : ${listaDietas}">
 									<td th:text="${d.id}"></td>
 									<td th:text=${d.paciente.nombre}></td>
 									<td th:text=${d.paciente.dni}></td>
@@ -183,7 +183,7 @@
 									<td th:text=${d.fechaInicio}></td>
 									<td th:text=${d.fechaFin}></td>
 									<td>
-										<span class="badge bg-info text-dark me-1" th:each="det : ${d.detdietas}"
+										<span class="badge bg-info text-dark mr-1" th:each="det : ${d.detdietas}"
 											th:text="${det.patologia.nombre}">
 										</span>
 										<span th:if="${d.detdietas == null or d.detdietas.isEmpty()}"
@@ -202,10 +202,10 @@
 											<a class="btn btn-warning btn-sm" th:href="@{/dieta/editar(id=${d.id})}">
 												Editar
 											</a>
-											<a class="btn btn-danger btn-sm" th:href="@{/CambiarEstado(id=${d.id})}">
+											<a class="btn btn-danger btn-sm" th:href="@{/dieta/cambiarEstado(id=${d.id})}">
 												Canbiar Estado
 											</a>
-											<a class="btn btn-success btn-sm" th:href="@{/CambiarEstado(id=${d.id})}">
+											<a class="btn btn-success btn-sm" th:href="@{/movimientos/dieta(id=${d.id})}">
 												Ver
 											</a>
 										</div>

@@ -103,4 +103,21 @@ public class DietaController {
 		model.addAttribute("listaSalas", dietaService.ListarSala());
 		return "Dieta/ControlDieta";
 	}
-}
+	
+	@GetMapping("/movimientos/dieta")
+	public String ListaMovimentoDieta(@RequestParam("id") int id, Model model) {
+		Dieta MiDieta = dietaService.BuscarDietaXid(id);
+		model.addAttribute("dieta", MiDieta);
+		model.addAttribute("listaDietas", dietaService.ListarDieta());
+		model.addAttribute("ListaMovimientos", dietaService.ListarMovimientoDietas(id));
+		return "Dieta/DetallesDietas";
+	}
+	
+	@GetMapping("/dieta/cambiarEstado")
+	public String CambiarEstadoDieta(Dieta dieta) {
+		dietaService.CambiarEstado(dieta);
+	return "redirect:/dieta/ControlDieta";
+	}
+	
+	}
+

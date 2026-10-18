@@ -1,10 +1,14 @@
 package ar.com.Practica2027.Hospital.ServiceImple;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ar.com.Practica2027.Hospital.Entity.Det_Dieta;
 import ar.com.Practica2027.Hospital.Entity.Dieta;
+import ar.com.Practica2027.Hospital.Entity.DietaMovimiento;
 import ar.com.Practica2027.Hospital.Entity.Estado;
 import ar.com.Practica2027.Hospital.Entity.Paciente;
 import ar.com.Practica2027.Hospital.Entity.Patologia;
@@ -12,6 +16,7 @@ import ar.com.Practica2027.Hospital.Entity.Sala;
 import ar.com.Practica2027.Hospital.Repository.IDetDietaRepository;
 import ar.com.Practica2027.Hospital.Repository.IDietaRepository;
 import ar.com.Practica2027.Hospital.Repository.IEstadoRepository;
+import ar.com.Practica2027.Hospital.Repository.IMovimientoDietaRepository;
 import ar.com.Practica2027.Hospital.Repository.IPatologiaRepository;
 import ar.com.Practica2027.Hospital.Repository.ISalaRepository;
 import ar.com.Practica2027.Hospital.Service.IDieta;
@@ -29,7 +34,9 @@ public class DietaService implements IDieta {
 	private ISalaRepository salaRep;
 	@Autowired
 	private IEstadoRepository estadoRep;
-
+	@Autowired
+	private IMovimientoDietaRepository MovimientoRep;
+	
 	@Override
 	public List<Patologia> ListarPatologias() {
 		return patologiaRep.findAll();
@@ -99,7 +106,13 @@ public class DietaService implements IDieta {
 			detalle.setPatologia(patologia);
 			detdietaRep.save(detalle);
 		}
-
+		
+		//se Guardara el movimento realizado o accion
+		DietaMovimiento movDieta = new DietaMovimiento();
+		movDieta.setFechadelcambio(LocalDate.now().toString());
+		movDieta.setTipoaccion("Se Registro una Dieta");
+		movDieta.setDieta(dieta);
+		MovimientoRep.save(movDieta);
 		return "Dieta registrada correctamente.";
 
 	}
@@ -147,23 +160,32 @@ public class DietaService implements IDieta {
 				dietaExistente.setSala(sala);
 			}
 
-			if (dieta.getFechaFin() != null && dieta.getFechaFin().isEmpty()) {
-				dietaExistente.setFechaFin("en tratamiento");
-			} else {
-				dietaExistente.setFechaFin(dieta.getFechaFin());
+		
+			if (dieta.getEstado() != null && dieta.getEstado().getNombre() != null
+			        && !dieta.getEstado().getNombre().isEmpty()) {
+			    String nombreEstado = dieta.getEstado().getNombre();
+			    
+			    Estado estadoExistente = estadoRep.findBynombre(nombreEstado); 
+			    if (estadoExistente == null) {
+			        estadoExistente = new Estado();
+			        estadoExistente.setNombre(nombreEstado);
+			        estadoExistente = estadoRep.save(estadoExistente);
+			    }
+			    
+			    dietaExistente.setEstado(estadoExistente);
 			}
 
-			if (dieta.getEstado() != null && dieta.getEstado().getNombre() != null
-					&& !dieta.getEstado().getNombre().isEmpty()) {
-				String nombreEstado = dieta.getEstado().getNombre();
-				Estado estadoExistente = estadoRep.findBynombre(nombreEstado);
-				if (estadoExistente == null) {
-					estadoExistente = new Estado();
-					estadoExistente.setNombre(nombreEstado);
-					estadoRep.save(estadoExistente);
-				}
-				dietaExistente.setEstado(estadoExistente);
-			}
+			    
+			    String estadoActual = dietaExistente.getEstado().getNombre();
+			    
+			    if (estadoActual.equalsIgnoreCase("Habilitada")) {
+			        dietaExistente.setFechaFin("en tratamiento");
+			        
+			    } else  {
+			        dietaExistente.setFechaFin(LocalDate.now().toString());
+			    }
+			
+			
 			dietaExistente.setFechaInicio(dieta.getFechaInicio());
 			dietaExistente.setMotivo(dieta.getMotivo());
 			dietaRep.save(dietaExistente);
@@ -186,7 +208,13 @@ public class DietaService implements IDieta {
 					}
 				}
 			}
+			DietaMovimiento movDieta = new DietaMovimiento();
+			movDieta.setFechadelcambio(LocalDate.now().toString());
+			movDieta.setTipoaccion("Se Modifico la Dieta");
+			movDieta.setDieta(dieta);
+			MovimientoRep.save(movDieta);
 			return "Dieta modificada correctamente.";
+			
 		}
 		return "No se encontró la dieta a modificar.";
 	}
@@ -196,6 +224,50 @@ public class DietaService implements IDieta {
 		return dietaRep.findByEstadoNombre(estado);
 	}
 
-	
+	@Override
+	public List<DietaMovimiento> ListarMovimientoDietas(int idDieta) {
+		Dieta MiDieta = BuscarDietaXid(idDieta);
+		if(MiDieta!=null) {
+			return MiDieta.getMovimientos();
+		}
+		return new ArrayList<>();
+	}
 
+	@Override
+	public void CambiarEstado(Dieta dieta) {
+		Dieta dietaExistente = BuscarDietaXid(dieta.getId());
+		Estado nuevoEstado;
+		if(dietaExistente.getEstado().getNombre().equalsIgnoreCase("Habilitada")) {
+			nuevoEstado = estadoRep.findBynombre("Finalizada");
+			if (nuevoEstado == null) {
+				nuevoEstado = new Estado();
+				nuevoEstado.setNombre("Finalizada");
+				nuevoEstado = estadoRep.save(nuevoEstado);
+				
+			}
+			
+			}else {
+				nuevoEstado = estadoRep.findBynombre("Habilitada");
+				if (nuevoEstado == null) {
+					nuevoEstado = new Estado();
+					nuevoEstado.setNombre("Habilitada");
+					nuevoEstado = estadoRep.save(nuevoEstado);
+				}
+			}
+		dietaExistente.setEstado(nuevoEstado);
+		String nombreEstado =nuevoEstado.getNombre();
+		
+		if (nombreEstado.equalsIgnoreCase("Finalizada") || nombreEstado.equalsIgnoreCase("Suspendida")) {
+	        // Si el estado es Finalizada o Suspendida, guardamos la fecha actual
+	        dietaExistente.setFechaFin(LocalDate.now().toString());
+		}
+		
+		dietaRep.save(dietaExistente);
+		DietaMovimiento movDieta = new DietaMovimiento();
+		movDieta.setFechadelcambio(LocalDate.now().toString());
+		movDieta.setTipoaccion("Se Guardo el estado: "+ dietaExistente.getEstado().getNombre());
+		movDieta.setDieta(dieta);
+		MovimientoRep.save(movDieta);
+	
+	}
 }
