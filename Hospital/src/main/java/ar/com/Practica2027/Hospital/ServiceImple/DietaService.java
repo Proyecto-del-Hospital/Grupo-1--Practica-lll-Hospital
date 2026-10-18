@@ -1,7 +1,6 @@
 package ar.com.Practica2027.Hospital.ServiceImple;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -138,7 +137,7 @@ public class DietaService implements IDieta {
 		if (dietaExistente != null) {
 			
 			if (dieta.getPaciente() == null || dieta.getPaciente().getId() == 0) {
-		        return "Debe seleccionar un paciente válido.";
+		        return "Debe seleccionar un paciente válido. o Habilitar al Paciente";
 		    }
 			Paciente paciente = dieta.getPaciente();
 			dietaExistente.setPaciente(paciente);
@@ -175,7 +174,6 @@ public class DietaService implements IDieta {
 			    dietaExistente.setEstado(estadoExistente);
 			}
 
-			    
 			    String estadoActual = dietaExistente.getEstado().getNombre();
 			    
 			    if (estadoActual.equalsIgnoreCase("Habilitada")) {
@@ -234,40 +232,53 @@ public class DietaService implements IDieta {
 	}
 
 	@Override
-	public void CambiarEstado(Dieta dieta) {
+	public String CambiarEstado(Dieta dieta) {
 		Dieta dietaExistente = BuscarDietaXid(dieta.getId());
-		Estado nuevoEstado;
-		if(dietaExistente.getEstado().getNombre().equalsIgnoreCase("Habilitada")) {
-			nuevoEstado = estadoRep.findBynombre("Finalizada");
-			if (nuevoEstado == null) {
-				nuevoEstado = new Estado();
-				nuevoEstado.setNombre("Finalizada");
-				nuevoEstado = estadoRep.save(nuevoEstado);
-				
-			}
-			
-			}else {
-				nuevoEstado = estadoRep.findBynombre("Habilitada");
-				if (nuevoEstado == null) {
-					nuevoEstado = new Estado();
-					nuevoEstado.setNombre("Habilitada");
-					nuevoEstado = estadoRep.save(nuevoEstado);
-				}
-			}
-		dietaExistente.setEstado(nuevoEstado);
-		String nombreEstado =nuevoEstado.getNombre();
 		
-		if (nombreEstado.equalsIgnoreCase("Finalizada") || nombreEstado.equalsIgnoreCase("Suspendida")) {
-	        // Si el estado es Finalizada o Suspendida, guardamos la fecha actual
-	        dietaExistente.setFechaFin(LocalDate.now().toString());
+		if (dietaExistente.getPaciente() != null && 
+		        dietaExistente.getPaciente().getEstado() != null && 
+		        dietaExistente.getPaciente().getEstado().getNombre().equalsIgnoreCase("Habilitado")) {
+		        
+		        Estado nuevoEstado;
+		        if (dietaExistente.getEstado().getNombre().equalsIgnoreCase("Habilitada")) {
+		            nuevoEstado = estadoRep.findBynombre("Finalizada");
+		            if (nuevoEstado == null) {
+		                nuevoEstado = new Estado();
+		                nuevoEstado.setNombre("Finalizada");
+		                nuevoEstado = estadoRep.save(nuevoEstado);
+		            }
+		        } else {
+		            nuevoEstado = estadoRep.findBynombre("Habilitada");
+		            if (nuevoEstado == null) {
+		                nuevoEstado = new Estado();
+		                nuevoEstado.setNombre("Habilitada");
+		                nuevoEstado = estadoRep.save(nuevoEstado);
+		            }
+		        }
+		        
+		        dietaExistente.setEstado(nuevoEstado);
+		        String nombreEstado = nuevoEstado.getNombre();
+		        
+		        if (nombreEstado.equalsIgnoreCase("Finalizada") || nombreEstado.equalsIgnoreCase("Suspendida")) {
+		            // Si el estado es Finalizada o Suspendida, guardamos la fecha actual
+		            dietaExistente.setFechaFin(LocalDate.now().toString());
+		        } else if (nombreEstado.equalsIgnoreCase("Habilitada")) {
+		            // Opcional: si vuelve a habilitarse, poner la fecha fin acorde
+		            dietaExistente.setFechaFin("en tratamiento");
+		        }
+		        
+		        dietaRep.save(dietaExistente);
+		        
+		        // Registrar el movimiento
+		        DietaMovimiento movDieta = new DietaMovimiento();
+		        movDieta.setFechadelcambio(LocalDate.now().toString());
+		        movDieta.setTipoaccion("Se Guardo el estado: " + dietaExistente.getEstado().getNombre());
+		        movDieta.setDieta(dieta);
+		        MovimientoRep.save(movDieta);
+		        
+		}else {
+			return "No se puede cambiar el estado de la dieta porque el paciente se encuentra inhabilitado.";
 		}
-		
-		dietaRep.save(dietaExistente);
-		DietaMovimiento movDieta = new DietaMovimiento();
-		movDieta.setFechadelcambio(LocalDate.now().toString());
-		movDieta.setTipoaccion("Se Guardo el estado: "+ dietaExistente.getEstado().getNombre());
-		movDieta.setDieta(dieta);
-		MovimientoRep.save(movDieta);
-	
+	return null;
 	}
 }

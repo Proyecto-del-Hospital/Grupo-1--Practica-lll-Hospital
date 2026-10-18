@@ -114,8 +114,10 @@ public class DietaController {
 	}
 	
 	@GetMapping("/dieta/cambiarEstado")
-	public String CambiarEstadoDieta(Dieta dieta) {
-		dietaService.CambiarEstado(dieta);
+	public String CambiarEstadoDieta(Dieta dieta,RedirectAttributes redirect) {
+		
+		String mensaje=dietaService.CambiarEstado(dieta);
+		redirect.addFlashAttribute("mensaje", mensaje);
 	return "redirect:/dieta/ControlDieta";
 	}
 	

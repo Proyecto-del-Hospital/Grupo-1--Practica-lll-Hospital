@@ -19,5 +19,5 @@ public interface IDieta {
 	String ModificarDieta(Dieta dieta,List<Integer> patologiasid,String SalaNueva,Integer SalaId);
 	List<Dieta> BuscarPorEstado(String estado);
 	List<DietaMovimiento>ListarMovimientoDietas(int id);
-	void CambiarEstado(Dieta dieta);
+	public String CambiarEstado(Dieta dieta);
 }
