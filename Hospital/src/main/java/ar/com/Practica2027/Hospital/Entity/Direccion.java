@@ -17,8 +17,8 @@ public class Direccion {
 	private String calle;
 	private String Barrio;
 	private String numer_calle;
-	
-	
+	private String localidad;
+
     @OneToMany (mappedBy = "direccion")
     private List<Paciente> pacientes;
     
@@ -28,20 +28,21 @@ public class Direccion {
     @OneToMany(mappedBy = "direccion")
     private List<Empleado> empleados;
 
-	public Direccion() {
-		super();
-	}
-
-	public Direccion(int id, String calle, String barrio, String numer_calle, List<Paciente> pacientes,
-			List<Proveedor> proveedores, List<Empleado> empleados) {
+	public Direccion(int id, String calle, String barrio, String numer_calle, String localidad,
+			List<Paciente> pacientes, List<Proveedor> proveedores, List<Empleado> empleados) {
 		super();
 		this.id = id;
 		this.calle = calle;
 		Barrio = barrio;
 		this.numer_calle = numer_calle;
+		this.localidad = localidad;
 		this.pacientes = pacientes;
 		this.proveedores = proveedores;
 		this.empleados = empleados;
+	}
+
+	public Direccion() {
+		super();
 	}
 
 	public int getId() {
@@ -76,6 +77,14 @@ public class Direccion {
 		this.numer_calle = numer_calle;
 	}
 
+	public String getLocalidad() {
+		return localidad;
+	}
+
+	public void setLocalidad(String localidad) {
+		this.localidad = localidad;
+	}
+
 	public List<Paciente> getPacientes() {
 		return pacientes;
 	}
@@ -99,5 +108,6 @@ public class Direccion {
 	public void setEmpleados(List<Empleado> empleados) {
 		this.empleados = empleados;
 	}
+
 	
 }

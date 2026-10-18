@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ar.com.Practica2027.Hospital.Entity.Proveedor;
 import ar.com.Practica2027.Hospital.Service.IProveedor;
@@ -28,8 +29,10 @@ public class ProveedorController {
 	}
 
 	@PostMapping("/proveedor/crear")
-	public String crearProveedor(Proveedor prov) {
-		proveedorService.CrearProveedor(prov);
+	public String crearProveedor(Proveedor prov,RedirectAttributes redirect) {
+		String mensaje= proveedorService.CrearProveedor(prov);
+		redirect.addFlashAttribute("mensaje", mensaje);
+		
 		return "redirect:/proveedor/control";
 	}
 	@PostMapping("/proveedor/buscar")
@@ -47,8 +50,9 @@ public class ProveedorController {
 		return "Proveedor/ModificarProveedor";
 	}
 	@PostMapping("/modificar/Proveedor")
-		public String modificarProveedor(Proveedor proveedor) {
-			proveedorService.ModificarProveedor(proveedor);
+		public String modificarProveedor(Proveedor proveedor,RedirectAttributes redirect) {
+			String mensaje= proveedorService.ModificarProveedor(proveedor);
+			redirect.addFlashAttribute("mensaje", mensaje);
 			return "redirect:/proveedor/control";
 		}
 	}

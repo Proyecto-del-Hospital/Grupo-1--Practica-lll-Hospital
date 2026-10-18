@@ -29,15 +29,15 @@ public class ProveedorService implements IProveedor {
 	private IDireccionRepository direccionRepo;
 
 	@Override
-	public void CrearProveedor(Proveedor proveedor) {
+	public String CrearProveedor(Proveedor proveedor) {
 
 		List<Proveedor> proveedores = proveedorRepo.findAll();
 		boolean encontrado = false;
 		for (Proveedor pr : proveedores) {
 			if (pr.getDni().equalsIgnoreCase(proveedor.getDni())) {
 				encontrado = true;
-				break;
-
+			
+           return "El dni ya existe";
 			}
 
 		}
@@ -57,7 +57,7 @@ public class ProveedorService implements IProveedor {
 			proveedorRepo.save(proveedor);
 		}
 
-	}
+	return "Proveedor creado con exito";}
 
 	@Override
 	public List<Proveedor> ListarProveedores() {
@@ -72,7 +72,7 @@ public class ProveedorService implements IProveedor {
 	}
 
 	@Override
-	public void ModificarProveedor(Proveedor proveedor) {
+	public String ModificarProveedor(Proveedor proveedor) {
 		Proveedor proveedorExitente= proveedorRepo.findById(proveedor.getId());
 		if(proveedorExitente!=null) {
 			List<Proveedor>proveedores=proveedorRepo.findAll();
@@ -89,6 +89,7 @@ public class ProveedorService implements IProveedor {
 					proveedorExitente.setMotivo(proveedor.getMotivo());
 					
 					Direccion direccionExistente= proveedorExitente.getDireccion();
+					direccionExistente.setLocalidad(proveedor.getDireccion().getLocalidad());
 					direccionExistente.setCalle(proveedor.getDireccion().getCalle());
 					direccionExistente.setNumer_calle(proveedor.getDireccion().getNumer_calle());
 					direccionExistente.setBarrio(proveedor.getDireccion().getBarrio());
@@ -105,7 +106,7 @@ public class ProveedorService implements IProveedor {
 			
 		}
 		
-	}
+	return "Se modifico con Exito " ;}
 
 	@Override
 	public Proveedor BuscarProveedor(int id) {

@@ -9,6 +9,7 @@
 	<script src="https://kit.fontawesome.com/57faba85b1.js" crossorigin="anonymous"></script>
 	<title>Modificar Paciente</title>
 </head>
+
 <body>
 	<header>
 		<div th:replace="Inicio/Home::navbar"></div>
@@ -49,9 +50,15 @@
 								<input type="number" class="form-control form-control-sm" th:field="*{telefono}">
 							</div>
 							<div class="col-md-6" th:object="${paciente.direccion}">
+								<label class="form-label">Localidad</label>
+								<input type="text" class="form-control form-control-sm" th:field="*{localidad}"
+									placeholder="localidad">
+							</div>
+							<div class="col-md-6" th:object="${paciente.direccion}">
 								<label class="form-label">Calle</label>
 								<input type="text" class="form-control form-control-sm" th:field="*{calle}">
 							</div>
+
 							<div class="col-md-6" th:object="${paciente.direccion}">
 								<label class="form-label">Barrio</label>
 								<input type="text" class="form-control form-control-sm" th:field="*{barrio}">

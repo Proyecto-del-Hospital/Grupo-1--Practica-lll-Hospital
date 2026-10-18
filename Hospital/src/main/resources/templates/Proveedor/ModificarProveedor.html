@@ -44,6 +44,10 @@
 								<input type="number" class="form-control form-control-sm" th:field="*{telefono}">
 							</div>
 							<div class="col-md-6" th:object="${proveedor.direccion}">
+							<label class="form-label">Localidad</label>
+							<input type="text" class="form-control form-control-sm" th:field="*{localidad}">
+							</div>
+							<div class="col-md-6" th:object="${proveedor.direccion}">
 								<label class="form-label">Calle</label>
 								<input type="text" class="form-control form-control-sm" th:field="*{calle}">
 							</div>

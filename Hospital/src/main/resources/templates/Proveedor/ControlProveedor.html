@@ -18,6 +18,10 @@
 				<article>
 					<div class="row justify-content-center">
 						<div class="col-md-8">
+							<div th:if="${mensaje}" class="alert alert-success text-center">
+										<p th:text="${mensaje}">
+										</p>
+										</div>
 							<div class="card shadow-sm p-4">
 								<h3 class="mb-4 text-center">Registrar Proveedor</h3>
 								<form class="row g-2" method="post" th:action="@{/proveedor/crear}"
@@ -47,6 +51,11 @@
 										<label class="form-label">Telefono</label>
 										<input type="number" class="form-control form-control-sm" th:field="*{telefono}"
 											placeholder="Teléfono Celular">
+									</div>
+									<div class="col-md-6" th:object="${proveedor.direccion}">
+										<label class="form-label">Localidad</label>
+										<input type="text" class="form-control form-control-sm" th:field="*{localidad}"
+										required placeholder="Localidad">
 									</div>
 									<div class="col-md-6" th:object="${proveedor.direccion}">
 										<label class="form-label">Calle</label>
