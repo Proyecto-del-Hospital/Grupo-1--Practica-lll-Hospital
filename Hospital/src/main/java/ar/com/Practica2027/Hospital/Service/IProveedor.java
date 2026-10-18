@@ -11,5 +11,6 @@ public interface IProveedor {
 	List<Proveedor>BuscarProveedor(String Dni);
 	String ModificarProveedor (Proveedor proveedor);
 	Proveedor BuscarProveedor(int id);
+	void cambiarEstadoProveedor(Proveedor proveedor);
 	
 }

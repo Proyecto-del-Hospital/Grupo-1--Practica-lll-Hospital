@@ -55,5 +55,12 @@ public class ProveedorController {
 			redirect.addFlashAttribute("mensaje", mensaje);
 			return "redirect:/proveedor/control";
 		}
+	@GetMapping("/proveedor/cambiarEstado")
+	public String cambiarEstadoProveedor (Proveedor proveedor) {
+		proveedorService.cambiarEstadoProveedor(proveedor);
+		
+		return "redirect:/proveedor/control";
+		 
+	}
 	}
 	

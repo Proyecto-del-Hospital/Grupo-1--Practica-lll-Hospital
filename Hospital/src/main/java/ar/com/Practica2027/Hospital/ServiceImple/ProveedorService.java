@@ -114,6 +114,31 @@ public class ProveedorService implements IProveedor {
 		return proveedorRepo.findById(id);
 	}
 
+	@Override
+	public void cambiarEstadoProveedor(Proveedor proveedor) {
+		Proveedor proveedorExistente= proveedorRepo.findById(proveedor.getId());
+	  Estado estadoNuevo;
+		if(proveedorExistente.getEstado().getNombre().equalsIgnoreCase("Habilitado")) {
+			estadoNuevo=estadoRepo.findBynombre("Inhabilitado");
+			if(estadoNuevo==null) {
+				estadoNuevo=new Estado();
+				estadoNuevo.setNombre("Inhabilitado");
+				estadoNuevo=estadoRepo.save(estadoNuevo);
+			}
+		
+		}
+		else {
+			estadoNuevo=estadoRepo.findBynombre("Habilitado");
+			if(estadoNuevo==null) {
+				estadoNuevo=new Estado();
+				estadoNuevo.setNombre("Habilitado");
+				estadoNuevo=estadoRepo.save(estadoNuevo);
+			}
+		}
+		proveedorExistente.setEstado(estadoNuevo);
+		proveedorRepo.save(proveedorExistente);
+	}
+
 	
 
 
