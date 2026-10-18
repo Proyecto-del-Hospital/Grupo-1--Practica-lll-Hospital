@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" th:href="@{CSS/bootstrap.min.css}">
-	<link rel="stylesheet" th:href="@{CSS/style.css}">
+	<link rel="stylesheet" th:href="@{/CSS/bootstrap.min.css}">
+	<link rel="stylesheet" th:href="@{/CSS/bootstrap.css}">
 	<title>Hospital</title>
 </head>
+
 <body>
 	<header>
-		<nav th:fragment = "navbar" class="navbar navbar-expand-lg bg-body-tertiary navbar navbar-dark bg-dark">
+		<nav th:fragment="navbar" class="navbar navbar-expand-lg bg-body-tertiary navbar navbar-dark bg-dark">
 			<div class="container-fluid">
 				<a class="navbar-brand" th:href="@{/}">Inicio</a>
 				<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -20,12 +22,23 @@
 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 						<li class="nav-item">
-							<a class="nav-link active" aria-current="page" th:href="@{/paciente/formulario}">Control de Paciente</a>
+							<a class="nav-link active" aria-current="page" th:href="@{/paciente/formulario}">Control de
+								Paciente</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link active" aria-current="page" th:href="@{/dieta/ControlDieta}">Control de
+								Dieta</a>
 						</li>
 					</ul>
 				</div>
 			</div>
 		</nav>
+		<div th:if="${mensaje}" class="alert alert-danger">
+							<p th:text="${mensaje}"></p>
+						</div>
 	</header>
+	<script th:src="@{/js/bootstrap.min.js}"></script>
+	<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
 </body>
+
 </html>

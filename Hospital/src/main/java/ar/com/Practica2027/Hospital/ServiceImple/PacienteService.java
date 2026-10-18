@@ -1,15 +1,20 @@
 package ar.com.Practica2027.Hospital.ServiceImple;
 
+import java.time.LocalDate;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ar.com.Practica2027.Hospital.Entity.Contacto;
+import ar.com.Practica2027.Hospital.Entity.Dieta;
+import ar.com.Practica2027.Hospital.Entity.DietaMovimiento;
 import ar.com.Practica2027.Hospital.Entity.Direccion;
 import ar.com.Practica2027.Hospital.Entity.Estado;
 import ar.com.Practica2027.Hospital.Entity.Paciente;
 import ar.com.Practica2027.Hospital.Repository.IContactoRepository;
+import ar.com.Practica2027.Hospital.Repository.IDietaRepository;
 import ar.com.Practica2027.Hospital.Repository.IDireccionRepository;
 import ar.com.Practica2027.Hospital.Repository.IEstadoRepository;
+import ar.com.Practica2027.Hospital.Repository.IMovimientoDietaRepository;
 import ar.com.Practica2027.Hospital.Repository.IPacienteRepository;
 import ar.com.Practica2027.Hospital.Service.IPaciente;
 
@@ -27,7 +32,11 @@ public class PacienteService implements IPaciente {
 
 	@Autowired
 	private IDireccionRepository direccionRepo;
-
+	@Autowired
+	private IDietaRepository dietaRep;
+	@Autowired
+	private IMovimientoDietaRepository MovimientoRep;
+	
 	@Override
 	public void CrearPaciente(Paciente paciente) {
 
@@ -146,8 +155,32 @@ public class PacienteService implements IPaciente {
 		}
 
 		pacienteExistente.setEstado(nuevoEstado);
-
 		pacienteRepo.save(pacienteExistente);
-
-	}
+		
+		if (nuevoEstado.getNombre().equalsIgnoreCase("Inhabilitado")) {
+	        
+	        // 1. Buscamos el estado "Suspendida" (creándolo si no existe)
+	        Estado estadoSuspendido = estadoRepo.findBynombre("Suspendida");
+	        if (estadoSuspendido == null) {
+	            estadoSuspendido = new Estado();
+	            estadoSuspendido.setNombre("Suspendida");
+	            estadoSuspendido = estadoRepo.save(estadoSuspendido);
+	        }
+	        
+	        List<Dieta> dietasDelPaciente = dietaRep.findByPacienteId(pacienteExistente.getId());
+	        if (dietasDelPaciente != null) {
+	            for (Dieta dieta : dietasDelPaciente) {
+	                dieta.setEstado(estadoSuspendido);
+	                dieta.setFechaFin(LocalDate.now().toString());
+	                dietaRep.save(dieta);
+	                
+	                DietaMovimiento movDieta = new DietaMovimiento();
+	    			movDieta.setFechadelcambio(LocalDate.now().toString());
+	    			movDieta.setTipoaccion("Se suspendió la dieta por inhabilitación del paciente");
+	    			movDieta.setDieta(dieta);
+	    			MovimientoRep.save(movDieta);
+	            }
+	        }
+		}
+		}
 }

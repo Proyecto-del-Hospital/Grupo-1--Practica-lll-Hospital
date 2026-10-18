@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" th:href="@{/CSS/bootstrap.min.css}">
+	<title>Control de Dieta</title>
+</head>
+
+<body>
+	<header>
+		<div th:replace="Inicio/Home::navbar"></div>
+	</header>
+	<main>
+
+		<div class=" conteiner justify-content-center w-70 pt-3 pl-5 pr-5">
+
+			<section>
+				<article>
+					<div class="align-items-center shadow-lg  bg-body-tertiary rounded ">
+						<h4 class="mb-4 text-center text-primary pt-3">Informacion de la Dieta</h4>
+
+						<div class="table-responsive ">
+							<table class="table table-bordered table-striped align-middle mb-0">
+								<tbody>
+
+									<tr>
+										<th class="table-light">Paciente</th>
+										<td th:text="${dieta.paciente.nombre + ' ' + dieta.paciente.apellido}"></td>
+									</tr>
+									<tr>
+										<th class="table-light">DNI</th>
+										<td th:text="${dieta.paciente.dni}"></td>
+									</tr>
+									<tr>
+										<th class="table-light">Sala</th>
+										<td th:text=${dieta.sala.nombre}></td>
+									</tr>
+									<tr>
+										<th class="table-light">Fecha de Inicio</th>
+										<td th:text="${dieta.fechaInicio}"></td>
+									</tr>
+									<tr>
+										<th class="table-light">Fecha de fin</th>
+										<td th:text="${dieta.fechaFin}"></td>
+									</tr>
+									<tr>
+										<th class="table-light">Patologias</th>
+										<td>
+											<span class="badge bg-info text-dark mr-2"
+												th:each="det : ${dieta.detdietas}"
+												th:text="${det.patologia.nombre}"></span>
+											<span th:if="${dieta.detdietas == null or dieta.detdietas.isEmpty()}"
+												class="text-muted small">Sin patologías</span>
+										</td>
+									</tr>
+									<tr>
+										<th class="table-light">Descripcion</th>
+										<td th:text="${dieta.descripcion}"></td>
+									</tr>
+									<tr>
+										<th class="table-light">Estado</th>
+										<td th:text="${dieta.estado.nombre}"></td>
+									</tr>
+									<tr>
+										<th class="table-light">Motivo Del Estado</th>
+										<td th:text="${dieta.motivo}"></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</article>
+
+				<article>
+					<!--esto solo veria el rol Jefa de cocina y no las cocineras-->
+					<div class=" shadow-lg p-3 mb-5 bg-white rounded">
+						<h3 class="mb-4 text-center text-primary">Movimientos Realizados</h1>
+
+							<div class="table-responsive">
+								<table class="table table-bordered table-striped table-hover mb-0 ">
+									<thead class="table-dark">
+										<tr class="text-center">
+											<th>fechadelcambio</th>
+											<th>tipoaccion</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr class="text-center" th:each="m : ${ListaMovimientos}">
+											<td th:text=${m.fechadelcambio}></td>
+											<td>
+												<span class="badge estado-badge "
+													th:classappend="${m.tipoaccion == 'Se Registro una Dieta'} ? ' bg-success' : (${m.tipoaccion == 'Se Modifico la Dieta'} ? ' bg-warning text-dark' : ' bg-info')"
+													th:text="${m.tipoaccion}">
+												</span>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+					</div>
+				</article>
+
+			</section>
+		</div>
+	</main>
+</body>
+
+</html>
