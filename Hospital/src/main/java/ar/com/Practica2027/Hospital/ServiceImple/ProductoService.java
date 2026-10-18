@@ -87,4 +87,10 @@ public class ProductoService implements IProducto{
 		return productoRepo.findAll();
 	}
 
+	@Override
+	public Producto buscarProducto(String nombre) {
+		
+		return productoRepo.findBynombre(nombre);
+	}
+
 }

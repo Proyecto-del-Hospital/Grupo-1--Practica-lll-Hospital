@@ -28,4 +28,11 @@ public class ProductoController {
 		
 		return "redirect:/controlproducto";
 	}
+	@PostMapping ("/busquedaProducto")
+	public String buscarproducto (Model model, String nombre) {
+		Producto p = productoserv.buscarProducto(nombre);
+		model.addAttribute("producto", new Producto());
+		model.addAttribute("ListaProductos", p);
+		return "Producto/ControlProducto";
+	}
 }
