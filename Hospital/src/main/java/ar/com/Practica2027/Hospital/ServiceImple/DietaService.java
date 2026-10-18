@@ -186,6 +186,7 @@ public class DietaService implements IDieta {
 			
 			dietaExistente.setFechaInicio(dieta.getFechaInicio());
 			dietaExistente.setMotivo(dieta.getMotivo());
+			dietaExistente.setDescripcion(dieta.getDescripcion());
 			dietaRep.save(dietaExistente);
 
 			if (patologiasid != null && !patologiasid.isEmpty()) {
