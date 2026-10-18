@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" th:href="@{/CSS/bootstrap.min.css}">
+	<title>Control de Dieta</title>
+</head>
+
+<body>
+	<header>
+		<div th:replace="Inicio/Home::navbar"></div>
+	</header>
+	<main>
+		<section>
+			<div class="justify-content-center pt-3 pl-5 pr-5">
+
+				<div th:if="${mensaje}" class="alert alert-success text-center">
+					<p th:text="${mensaje}">
+					</p>
+				</div>
+				<article>
+					<div class="justify-content-center pr-5 pl-5 ">
+						<div>
+							<a th:href="@{/}" class="btn btn-secondary mb-3">
+								← Volver al inicio
+							</a>
+							<div class="shadow-lg p-2 bg-body-tertiary rounded">
+								
+								<h1 class="mb-4 text-center text-primary"
+									th:text="${Editar == null} ? 'Registrar Dieta' : 'Modificar Dieta'"></h1>
+								<form class="row g-2" method="post"
+									th:action="${Editar == null} ? @{/dieta/crear} : @{/dieta/editar/crear}"
+									th:object="${dieta}">
+									<input type="hidden" th:field="*{id}" />
+									<!--Seleccion de Paciente-->
+									<div class="col-12 mb-2">
+										<label class="form-label fw-bold">Paciente</label>
+										<select class="form-select form-select-sm" th:field="*{paciente.id}" required>
+											<option value="0" selected>Seleccione un paciente...</option>
+											<option th:each="p : ${ListaPacientes}"
+												th:if="${p.estado.nombre == 'Habilitado'}" th:value="${p.id}"
+												th:text="${p.nombre + ' ' + p.apellido + ' (DNI: ' + p.dni + ')'}">
+											</option>
+										</select>
+									</div>
+
+									<!--Apartado de Dieta-->
+									<div class="col-md-6">
+										<label class="form-label">Fecha Inicial</label>
+										<input type="date" class="form-control form-control-sm"
+											th:field="*{fechaInicio}" required>
+									</div>
+									<div class="col-md-6">
+										<label class="form-label">Fecha Fin</label>
+										<input type="date" class="form-control form-control-sm" th:field="*{fechaFin}">
+									</div>
+
+									<!--Seleccion De Sala-->
+									<div class="col-md-6">
+										<br>
+										<label class="form-label">
+											Sala Existente
+
+										</label>
+										<select class="form-select form-select-sm" name="SalaId">
+											<option value="">
+												Seleccione una sala...
+											</option>
+											<option th:each="s : ${listaSalas}" th:value="${s.id}"
+												th:text="${s.nombre}">
+											</option>
+										</select>
+									</div>
+									<div class="col-md-6">
+										<label class="form-label">
+											O Nueva Sala
+										</label>
+										<input type="text" class="form-control form-control-sm" name="SalaNueva"
+											placeholder="Ej: Sala 3B">
+									</div>
+
+									<div class="col-12 mb-2" th:if="${Editar != null}">
+										<label class="form-label fw-bold text-secondary">Estado de la Dieta</label>
+										<select class="form-select" th:field="*{estado.nombre}">
+											<option value="">-- Seleccione un estado --</option>
+											<option value="Habilitada">Habilitada</option>
+											<option value="Finalizada">Finalizada</option>
+											<option value="Suspendida">Suspendida</option>
+										</select>
+									</div>
+
+									<div class="col-12">
+										<label class="form-label">Motivo</label>
+										<input type="text" class="form-control form-control-sm" th:field="*{motivo}"
+											placeholder="Ej: Control general" required>
+									</div>
+
+									<div class="col-12">
+										<label class="form-label">Descripción</label>
+										<textarea class="form-control form-control-sm" rows="2"
+											th:field="*{descripcion}" placeholder="Detalles..."></textarea>
+									</div>
+
+									<div class="col-12 mt-4 border-top pt-3">
+										<label class="form-label fw-bold text-secondary">Patologías Asociadas</label>
+										<p>Marque las patologías existentes o escriba una nueva:</p>
+
+										<!--Seleccion De Patologia -->
+										<div class="d-flex flex-row">
+											<div class="form-check form-check-inline"
+												th:each="patologia : ${listaPatologias}">
+												<input class="form-check-input" type="checkbox" name="patologiasIds"
+													th:value="${patologia.id}" th:id="${patologia.id}">
+												<label class="form-check-label" th:for="${patologia.id}"
+													th:text="${patologia.nombre}">
+													Patología
+												</label>
+											</div>
+										</div>
+										<div>
+											<a th:href="@{/patologia/formulario}">
+												Registre una patología.
+											</a>
+
+										</div>
+									</div>
+									<div class="col-12 mt-4">
+										<button type="submit" class="btn btn-primary btn-sm w-100">Guardar</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</article>
+
+				<!--Lista de dieta-->
+				<article class="pt-3">
+
+					<div class="align-items-center shadow-lg p-3 mb-5 bg-body-tertiary rounded">
+
+						<form class="d-flex me-2" th:action="@{/dieta/buscar}" method="post">
+							<input class="form-control me-2" type="text" name="dni"
+								placeholder="Buscar la dieta del Paciente por su DNI">
+							<button class="btn btn-outline-success" type="submit">Buscar</button>
+						</form>
+
+						<div class="row justify-content-center ">
+							<a class="btn btn-success m-2" th:href="@{/dieta/filtrar(estado='Habilitada')}">
+								Habilitada
+							</a>
+							<a class="btn btn-warning text-dark m-2" th:href="@{/dieta/filtrar(estado='Finalizada')}">
+								Finalizada
+							</a>
+							<a class="btn btn-danger m-2" th:href="@{/dieta/filtrar(estado='Suspendida')}">
+								Suspendida
+							</a>
+							<a class="btn btn-secondary m-2" th:href="@{/dieta/ControlDieta}">Todas</a>
+						</div>
+
+						<div class="table-responsive">
+							<table class="table table-bordered table-striped table-hover mb-0 ">
+								<thead class="table-dark">
+									<tr class="text-center">
+										<th>#</th>
+										<th>Paciente</th>
+										<th>dni</th>
+										<th>sala Asignada</th>
+										<th>fechaInicio</th>
+										<th>fechaFin</th>
+										<th>Patologías</th>
+										<th>Estado</th>
+										<th>motivo del estado</th>
+										<th>Acción</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr class="text-center " th:each="d : ${listaDietas}">
+										<td th:text="${d.id}"></td>
+										<td th:text=${d.paciente.nombre}></td>
+										<td th:text=${d.paciente.dni}></td>
+										<td th:text=${d.sala.nombre}></td>
+										<td th:text=${d.fechaInicio}></td>
+										<td th:text=${d.fechaFin}></td>
+										<td>
+											<span class="badge bg-info text-dark mr-1" th:each="det : ${d.detdietas}"
+												th:text="${det.patologia.nombre}">
+											</span>
+											<span th:if="${d.detdietas == null or d.detdietas.isEmpty()}"
+												class="text-muted small">Sin patologías</span>
+										</td>
+										<td>
+											<span class="badge estado-badge"
+												th:classappend="${d.estado.nombre == 'Habilitada'} ? ' bg-success' : (${d.estado.nombre == 'Finalizada'} ? ' bg-warning text-dark' : ' bg-danger')"
+												th:text="${d.estado.nombre}">
+											</span>
+										</td>
+										<td th:text=${d.motivo}></td>
+										<!--Botones-->
+										<td>
+											<div>
+												<a class="btn btn-warning btn-sm"
+													th:href="@{/dieta/editar(id=${d.id})}">
+													Editar
+												</a>
+												<a class="btn btn-danger btn-sm"
+													th:href="@{/dieta/cambiarEstado(id=${d.id})}">
+													Cambiar Estado
+												</a>
+												<a class="btn btn-success btn-sm"
+													th:href="@{/movimientos/dieta(id=${d.id})}">
+													Ver
+												</a>
+											</div>
+										</td>
+									</tr>
+
+								</tbody>
+							</table>
+						</div>
+					</div>
+
+				</article>
+			</div>
+		</section>
+	</main>
+</body>
+
+</html>

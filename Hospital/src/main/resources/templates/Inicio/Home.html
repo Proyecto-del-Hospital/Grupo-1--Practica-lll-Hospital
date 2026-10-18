@@ -4,8 +4,8 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" th:href="@{CSS/bootstrap.min.css}">
-	<link rel="stylesheet" th:href="@{CSS/style.css}">
+	<link rel="stylesheet" th:href="@{/CSS/bootstrap.min.css}">
+	<link rel="stylesheet" th:href="@{/CSS/bootstrap.css}">
 	<title>Hospital</title>
 </head>
 
@@ -29,11 +29,20 @@
 							<a class="nav-link active" aria-current="page" th:href="@{/controlproducto}">Control de
 								Producto</a>
 						</li>
+						<li>
+							<a class="nav-link active" aria-current="page" th:href="@{/dieta/ControlDieta}">Control de
+								Dieta</a>
+						</li>
 					</ul>
 				</div>
 			</div>
 		</nav>
+		<div th:if="${mensaje}" class="alert alert-danger">
+			<p th:text="${mensaje}"></p>
+		</div>
 	</header>
+	<script th:src="@{/js/bootstrap.min.js}"></script>
+	<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
 </body>
 
 </html>
