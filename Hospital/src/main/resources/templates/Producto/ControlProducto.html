@@ -80,6 +80,49 @@
 						</div>
 					</div>
 				</article>
+				<article>
+					<div class="align-items-center shadow-lg p-3 mb-5 bg-body-tertiary rounded">
+						<div class="table-responsive">
+							<table class="table table-bordered table-striped table-hover tabla-pacientes mb-0">
+								<thead class="table-dark">
+									<tr class="text-center">
+										<th>ID</th>
+										<th>Nombre</th>
+										<th>TIPO</th>
+										<th>SUBTIPO</th>
+										<th>UNIDAD</th>
+										<th>STOCK ACTUAL</th>
+										<th>STOCK MINIMO</th>
+										<th>MOTIVO</th>
+										<th>ESTADO</th>
+										<th>ACCIÓN</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="p : ${ListaProductos}" class="text-center">
+										<td th:text="${p.id}"></td>
+										<td th:text="${p.nombre}"></td>
+										<td th:text="${p.tipo.nombre}"></td>
+										<td th:text="${p.subtipo.nombre}"></td>
+										<td th:text="${p.unidad.nombre}"></td>
+										<td th:text="${p.stockactual}"></td>
+										<td th:text="${p.stockminimo}"></td>
+										<td th:text="${p.motivo}"></td>
+										<td><span class="badge estado-badge"
+												th:classappend="${p.estado.nombre == 'Disponible'} ? ' bg-success' : ' bg-danger'"
+												th:text="${p.estado.nombre}">
+											</span></td>
+										<td><a class="btn btn-primary btn-sm"
+												th:href="@{/FormularioModificar(id=${p.id})}">Modificar</a>
+											<a class="btn btn-warning btn-sm"
+												th:href="@{/paciente/cambiarEstado(id=${p.id})}">Cambiar Estado</a>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</article>
 			</div>
 		</section>
 	</main>

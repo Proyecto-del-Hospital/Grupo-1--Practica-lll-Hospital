@@ -18,6 +18,7 @@ public class ProductoController {
 	@GetMapping ("/controlproducto")
 	public String ControlP (Model model) {
 		model.addAttribute("producto", new Producto());
+		model.addAttribute("ListaProductos", productoserv.ListarProductos());
 		return "Producto/ControlProducto";
 	}
 	@PostMapping ("/guardarproducto")

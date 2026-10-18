@@ -81,4 +81,10 @@ public class ProductoService implements IProducto{
 		return "Producto creado correctamente";
 	}
 
+	@Override
+	public List<Producto> ListarProductos() {
+		
+		return productoRepo.findAll();
+	}
+
 }
