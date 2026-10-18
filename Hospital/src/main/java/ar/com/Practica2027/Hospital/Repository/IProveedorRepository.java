@@ -11,6 +11,7 @@ import ar.com.Practica2027.Hospital.Entity.Proveedor;
 
 public interface IProveedorRepository extends JpaRepository<Proveedor, Integer>{
 	List<Proveedor> findByDni(String dni);
+	Proveedor findById(int id);
 	
 
 }

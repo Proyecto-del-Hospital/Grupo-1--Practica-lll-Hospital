@@ -7,9 +7,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import ar.com.Practica2027.Hospital.Entity.Proveedor;
 import ar.com.Practica2027.Hospital.Service.IProveedor;
+import ar.com.Practica2027.Hospital.ServiceImple.ProveedorService;
 
 @Controller
 
@@ -38,5 +40,16 @@ public class ProveedorController {
 		
 		return "Proveedor/ControlProveedor";
 	}
-    
-}
+	@GetMapping("/Formulario/Modificar/proveedor")
+	public String FormularioModificar(int id, Model model) {
+		Proveedor proveedor = proveedorService.BuscarProveedor(id);
+		model.addAttribute("proveedor", proveedor);
+		return "Proveedor/ModificarProveedor";
+	}
+	@PostMapping("/modificar/Proveedor")
+		public String modificarProveedor(Proveedor proveedor) {
+			proveedorService.ModificarProveedor(proveedor);
+			return "redirect:/proveedor/control";
+		}
+	}
+	

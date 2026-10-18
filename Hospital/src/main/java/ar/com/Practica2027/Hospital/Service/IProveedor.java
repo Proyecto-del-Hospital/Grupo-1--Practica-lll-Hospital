@@ -9,6 +9,7 @@ public interface IProveedor {
 	void CrearProveedor(Proveedor proveedor);
 	List<Proveedor> ListarProveedores();
 	List<Proveedor>BuscarProveedor(String Dni);
-	
+	void ModificarProveedor (Proveedor proveedor);
+	Proveedor BuscarProveedor(int id);
 	
 }

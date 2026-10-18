@@ -71,6 +71,51 @@ public class ProveedorService implements IProveedor {
 		return proveedorRepo.findByDni(dni);
 	}
 
+	@Override
+	public void ModificarProveedor(Proveedor proveedor) {
+		Proveedor proveedorExitente= proveedorRepo.findById(proveedor.getId());
+		if(proveedorExitente!=null) {
+			List<Proveedor>proveedores=proveedorRepo.findAll();
+			boolean encontrado=false;
+			for(Proveedor prov:proveedores) {
+				if(prov.getId()!= proveedorExitente.getId() && prov.getDni().equalsIgnoreCase(proveedor.getDni())){
+					encontrado=true;
+					break;
+				}
+				if(encontrado==false) {
+					proveedorExitente.setNombre(proveedor.getNombre());
+					proveedorExitente.setApellido(proveedor.getApellido());
+					proveedorExitente.setDni(proveedor.getDni());
+					proveedorExitente.setMotivo(proveedor.getMotivo());
+					
+					Direccion direccionExistente= proveedorExitente.getDireccion();
+					direccionExistente.setCalle(proveedor.getDireccion().getCalle());
+					direccionExistente.setNumer_calle(proveedor.getDireccion().getNumer_calle());
+					direccionExistente.setBarrio(proveedor.getDireccion().getBarrio());
+					direccionRepo.save(direccionExistente);
+					
+					Contacto contactoExistente=proveedorExitente.getContacto();
+					contactoExistente.setCorreo(proveedor.getContacto().getCorreo());
+					contactoExistente.setTelefono(proveedor.getContacto().getTelefono());
+					contactoRepo.save(contactoExistente);
+					
+				  proveedorRepo.save(proveedorExitente);
+				}
+			}
+			
+		}
+		
+	}
+
+	@Override
+	public Proveedor BuscarProveedor(int id) {
+		
+		return proveedorRepo.findById(id);
+	}
+
+	
+
+
 	
 
 }
