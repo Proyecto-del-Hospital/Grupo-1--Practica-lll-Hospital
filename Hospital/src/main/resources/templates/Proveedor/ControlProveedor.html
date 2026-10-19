@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" th:href="@{/CSS/bootstrap.min.css}">
+	<link rel="stylesheet" th:href="@{/CSS/style.css}">
+	<script src="https://kit.fontawesome.com/57faba85b1.js" crossorigin="anonymous"></script>
+	<title>Control de Proveedor</title>
+</head>
+<body>
+	<header>
+		<div th:replace="Inicio/Home::navbar"></div>
+	</header>
+	<main>
+		<section>
+			<div class="justify-content-center w-100 p-5">
+				<article>
+					<div class="row justify-content-center">
+						<div class="col-md-8">
+							<div th:if="${mensaje}" class="alert alert-info text-center">
+										<p th:text="${mensaje}">
+										</p>
+										</div>
+							<div class="card shadow-sm p-4">
+								<h3 class="mb-4 text-center">Registrar Proveedor</h3>
+								<form class="row g-2" method="post" th:action="@{/proveedor/crear}"
+									th:object="${proveedor}">
+									<div class="col-md-6">
+										<label class="form-label">Nombre</label>
+										<input type="text" class="form-control form-control-sm" th:field="*{nombre}"
+											required placeholder="Nombre Completo">
+									</div>
+									<div class="col-md-6">
+										<label class="form-label">Apellido</label>
+										<input type="text" class="form-control form-control-sm" th:field="*{apellido}"
+											required placeholder="Apellido">
+									</div>
+									<div class="col-12">
+										<label class="form-label">DNI</label>
+										<input type="number" class="form-control form-control-sm" placeholder="DNI-CUIL"
+											th:field="*{dni}" required>
+									</div>
+									
+									<div class="col-md-6" th:object="${proveedor.contacto}">
+										<label class="form-label">Correo</label>
+										<input type="email" class="form-control form-control-sm" th:field="*{correo}"
+											placeholder="Correo Electrónico">
+									</div>
+									<div class="col-md-6" th:object="${proveedor.contacto}">
+										<label class="form-label">Telefono</label>
+										<input type="number" class="form-control form-control-sm" th:field="*{telefono}"
+											placeholder="Teléfono Celular">
+									</div>
+									<div class="col-md-6" th:object="${proveedor.direccion}">
+										<label class="form-label">Localidad</label>
+										<input type="text" class="form-control form-control-sm" th:field="*{localidad}"
+										required placeholder="Localidad">
+									</div>
+									<div class="col-md-6" th:object="${proveedor.direccion}">
+										<label class="form-label">Calle</label>
+										<input type="text" class="form-control form-control-sm" th:field="*{calle}"
+											required placeholder="Calle">
+									</div>
+									<div class="col-md-6" th:object="${proveedor.direccion}">
+										<label class="form-label">Barrio</label>
+										<input type="text" class="form-control form-control-sm" th:field="*{barrio}"
+											required placeholder="Barrio">
+									</div>
+									<div class="col-md-6" th:object="${proveedor.direccion}">
+										<label class="form-label">Numero de calle</label>
+										<input type="text" class="form-control form-control-sm"
+											th:field="*{numer_calle}" required placeholder="Numero de Calle">
+									</div>
+									<div class="col-12 mt-4">
+										<button type="submit" class="btn btn-primary w-100">Registrar</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</article>
+				<br><br>
+				<article>
+					<div class="align-items-center shadow-lg p-3 mb-5 bg-body-tertiary rounded">
+						<form class="d-flex me-2" th:action="@{/proveedor/buscar}" method="post">
+													<input class="form-control me-2" type="text" name="dni" placeholder="Buscar por DNI">
+													<button class="btn btn-outline-success" type="submit">Buscar</button>
+												</form>
+												<br>
+										<div class="table-responsive">
+											<table class="table table-bordered table-striped table-hover tabla-pacientes mb-0">
+												<thead class="table-dark">
+														<tr class="text-center">
+														<th>ID</th>
+														<th>Nombre</th>
+														<th>Apellido</th>
+														<th>DNI</th>
+														<th>Calle</th>
+														<th>Barrio</th>
+														<th>Número de Calle</th>
+														<th>Correo</th>
+														<th>Teléfono</th>
+														<th>Estado</th>
+														<th>Motivo</th>
+														<th>Acción</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr th:each="pr : ${ListaProveedores}">
+														<td th:text="${pr.id}"></td>
+														<td th:text="${pr.nombre}"></td>
+														<td th:text="${pr.apellido}"></td>
+														<td th:text="${pr.dni}"></td>
+														<td th:text="${pr.direccion.calle}"></td>
+														<td th:text="${pr.direccion.barrio}"></td>
+														<td th:text="${pr.direccion.numer_calle}"></td>
+														<td th:text="${pr.contacto.correo}"></td>
+														<td th:text="${pr.contacto.telefono}"></td>
+														<td><span class="badge estado-badge"
+																th:classappend="${pr.estado.nombre == 'Habilitado'} ? ' bg-success' : ' bg-danger'"
+																th:text="${pr.estado.nombre}">
+															</span></td>
+														<td th:text="${pr.motivo}"></td>
+														<td><a class="btn btn-primary btn-sm"
+																th:href="@{/Formulario/Modificar/proveedor(id=${pr.id})}">Modificar</a>
+															<a class="btn btn-warning btn-sm"
+																th:href="@{/proveedor/cambiarEstado(id=${pr.id})}">Cambiar Estado</a>
+														</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</article>
+			</div>
+		</section>
+	</main>
+</body>
+</html>
