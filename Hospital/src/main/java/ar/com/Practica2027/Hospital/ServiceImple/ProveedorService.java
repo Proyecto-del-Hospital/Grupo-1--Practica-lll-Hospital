@@ -54,6 +54,7 @@ public class ProveedorService implements IProveedor {
 			proveedor.setContacto(contacto);
 			proveedor.setEstado(estado);
 			proveedor.setDireccion(direccion);
+			proveedor.setMotivo("-");
 			proveedorRepo.save(proveedor);
 		}
 

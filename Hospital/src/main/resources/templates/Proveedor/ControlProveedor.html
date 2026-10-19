@@ -69,13 +69,8 @@
 									</div>
 									<div class="col-md-6" th:object="${proveedor.direccion}">
 										<label class="form-label">Numero de calle</label>
-										<input type="number" class="form-control form-control-sm"
+										<input type="text" class="form-control form-control-sm"
 											th:field="*{numer_calle}" required placeholder="Numero de Calle">
-									</div>
-									<div class="col-md-6">
-										<label class="form-label">motivo</label>
-										<input type="text" class="form-control form-control-sm" th:field="*{motivo}"
-											placeholder="Motivo (Opcional: - )">
 									</div>
 									<div class="col-12 mt-4">
 										<button type="submit" class="btn btn-primary w-100">Registrar</button>
