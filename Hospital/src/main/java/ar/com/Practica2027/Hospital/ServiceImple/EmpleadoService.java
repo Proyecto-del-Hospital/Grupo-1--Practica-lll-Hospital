@@ -59,7 +59,17 @@ public class EmpleadoService implements IEmpledo{
 			
 			return "No Selecionaste Un Sector";
 		}
-		
+		// se agrego la validadcion de que no se repita el dni
+		for (Empleado e : empleados) {
+		  if (e.getDNI().equalsIgnoreCase(empleado.getDNI()) ) {
+		return "El dni ya existe";
+		}
+		// se agrego la validadcion de que no se repita el usuario
+		if (e.getUsuario().getNombre_usuario().equalsIgnoreCase(empleado.getUsuario().getNombre_usuario())) {
+			return "El Usuario ya Existe";
+			}
+		}
+
 		Rol rol = rolRepo.findBynombre(empleado.getUsuario().getRol().getNombre());
 		if(rol == null ) { 
 			rol = new Rol();
