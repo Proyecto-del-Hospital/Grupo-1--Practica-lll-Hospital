@@ -120,4 +120,16 @@ public class EmpleadoService implements IEmpledo{
 		return null;
 	}
 
+	@Override
+	public List<Empleado> ListarEmpleados() {
+		// TODO Auto-generated method stub
+		return EmpleRepo.findAll();
+	}
+	//se agrego la subtares de buscar por dni
+	@Override
+	public List<Empleado> buscarEmpleado(String DNI) {
+		
+		return EmpleRepo.findByDNI(DNI);
+	}
+
 }
