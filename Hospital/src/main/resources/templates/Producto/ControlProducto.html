@@ -24,9 +24,12 @@
 								<p th:text="${exito}"></p>
 							</div>
 							<div class="card shadow-sm p-4">
-								<h3 class="mb-4 text-center">Registrar Producto</h3>
-								<form class="row g-2" method="post" th:action="@{/guardarproducto}"
+								<h3 class="mb-4 text-center"
+									th:text="${Editar == null} ? 'Registrar Producto' : 'Modificar Producto'"></h3>
+								<form class="row g-2" method="post"
+									th:action="${Editar == null} ? @{/guardarproducto} : @{/modificarproducto}"
 									th:object="${producto}">
+									<input type="hidden" th:field="*{id}">
 									<div class="col-md-6">
 										<label class="form-label">Nombre del Producto</label>
 										<input type="text" class="form-control form-control-sm" th:field="*{nombre}"
@@ -73,7 +76,7 @@
 											th:field="*{stockminimo}" required placeholder="Ingres el stock mínimo">
 									</div>
 									<div class="col-12 mt-4">
-										<button type="submit" class="btn btn-primary w-100">Registrar</button>
+										<button type="submit" class="btn btn-primary w-100">Guardar</button>
 									</div>
 								</form>
 							</div>
@@ -83,7 +86,8 @@
 				<article>
 					<div class="align-items-center shadow-lg p-3 mb-5 bg-body-tertiary rounded">
 						<form class="d-flex me-2" th:action="@{/busquedaProducto}" method="post">
-							<input class="form-control me-2" type="text" name="nombre" placeholder="Buscar producto por nombre">
+							<input class="form-control me-2" type="text" name="nombre"
+								placeholder="Buscar producto por nombre">
 							<button class="btn btn-outline-success" type="submit">Buscar</button>
 						</form>
 						<br>
@@ -118,7 +122,7 @@
 												th:text="${p.estado.nombre}">
 											</span></td>
 										<td><a class="btn btn-primary btn-sm"
-												th:href="@{/FormularioModificar(id=${p.id})}">Modificar</a>
+												th:href="@{/producto/formularioM(id=${p.id})}">Modificar</a>
 											<a class="btn btn-warning btn-sm"
 												th:href="@{/paciente/cambiarEstado(id=${p.id})}">Cambiar Estado</a>
 										</td>

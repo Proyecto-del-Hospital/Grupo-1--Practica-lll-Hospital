@@ -18,33 +18,33 @@ import ar.com.Practica2027.Hospital.Repository.IUnidadRepository;
 import ar.com.Practica2027.Hospital.Service.IProducto;
 
 @Service
-public class ProductoService implements IProducto{
-	
+public class ProductoService implements IProducto {
+
 	@Autowired
 	private IProductoRepository productoRepo;
-	
+
 	@Autowired
 	private ISubTipoRepository subtipoRepo;
-	
+
 	@Autowired
 	private ITipoRepository tipoRepo;
-	
+
 	@Autowired
 	private IUnidadRepository unidadRepo;
-	
+
 	@Autowired
 	private IEstadoRepository estadoRepo;
 
 	@Override
 	public String CrearProducto(Producto producto) {
-		
+
 		Tipo tipo = tipoRepo.findBynombre(producto.getTipo().getNombre());
 		SubTipo subtipo = subtipoRepo.findBynombre(producto.getSubtipo().getNombre());
 		Unidad unidad = unidadRepo.findBynombre(producto.getUnidad().getNombre());
 		Estado estado = estadoRepo.findBynombre("Disponible");
-		
+
 		List<Producto> productos = productoRepo.findAll();
-		
+
 		for (Producto p : productos) {
 			if (producto.getNombre().equalsIgnoreCase(p.getNombre())) {
 				return "El producto ya existe";
@@ -75,22 +75,69 @@ public class ProductoService implements IProducto{
 		producto.setSubtipo(subtipo);
 		producto.setUnidad(unidad);
 		producto.setEstado(estado);
-		
+
 		productoRepo.save(producto);
-		
+
 		return "Producto creado correctamente";
 	}
 
 	@Override
 	public List<Producto> ListarProductos() {
-		
+
 		return productoRepo.findAll();
 	}
 
 	@Override
 	public Producto buscarProducto(String nombre) {
-		
+
 		return productoRepo.findBynombre(nombre);
+	}
+
+	@Override
+	public String ModificarProducto(Producto producto) {
+
+		Producto productoExistente = productoRepo.findByid(producto.getId());
+		Tipo tipo = tipoRepo.findBynombre(producto.getTipo().getNombre());
+		SubTipo subtipo = subtipoRepo.findBynombre(producto.getSubtipo().getNombre());
+		Unidad unidad = unidadRepo.findBynombre(producto.getUnidad().getNombre());
+
+		if (productoExistente != null) {
+			
+			productoExistente.setNombre(producto.getNombre());
+			productoExistente.setMotivo("-");
+			productoExistente.setStockactual(producto.getStockactual());
+			productoExistente.setStockminimo(producto.getStockminimo());
+			
+			if (tipo == null) {
+				tipo = new Tipo();
+				tipo.setNombre(producto.getTipo().getNombre());
+				tipoRepo.save(tipo);
+			}
+			if (subtipo == null) {
+				subtipo = new SubTipo();
+				subtipo.setNombre(producto.getSubtipo().getNombre());
+				subtipoRepo.save(subtipo);
+			}
+			if (unidad == null) {
+				unidad = new Unidad();
+				unidad.setNombre(producto.getUnidad().getNombre());
+				unidadRepo.save(unidad);
+			}
+			productoExistente.setTipo(tipo);
+			productoExistente.setSubtipo(subtipo);
+			productoExistente.setUnidad(unidad);
+			productoRepo.save(productoExistente);
+
+			return "Producto modificado con éxito";
+		}
+
+		return null;
+	}
+
+	@Override
+	public Producto buscarProductoPorId(int id) {
+
+		return productoRepo.findByid(id);
 	}
 
 }
