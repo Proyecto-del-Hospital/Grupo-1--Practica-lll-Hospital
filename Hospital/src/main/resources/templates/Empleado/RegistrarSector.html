@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html sxmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Alta Sector</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+</head>
+<body>
+	<header>
+			<div th:replace="Inicio/Home::navbar"></div>
+		</header>
+	<div class="container mt-5">
+
+				<div class="row justify-content-center">
+
+					<div class="col-md-6">
+
+						<div class="card shadow-sm p-4">
+							<h3 class="mb-4 text-center text-primary">
+								Registrar Sector
+							</h3>
+							<form method="post" th:action="@{/guardar/sector}" th:object="${sector}">
+								<div class="mb-3">
+									<label class="form-label">
+										Nombre del Sector
+									</label>
+									<input type="text" class="form-control" th:field="*{nombre}" placeholder="Ej: sector b"
+										required>
+								</div>
+
+								<button type="submit" class="btn btn-primary w-100">
+									Registrar Sector
+								</button>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+</body>
+</html>
