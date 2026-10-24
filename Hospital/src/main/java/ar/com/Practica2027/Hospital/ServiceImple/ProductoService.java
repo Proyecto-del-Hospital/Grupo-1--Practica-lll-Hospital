@@ -102,12 +102,12 @@ public class ProductoService implements IProducto {
 		Unidad unidad = unidadRepo.findBynombre(producto.getUnidad().getNombre());
 
 		if (productoExistente != null) {
-			
+
 			productoExistente.setNombre(producto.getNombre());
 			productoExistente.setMotivo("-");
 			productoExistente.setStockactual(producto.getStockactual());
 			productoExistente.setStockminimo(producto.getStockminimo());
-			
+
 			if (tipo == null) {
 				tipo = new Tipo();
 				tipo.setNombre(producto.getTipo().getNombre());
@@ -126,11 +126,32 @@ public class ProductoService implements IProducto {
 			productoExistente.setTipo(tipo);
 			productoExistente.setSubtipo(subtipo);
 			productoExistente.setUnidad(unidad);
-			productoRepo.save(productoExistente);
 
+			if (productoExistente.getStockactual() <= productoExistente.getStockminimo()) {
+
+				Estado estado = estadoRepo.findBynombre("Bajo Stock");
+
+				if (estado == null) {
+					estado = new Estado();
+					estado.setNombre("Bajo Stock");
+					estadoRepo.save(estado);
+				}
+				productoExistente.setEstado(estado);
+			}else {
+				
+				Estado estado = estadoRepo.findBynombre(producto.getEstado().getNombre());
+
+				if (estado == null) {
+					estado = new Estado();
+					estado.setNombre(producto.getEstado().getNombre());
+					estadoRepo.save(estado);
+				}
+				productoExistente.setEstado(estado);
+			}
+			productoRepo.save(productoExistente);
+			
 			return "Producto modificado con éxito";
 		}
-
 		return null;
 	}
 
