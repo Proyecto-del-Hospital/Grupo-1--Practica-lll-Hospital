@@ -14,4 +14,5 @@ public interface IEmpledo {
 	List<Empleado> buscarEmpleado(String DNI);
 	Empleado buscarporid(int id);
 	String modificarempleado(Empleado empleado);
+	String CambiarEstadoempleado(Empleado empleado);
 }

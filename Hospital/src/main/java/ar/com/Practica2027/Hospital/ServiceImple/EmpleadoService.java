@@ -1,6 +1,7 @@
 package ar.com.Practica2027.Hospital.ServiceImple;
 
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,9 +9,12 @@ import org.springframework.stereotype.Service;
 
 import ar.com.Practica2027.Hospital.Entity.Contacto;
 import ar.com.Practica2027.Hospital.Entity.Det_Sector;
+import ar.com.Practica2027.Hospital.Entity.Dieta;
+import ar.com.Practica2027.Hospital.Entity.DietaMovimiento;
 import ar.com.Practica2027.Hospital.Entity.Direccion;
 import ar.com.Practica2027.Hospital.Entity.Empleado;
 import ar.com.Practica2027.Hospital.Entity.Estado;
+import ar.com.Practica2027.Hospital.Entity.Paciente;
 import ar.com.Practica2027.Hospital.Entity.Rol;
 import ar.com.Practica2027.Hospital.Entity.Sector;
 import ar.com.Practica2027.Hospital.Entity.Usuario;
@@ -201,4 +205,44 @@ public class EmpleadoService implements IEmpledo{
 	    return "Empleado modificado con éxito";
 	}
 
-}
+	@Override
+	public String CambiarEstadoempleado(Empleado empleado) {
+		
+		Empleado empleadoexistente = EmpleRepo.findByid(empleado.getId());
+		Estado nuevoEstado;
+
+		if (empleadoexistente.getEstado().getNombre().equalsIgnoreCase("Habilitado")) {
+			nuevoEstado = estadoRepo.findBynombre("Inhabilitado");
+
+			if (nuevoEstado == null) {
+				nuevoEstado = new Estado();
+				nuevoEstado.setNombre("Inhabilitado");
+				nuevoEstado = estadoRepo.save(nuevoEstado);
+			}
+		} else {
+			nuevoEstado = estadoRepo.findBynombre("Habilitado");
+
+			if (nuevoEstado == null) {
+				nuevoEstado = new Estado();
+				nuevoEstado.setNombre("Habilitado");
+				nuevoEstado = estadoRepo.save(nuevoEstado);
+			}
+		}
+
+		empleadoexistente.setEstado(nuevoEstado);
+		EmpleRepo.save(empleadoexistente);
+		
+		if (nuevoEstado.getNombre().equalsIgnoreCase("Inhabilitado")) {
+	        
+	        Estado estadoSuspendido = estadoRepo.findBynombre("Suspendida");
+	        if (estadoSuspendido == null) {
+	            estadoSuspendido = new Estado();
+	            estadoSuspendido.setNombre("Suspendida");
+	            estadoSuspendido = estadoRepo.save(estadoSuspendido);
+	        }
+	      }
+		return "";
+		}
+	}
+
+

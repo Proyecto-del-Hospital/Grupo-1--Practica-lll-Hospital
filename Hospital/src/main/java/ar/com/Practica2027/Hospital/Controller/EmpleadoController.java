@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import ar.com.Practica2027.Hospital.Entity.Dieta;
 import ar.com.Practica2027.Hospital.Entity.Empleado;
 import ar.com.Practica2027.Hospital.Entity.Sector;
 import ar.com.Practica2027.Hospital.ServiceImple.EmpleadoService;
@@ -80,6 +79,13 @@ public class EmpleadoController {
 	public String guardarempleadoodificar(Empleado empleado, RedirectAttributes redirect) {
 	    redirect.addFlashAttribute("mensaje", empleService.modificarempleado(empleado));
 
+		return "redirect:/Alta/Empleado";
+	}
+	
+	@GetMapping("/empleado/cambiarestado")
+	public String cambiarestadoempleador (Empleado empleado) {
+		empleService.CambiarEstadoempleado(empleado);
+		
 		return "redirect:/Alta/Empleado";
 	}
 }
