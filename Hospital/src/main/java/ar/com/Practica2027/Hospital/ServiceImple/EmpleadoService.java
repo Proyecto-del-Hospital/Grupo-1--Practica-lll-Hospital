@@ -132,4 +132,73 @@ public class EmpleadoService implements IEmpledo{
 		return EmpleRepo.findByDNI(DNI);
 	}
 
+	@Override
+	public Empleado buscarporid(int id) {
+		// TODO Auto-generated method stub
+		return EmpleRepo.findByid(id);
+	}
+
+	@Override
+	public String modificarempleado(Empleado empleado) {
+		
+		Empleado empleadoExistente = EmpleRepo.findByid(empleado.getId());
+
+	    if (empleadoExistente == null) {
+	        return "El empleado no existe";
+	    }
+
+	    List<Empleado> empleados = EmpleRepo.findAll();
+	    for (Empleado e : empleados) {
+	        if (e.getId() != empleadoExistente.getId()) {
+
+	            if (e.getDNI().equalsIgnoreCase(empleado.getDNI())) {
+	                return "El dni ya existe";
+	            }
+	            if (e.getUsuario().getNombre_usuario()
+	                    .equalsIgnoreCase(empleado.getUsuario().getNombre_usuario())) {
+	                return "El Usuario ya Existe";
+	            }
+	        }
+	    }
+
+	    empleadoExistente.setNombre(empleado.getNombre());
+	    empleadoExistente.setApellido(empleado.getApellido());
+	    empleadoExistente.setDNI(empleado.getDNI());
+	    empleadoExistente.setFecha_nac(empleado.getFecha_nac());
+
+	    Contacto contactoExistente = empleadoExistente.getContacto();
+	    contactoExistente.setCorreo(empleado.getContacto().getCorreo());
+	    contactoExistente.setTelefono(empleado.getContacto().getTelefono());
+	    contactoRepo.save(contactoExistente);
+
+	    Direccion direccionExistente = empleadoExistente.getDireccion();
+	    direccionExistente.setBarrio(empleado.getDireccion().getBarrio());
+	    direccionExistente.setCalle(empleado.getDireccion().getCalle());
+	    direccionExistente.setLocalidad(empleado.getDireccion().getLocalidad());
+	    direccionExistente.setNumer_calle(empleado.getDireccion().getNumer_calle());
+	    direccionRepo.save(direccionExistente);
+
+	    Rol rol = rolRepo.findBynombre(empleado.getUsuario().getRol().getNombre());
+	    if (rol == null) {
+	        rol = new Rol();
+	        rol.setNombre(empleado.getUsuario().getRol().getNombre());
+	        rol = rolRepo.save(rol);
+	    }
+
+	    Usuario usuarioExistente = empleadoExistente.getUsuario();
+	    usuarioExistente.setNombre_usuario(empleado.getUsuario().getNombre_usuario());
+	    usuarioExistente.setRol(rol);
+
+	    String nuevaContrasena = empleado.getUsuario().getContrasena();
+	    if (nuevaContrasena != null) {
+	        usuarioExistente.setContrasena(nuevaContrasena);
+	    }
+	    
+	    usuarioRepo.save(usuarioExistente);
+
+	    EmpleRepo.save(empleadoExistente);
+
+	    return "Empleado modificado con éxito";
+	}
+
 }

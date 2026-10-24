@@ -62,5 +62,24 @@ public class EmpleadoController {
 
 		return "Empleado/RegistrarEmpleado";
 	}
+	
+	@GetMapping("/modificar/empleado")
+	public String modificar(Model model,@RequestParam("id") int id) {		
+		
+	    Empleado empleado = empleService.buscarporid(id);
+    	model.addAttribute("editar", "editando");
+        model.addAttribute("empleado", empleado);
+        model.addAttribute("Listaempleados", empleService.ListarEmpleados());
+		model.addAttribute("ListaSectores", empleService.listarSector());
+        
+		
+		return "Empleado/RegistrarEmpleado";	
+	}
 
+	@PostMapping("/guardar/empleado/modificado")
+	public String guardarempleadoodificar(Empleado empleado, RedirectAttributes redirect) {
+	    redirect.addFlashAttribute("mensaje", empleService.modificarempleado(empleado));
+
+		return "redirect:/Alta/Empleado";
+	}
 }

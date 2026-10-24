@@ -13,4 +13,5 @@ public interface IEmpleadoRepository extends JpaRepository<Empleado, Integer> {
 	Empleado findByid(int id);
 	
 	List<Empleado> findByDNI(String DNI);
+	
 }

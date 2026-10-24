@@ -21,16 +21,15 @@
 					</p>
 				</div>
 				<article>
-					<div class="justify-content-center pr-5 pl-5 ">
-						<div>
+					<div class="row justify-content-center">
+						<div class="col-md-8">
 							<a th:href="@{/}" class="btn btn-secondary mb-3">
 								← Volver al inicio
 							</a>
 							<div class="shadow-lg p-2 bg-body-tertiary rounded">
-								
-								<h1 class="mb-4 text-center text-primary p-4 "> Registra Empleado</h1>
-								<form class="row g-2" method="post"	th:action="@{/GuardarEmpleado}" th:object="${empleado}">
-
+								<h3 class="mb-4 text-center text-primary"> Registra Empleado</h3>
+						<form class="row g-2" method="post"	th:action="${editar == null }? @{/GuardarEmpleado} : @{/guardar/empleado/modificado}" th:object="${empleado}">
+									<input type="hidden" th:field="*{id}">
 									<div class="col-md-6">
 									   <label class="form-label">Nombre</label>
 			  						   <input type="text" class="form-control form-control-sm" th:field="*{nombre}" required>
@@ -74,27 +73,38 @@
 										<label class="form-label">Número de calle</label>
 										<input type="text" class="form-control form-control-sm" th:field="*{direccion.numer_calle}" required>
 									</div>
-									<div class="col-md-6">
+									<div class="col-md-4">
 										<label class="form-label">Usuario</label>
 										<input type="text" class="form-control form-control-sm" th:field="*{usuario.nombre_usuario}" required>
 									</div>
-							        <div class="col-md-6">
-										<label class="form-label">Contraseña</label>
-									    <input type="password" class="form-control form-control-sm" th:field="*{usuario.contrasena}" required>
-									</div>
-										
-								    <div class="col-md-6">
+									<div class="col-md-4 pt-2">
 										<label class="form-label">Rol</label>
-				      					<select class="form-select form-select-sm" th:field="*{usuario.rol.nombre}" required>
+										<select class="form-select form-select-sm" th:field="*{usuario.rol.nombre}" required>
 											<option value="">Seleccione un rol...</option>
 											<option value="Administrativo"> Administrativo</option>
 											<option value="Jefa de Cocina">Jefa de cocina</option>
 											<option value="Cocinero">Cocinero/a</option>
-						                </select>
-	      							</div>
+							            </select>
+								    </div>								
+									<div class="col-mb-4 pt-4 pl-3" th:if="${editar != null}">
+									    <label class="form-label fw-bold text-secondary">Estado del Empleado</label>
+										<select class="form-select" th:field="*{estado.nombre}">
+											<option value=""> Seleccione un estado </option>
+											<option value="Habilitada">Habilitada</option>
+											<option value="Inhabilitado">Inhabilitado</option>
+										</select>
+									</div>
+							        <div class="col-md-4" th:if="${editar == null}">
+										<label class="form-label">Contraseña</label>
+									    <input type="password" class="form-control form-control-sm" th:field="*{usuario.contrasena}" required>
+									</div>
+							        <div class="col-md-8 pt-4 " th:unless="${editar == null}">
+										<label class="form-label">Nueva Contraseña (Dejar en blanco para mantener la actual)</label>
+										<input type="password" class="form-control form-control-sm" th:field="*{usuario.contrasena}">
+									</div>
 									<div class="col-12 mt-4 border-top pt-3">
 										<label class="form-label fw-bold text-secondary"> Sectores Asignados </label>
-										<p>Marque los secotres correspondientes o escribe uno nuevo:</p>
+										<p>Marque los sectores correspondientes o escribe uno nuevo:</p>
 										<div class="d-flex flex-row">
 											<div class="form-check form-check-inline"
 												th:each="sector : ${ListaSectores}">
@@ -118,63 +128,75 @@
 						</div>
 					</div>
 				</article>
-				<article>	
-							<div class="align-items-center p-3 mb-5 bg-body-tertiary rounded">
-								<form class="d-flex me-2" th:action="@{/Empleado/buscar}" method="post">
-									<input class="form-control me-2" type="text" name="DNI" placeholder="Buscar Empleado por su DNI">
-									<button class="btn btn-outline-success" type="submit">Buscar</button>
-								</form>	
-								<br>
-										<div class="table-responsive border border-primary">
-											<table class="table table-bordered table-striped table-hover mb-0">
-												<thead class="table-dark">
-													<tr class="text-center">
-														<th>ID</th>
-														<th>Nombre</th>
-														<th>Apellido</th>
-														<th>DNI</th>
-														<th>Fecha de Nacimiento</th>
-														<th>Calle</th>
-														<th>Barrio</th>
-														<th>Número de Calle</th>
-														<th>Correo</th>
-														<th>Teléfono</th>
-														<th>Usuario</th>
-														<th>Rol</th>
-														<th>Estado</th>
-														<th>Motivo</th>
-														<th>Acciones</th>
-													</tr>
-												</thead>
-
-												<tbody>
-													<tr th:each="e : ${Listaempleados}">
-														<td th:text="${e.id}"></td>
-														<td th:text="${e.nombre}"></td>
-														<td th:text="${e.apellido}"></td>
-														<td th:text="${e.DNI}"></td>
-														<td th:text="${e.fecha_nac}"></td>
-														<td th:text="${e.direccion.calle}"></td>
-														<td th:text="${e.direccion.barrio}"></td>
-														<td th:text="${e.direccion.numer_calle}"></td>
-														<td th:text="${e.contacto.correo}"></td>
-														<td th:text="${e.contacto.telefono}"></td>
-														<td th:text="${e.usuario.nombre_usuario}"></td>
-														<td th:text="${e.usuario.rol.nombre}"></td>
-														<td th:text="${e.estado.nombre}"></td>
-														<td th:text="${e.motivo}"></td>
-														<td>
-															<a class="btn btn-primary btn-sm" th:href="@{/ModificarEmpleado(id=${e.id})}">Modificar</a>
-															<a class="btn btn-warning btn-sm" th:href="@{/BajaEmpleado(id=${e.id})}">Baja</a>
-														</td>
-													</tr>
-												</tbody>
-											</table>
+				<br>
+				<article>
+					
+										<div class="align-items-center shadow-lg p-3 mb-5 bg-body-tertiary rounded">
+											
+											<form class="d-flex me-2" th:action="@{/Empleado/buscar}" method="post">
+												<input class="form-control me-2" type="text" name="DNI"
+													placeholder="Buscar Empleado por su DNI">
+												<button class="btn btn-outline-success" type="submit">Buscar</button>
+											</form>
+											<br>
+											
+											<div class="table-responsive">
+												<table class="table table-bordered table-striped table-hover mb-0">
+													<thead class="table-dark">
+														<tr class="text-center">
+															<th>ID</th>
+															<th>Nombre</th>
+															<th>Apellido</th>
+															<th>DNI</th>
+															<th>Fecha de Nacimiento</th>
+															<th>Calle</th>
+															<th>Barrio</th>
+															<th>Número de Calle</th>
+															<th>Correo</th>
+															<th>Teléfono</th>
+															<th>Usuario</th>
+															<th>Rol</th>
+															<th>Estado</th>
+															<th>Motivo</th>
+															<th>Acciones</th>
+														</tr>
+													</thead>
+					
+													<tbody>
+														<tr class="text-center" th:each="e : ${Listaempleados}">
+															<td th:text="${e.id}"></td>
+															<td th:text="${e.nombre}"></td>
+															<td th:text="${e.apellido}"></td>
+															<td th:text="${e.DNI}"></td>
+															<td th:text="${e.fecha_nac}"></td>
+															<td th:text="${e.direccion.calle}"></td>
+															<td th:text="${e.direccion.barrio}"></td>
+															<td th:text="${e.direccion.numer_calle}"></td>
+															<td th:text="${e.contacto.correo}"></td>
+															<td th:text="${e.contacto.telefono}"></td>
+															<td th:text="${e.usuario.nombre_usuario}"></td>
+															<td th:text="${e.usuario.rol.nombre}"></td>
+															<td>
+															    <span class="badge estado-badge"
+															          th:classappend="${e.estado.nombre == 'Habilitado'} ? ' bg-success' : ' bg-danger'"
+															          th:text="${e.estado.nombre}">
+															    </span>
+															</td>
+															<td th:text="${e.motivo}"></td>
+															<td class="text-nowrap">
+															    <a class="btn btn-primary btn-sm" th:href="@{/modificar/empleado(id=${e.id})}">Modificar</a>
+															    <a class="btn btn-warning btn-sm" th:href="@{/BajaEmpleado(id=${e.id})}">Baja</a>
+															</td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
 										</div>
-									</div>
-								</article>
+									</article>
+				
 			</div>
 		</section>
+		
 	</main>
 </body>
 
