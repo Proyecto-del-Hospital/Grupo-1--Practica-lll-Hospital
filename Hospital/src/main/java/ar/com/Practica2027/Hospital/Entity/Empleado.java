@@ -21,6 +21,7 @@ public class Empleado {
 	private String nombre;
 	private String apellido;
 	private String DNI;
+	private String fecha_nac;
 	private String motivo;
 
 	@OneToOne
@@ -59,7 +60,7 @@ public class Empleado {
 		super();
 	}
 
-	public Empleado(int id, String nombre, String apellido, String dNI, String motivo, Usuario usuario,
+	public Empleado(int id, String nombre, String apellido, String dNI,String fecha_nac, String motivo, Usuario usuario,
 			Direccion direccion, Contacto contacto, Estado estado, List<Det_Sector> sectores,
 			List<Solicitud> solicitudesregistradas, List<Entrega> entregasregistradas, List<Pedido> pedidosregistrados,
 			List<Det_Consumo> consumosregistrados) {
@@ -67,7 +68,8 @@ public class Empleado {
 		this.id = id;
 		this.nombre = nombre;
 		this.apellido = apellido;
-		DNI = dNI;
+		this.DNI = dNI;
+		this.fecha_nac=fecha_nac;
 		this.motivo = motivo;
 		this.usuario = usuario;
 		this.direccion = direccion;
@@ -111,6 +113,14 @@ public class Empleado {
 
 	public void setDNI(String dNI) {
 		DNI = dNI;
+	}
+
+	public String getFecha_nac() {
+		return fecha_nac;
+	}
+
+	public void setFecha_nac(String fecha_nac) {
+		this.fecha_nac = fecha_nac;
 	}
 
 	public String getMotivo() {
