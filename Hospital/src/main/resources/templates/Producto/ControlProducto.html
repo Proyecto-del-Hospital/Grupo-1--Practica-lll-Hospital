@@ -68,12 +68,12 @@
 									<div class="col-md-6">
 										<label class="form-label">Stock actual</label>
 										<input type="number" class="form-control form-control-sm"
-											th:field="*{stockactual}" placeholder="Ingrese el stock actual">
+											th:field="*{stockactual}" step="any" placeholder="Ingrese el stock actual">
 									</div>
 									<div class="col-md-6">
 										<label class="form-label">Stock mínimo</label>
 										<input type="number" class="form-control form-control-sm"
-											th:field="*{stockminimo}" required placeholder="Ingres el stock mínimo">
+											th:field="*{stockminimo}" step="any" required placeholder="Ingres el stock mínimo">
 									</div>
 									<div class="col-12 mt-4" th:if="${Editar != null}">
 										<label class="form-label">Estado del Producto</label>
@@ -134,7 +134,7 @@
 										<td><a class="btn btn-primary btn-sm"
 												th:href="@{/producto/formularioM(id=${p.id})}">Modificar</a>
 											<a class="btn btn-warning btn-sm"
-												th:href="@{/paciente/cambiarEstado(id=${p.id})}">Cambiar Estado</a>
+												th:href="@{/producto/cambiarEstado(id=${p.id})}">Cambiar Estado</a>
 										</td>
 									</tr>
 								</tbody>

@@ -137,8 +137,8 @@ public class ProductoService implements IProducto {
 					estadoRepo.save(estado);
 				}
 				productoExistente.setEstado(estado);
-			}else {
-				
+			} else {
+
 				Estado estado = estadoRepo.findBynombre(producto.getEstado().getNombre());
 
 				if (estado == null) {
@@ -149,7 +149,7 @@ public class ProductoService implements IProducto {
 				productoExistente.setEstado(estado);
 			}
 			productoRepo.save(productoExistente);
-			
+
 			return "Producto modificado con éxito";
 		}
 		return null;
@@ -159,6 +159,55 @@ public class ProductoService implements IProducto {
 	public Producto buscarProductoPorId(int id) {
 
 		return productoRepo.findByid(id);
+	}
+
+	@Override
+
+	public String CambiarEstado(Producto producto) {
+
+		Producto productoExistente = productoRepo.findByid(producto.getId());
+
+		if (productoExistente.getEstado().getNombre().equals("Disponible")
+				|| productoExistente.getEstado().getNombre().equals("Bajo Stock")) {
+
+			Estado estado = estadoRepo.findBynombre("Deshabilitado");
+
+			if (estado == null) {
+				estado = new Estado();
+				estado.setNombre("Deshabilitado");
+				estadoRepo.save(estado);
+			}
+
+			productoExistente.setEstado(estado);
+
+		} else if (productoExistente.getStockactual() <= productoExistente.getStockminimo()) {
+
+			Estado estado = estadoRepo.findBynombre("Bajo Stock");
+
+			if (estado == null) {
+				estado = new Estado();
+				estado.setNombre("Bajo Stock");
+				estadoRepo.save(estado);
+			}
+
+			productoExistente.setEstado(estado);
+
+		} else {
+
+			Estado estado = estadoRepo.findBynombre("Disponible");
+
+			if (estado == null) {
+				estado = new Estado();
+				estado.setNombre("Disponible");
+				estadoRepo.save(estado);
+			}
+
+			productoExistente.setEstado(estado);
+		}
+
+		productoRepo.save(productoExistente);
+
+		return null;
 	}
 
 }

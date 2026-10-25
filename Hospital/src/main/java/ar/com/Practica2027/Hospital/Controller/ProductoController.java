@@ -51,4 +51,9 @@ public class ProductoController {
 		
 		return "redirect:/controlproducto";
 	}
+	@GetMapping ("/producto/cambiarEstado")
+	public String CambiarEstado (Producto producto) {
+		productoserv.CambiarEstado(producto);
+		return "redirect:/controlproducto";
+	}
 }

@@ -10,4 +10,5 @@ public interface IProducto {
 	Producto buscarProducto (String nombre);
 	String ModificarProducto (Producto producto);
 	Producto buscarProductoPorId (int id);
+	String CambiarEstado (Producto producto);
 }
