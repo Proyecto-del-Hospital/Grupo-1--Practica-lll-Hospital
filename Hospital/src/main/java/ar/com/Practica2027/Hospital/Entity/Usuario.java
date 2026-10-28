@@ -14,7 +14,7 @@ public class Usuario {
 	@Id
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	private int id;
-	private String nombre_usuario;
+	private String nombreu;
 	private String contrasena;
 	
 	@ManyToOne
@@ -28,10 +28,10 @@ public class Usuario {
 		super();
 	}
 
-	public Usuario(int id, String nombre_usuario, String contrasena, Rol rol, Empleado empleado) {
+	public Usuario(int id, String nombreu, String contrasena, Rol rol, Empleado empleado) {
 		super();
 		this.id = id;
-		this.nombre_usuario = nombre_usuario;
+		this.nombreu = nombreu;
 		this.contrasena = contrasena;
 		this.rol = rol;
 		this.empleado = empleado;
@@ -45,12 +45,12 @@ public class Usuario {
 		this.id = id;
 	}
 
-	public String getNombre_usuario() {
-		return nombre_usuario;
+	public String getNombreu() {
+		return nombreu;
 	}
 
-	public void setNombre_usuario(String nombre_usuario) {
-		this.nombre_usuario = nombre_usuario;
+	public void setNombreu(String nombreu) {
+		this.nombreu = nombreu;
 	}
 
 	public String getContrasena() {
@@ -76,4 +76,5 @@ public class Usuario {
 	public void setEmpleado(Empleado empleado) {
 		this.empleado = empleado;
 	}
+	
 }
