@@ -18,8 +18,8 @@ public class Factura {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
-	private String num_factura;
-	private String fecha_emision;
+	private String numfactura;
+	private String fechaemision;
 	private double total;
 
 	@ManyToOne
@@ -34,12 +34,12 @@ public class Factura {
 	@OneToMany(mappedBy = "factura")
 	private List<Det_Factura> detallesFactura = new ArrayList<>();
 
-	public Factura(int id, String num_factura, String fecha_emision, double total, Proveedor proveedor, Pedido pedido,
+	public Factura(int id, String numfactura, String fechaemision, double total, Proveedor proveedor, Pedido pedido,
 			List<Det_Factura> detallesFactura) {
 		super();
 		this.id = id;
-		this.num_factura = num_factura;
-		this.fecha_emision = fecha_emision;
+		this.numfactura = numfactura;
+		this.fechaemision = fechaemision;
 		this.total = total;
 		this.proveedor = proveedor;
 		this.pedido = pedido;
@@ -58,20 +58,20 @@ public class Factura {
 		this.id = id;
 	}
 
-	public String getNum_factura() {
-		return num_factura;
+	public String getNumfactura() {
+		return numfactura;
 	}
 
-	public void setNum_factura(String num_factura) {
-		this.num_factura = num_factura;
+	public void setNumfactura(String numfactura) {
+		this.numfactura = numfactura;
 	}
 
-	public String getFecha_emision() {
-		return fecha_emision;
+	public String getFechaemision() {
+		return fechaemision;
 	}
 
-	public void setFecha_emision(String fecha_emision) {
-		this.fecha_emision = fecha_emision;
+	public void setFechaemision(String fechaemision) {
+		this.fechaemision = fechaemision;
 	}
 
 	public double getTotal() {

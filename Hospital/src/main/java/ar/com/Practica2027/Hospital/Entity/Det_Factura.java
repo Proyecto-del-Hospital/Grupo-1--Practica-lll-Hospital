@@ -14,7 +14,7 @@ public class Det_Factura {
 	private int id;
 
 	private double cantidad;
-	private double precio_unitario;
+	private double preciounitario;
 	private double subtotal;
 
 	@ManyToOne
@@ -25,12 +25,12 @@ public class Det_Factura {
 	@JoinColumn(name = "id_producto")
 	private Producto producto;
 
-	public Det_Factura(int id, int cantidad, float precio_unitario, float subtotal, Factura factura,
+	public Det_Factura(int id, int cantidad, float preciounitario, float subtotal, Factura factura,
 			Producto producto) {
 		super();
 		this.id = id;
 		this.cantidad = cantidad;
-		this.precio_unitario = precio_unitario;
+		this.preciounitario = preciounitario;
 		this.subtotal = subtotal;
 		this.factura = factura;
 		this.producto = producto;
@@ -56,12 +56,12 @@ public class Det_Factura {
 		this.cantidad = cantidad;
 	}
 
-	public double getPrecio_unitario() {
-		return precio_unitario;
+	public double getPreciounitario() {
+		return preciounitario;
 	}
 
-	public void setPrecio_unitario(double precio_unitario) {
-		this.precio_unitario = precio_unitario;
+	public void setPreciounitario(double preciounitario) {
+		this.preciounitario = preciounitario;
 	}
 
 	public double getSubtotal() {
