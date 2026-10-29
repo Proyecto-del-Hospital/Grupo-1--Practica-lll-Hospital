@@ -1,20 +1,17 @@
 package ar.com.Practica2027.Hospital.ServiceImple;
 
 
-import java.time.LocalDate;
 import java.util.List;
 
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ar.com.Practica2027.Hospital.Entity.Contacto;
 import ar.com.Practica2027.Hospital.Entity.Det_Sector;
-import ar.com.Practica2027.Hospital.Entity.Dieta;
-import ar.com.Practica2027.Hospital.Entity.DietaMovimiento;
 import ar.com.Practica2027.Hospital.Entity.Direccion;
 import ar.com.Practica2027.Hospital.Entity.Empleado;
 import ar.com.Practica2027.Hospital.Entity.Estado;
-import ar.com.Practica2027.Hospital.Entity.Paciente;
 import ar.com.Practica2027.Hospital.Entity.Rol;
 import ar.com.Practica2027.Hospital.Entity.Sector;
 import ar.com.Practica2027.Hospital.Entity.Usuario;
@@ -27,6 +24,7 @@ import ar.com.Practica2027.Hospital.Repository.IRolRepository;
 import ar.com.Practica2027.Hospital.Repository.ISectorRepository;
 import ar.com.Practica2027.Hospital.Repository.IUsuarioRepository;
 import ar.com.Practica2027.Hospital.Service.IEmpledo;
+import org.mindrot.jbcrypt.BCrypt;
 
 @Service
 public class EmpleadoService implements IEmpledo{
@@ -69,7 +67,7 @@ public class EmpleadoService implements IEmpledo{
 		return "El dni ya existe";
 		}
 		// se agrego la validadcion de que no se repita el usuario
-		if (e.getUsuario().getNombre_usuario().equalsIgnoreCase(empleado.getUsuario().getNombre_usuario())) {
+		if (e.getUsuario().getNombreu().equalsIgnoreCase(empleado.getUsuario().getNombreu())) {
 			return "El Usuario ya Existe";
 			}
 		}
@@ -99,6 +97,11 @@ public class EmpleadoService implements IEmpledo{
 		empleado.setContacto(contacto);
 		empleado.setEstado(estado);
 		empleado.setMotivo("-");
+		
+		String empleadodesencritado = empleado.getUsuario().getContrasena();
+	    String empleadoencritado =  BCrypt.hashpw(empleadodesencritado, BCrypt.gensalt());
+		empleado.getUsuario().setContrasena(empleadoencritado);
+		
 		EmpleRepo.save(empleado);
 		
 		for (Integer id : sectoresids) {
@@ -158,8 +161,8 @@ public class EmpleadoService implements IEmpledo{
 	            if (e.getDNI().equalsIgnoreCase(empleado.getDNI())) {
 	                return "El dni ya existe";
 	            }
-	            if (e.getUsuario().getNombre_usuario()
-	                    .equalsIgnoreCase(empleado.getUsuario().getNombre_usuario())) {
+	            if (e.getUsuario().getNombreu()
+	                    .equalsIgnoreCase(empleado.getUsuario().getNombreu())) {
 	                return "El Usuario ya Existe";
 	            }
 	        }
@@ -190,7 +193,7 @@ public class EmpleadoService implements IEmpledo{
 	    }
 
 	    Usuario usuarioExistente = empleadoExistente.getUsuario();
-	    usuarioExistente.setNombre_usuario(empleado.getUsuario().getNombre_usuario());
+	    usuarioExistente.setNombreu(empleado.getUsuario().getNombreu());
 	    usuarioExistente.setRol(rol);
 
 	    String nuevaContrasena = empleado.getUsuario().getContrasena();
