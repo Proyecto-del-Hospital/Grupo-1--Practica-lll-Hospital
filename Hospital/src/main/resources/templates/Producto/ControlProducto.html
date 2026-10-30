@@ -73,11 +73,13 @@
 									<div class="col-md-6">
 										<label class="form-label">Stock mínimo</label>
 										<input type="number" class="form-control form-control-sm"
-											th:field="*{stockminimo}" step="any" required placeholder="Ingres el stock mínimo">
+											th:field="*{stockminimo}" step="any" required
+											placeholder="Ingres el stock mínimo">
 									</div>
 									<div class="col-12 mt-4" th:if="${Editar != null}">
 										<label class="form-label">Estado del Producto</label>
-										<select class="form-control form-control-sm" th:field="*{estado.nombre}">
+										<select class="form-control form-control-sm" th:field="*{estado.nombre}"
+											required>
 											<option value="">Seleccione un Estado</option>
 											<option value="Disponible">Disponible</option>
 											<option value="Deshabilitado">Deshabilitado</option>
@@ -99,6 +101,19 @@
 								placeholder="Buscar producto por nombre">
 							<button class="btn btn-outline-success" type="submit">Buscar</button>
 						</form>
+						<br>
+						<div class="row justify-content-center ">
+							<a class="btn btn-success m-2" th:href="@{/producto/filtrar(nombre='Disponible')}">
+								Disponible
+							</a>
+							<a class="btn btn-warning text-dark m-2" th:href="@{/producto/filtrar(nombre='Bajo Stock')}">
+								Bajo Stock
+							</a>
+							<a class="btn btn-danger m-2" th:href="@{/producto/filtrar(nombre='Deshabilitado')}">
+								Deshabilitado
+							</a>
+							<a class="btn btn-secondary m-2" th:href="@{/controlproducto}">Todos</a>
+						</div>
 						<br>
 						<div class="table-responsive">
 							<table class="table table-bordered table-striped table-hover tabla-pacientes mb-0">

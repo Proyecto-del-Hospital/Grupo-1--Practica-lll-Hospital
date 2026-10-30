@@ -1,5 +1,7 @@
 package ar.com.Practica2027.Hospital.Controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -55,5 +57,12 @@ public class ProductoController {
 	public String CambiarEstado (Producto producto) {
 		productoserv.CambiarEstado(producto);
 		return "redirect:/controlproducto";
+	}
+	@GetMapping ("/producto/filtrar")
+	public String filtrarProducto (Model model, String nombre) {
+		List<Producto> ListarProductos = productoserv.BuscarEstado(nombre);
+		model.addAttribute("producto", new Producto());
+		model.addAttribute("ListaProductos", ListarProductos);
+		return "Producto/ControlProducto";
 	}
 }

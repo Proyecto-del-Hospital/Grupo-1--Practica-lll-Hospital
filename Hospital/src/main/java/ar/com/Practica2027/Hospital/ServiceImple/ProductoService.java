@@ -41,7 +41,6 @@ public class ProductoService implements IProducto {
 		Tipo tipo = tipoRepo.findBynombre(producto.getTipo().getNombre());
 		SubTipo subtipo = subtipoRepo.findBynombre(producto.getSubtipo().getNombre());
 		Unidad unidad = unidadRepo.findBynombre(producto.getUnidad().getNombre());
-		Estado estado = estadoRepo.findBynombre("Disponible");
 
 		List<Producto> productos = productoRepo.findAll();
 
@@ -50,10 +49,23 @@ public class ProductoService implements IProducto {
 				return "El producto ya existe";
 			}
 		}
-		if (estado == null) {
-			estado = new Estado();
-			estado.setNombre("Disponible");
-			estadoRepo.save(estado);
+
+		if (producto.getStockactual() <= producto.getStockminimo()) {
+			Estado estado = estadoRepo.findBynombre("Bajo Stock");
+			if (estado == null) {
+				estado = new Estado();
+				estado.setNombre("Bajo Stock");
+				estadoRepo.save(estado);
+			}
+			producto.setEstado(estado);
+		} else {
+			Estado estado = estadoRepo.findBynombre("Disponible");
+			if (estado == null) {
+				estado = new Estado();
+				estado.setNombre("Disponible");
+				estadoRepo.save(estado);
+			}
+			producto.setEstado(estado);
 		}
 		if (unidad == null) {
 			unidad = new Unidad();
@@ -74,7 +86,7 @@ public class ProductoService implements IProducto {
 		producto.setTipo(tipo);
 		producto.setSubtipo(subtipo);
 		producto.setUnidad(unidad);
-		producto.setEstado(estado);
+		
 
 		productoRepo.save(producto);
 
@@ -204,10 +216,17 @@ public class ProductoService implements IProducto {
 
 			productoExistente.setEstado(estado);
 		}
-		//feliz navidad :)
+		// feliz navidad :)
 		productoRepo.save(productoExistente);
 
 		return null;
 	}
+
+	@Override
+	public List<Producto> BuscarEstado(String nombre) {
+		
+		return productoRepo.findByEstadoNombre(nombre);
+	}
+
 
 }
