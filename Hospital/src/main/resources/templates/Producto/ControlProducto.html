@@ -76,15 +76,6 @@
 											th:field="*{stockminimo}" step="any" required
 											placeholder="Ingres el stock mínimo">
 									</div>
-									<div class="col-12 mt-4" th:if="${Editar != null}">
-										<label class="form-label">Estado del Producto</label>
-										<select class="form-control form-control-sm" th:field="*{estado.nombre}"
-											required>
-											<option value="">Seleccione un Estado</option>
-											<option value="Disponible">Disponible</option>
-											<option value="Deshabilitado">Deshabilitado</option>
-										</select>
-									</div>
 									<div class="col-12 mt-4">
 										<button type="submit" class="btn btn-primary w-100">Guardar</button>
 									</div>

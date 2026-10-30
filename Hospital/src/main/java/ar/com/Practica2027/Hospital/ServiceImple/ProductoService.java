@@ -150,12 +150,12 @@ public class ProductoService implements IProducto {
 				}
 				productoExistente.setEstado(estado);
 			} else {
-
-				Estado estado = estadoRepo.findBynombre(producto.getEstado().getNombre());
+				
+				Estado estado = estadoRepo.findBynombre("Disponible");
 
 				if (estado == null) {
 					estado = new Estado();
-					estado.setNombre(producto.getEstado().getNombre());
+					estado.setNombre("Disponible");
 					estadoRepo.save(estado);
 				}
 				productoExistente.setEstado(estado);
