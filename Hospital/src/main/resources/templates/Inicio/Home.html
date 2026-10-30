@@ -26,6 +26,10 @@
 								Paciente</a>
 						</li>
 						<li class="nav-item">
+							<a class="nav-link active" aria-current="page" th:href="@{/controlproducto}">Control de
+								Producto</a>
+						</li>
+						<li>
 							<a class="nav-link active" aria-current="page" th:href="@{/dieta/ControlDieta}">Control de
 								Dieta</a>
 						</li>
@@ -37,8 +41,8 @@
 			</div>
 		</nav>
 		<div th:if="${mensaje}" class="alert alert-danger">
-							<p th:text="${mensaje}"></p>
-						</div>
+			<p th:text="${mensaje}"></p>
+		</div>
 	</header>
 	<script th:src="@{/js/bootstrap.min.js}"></script>
 	<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
