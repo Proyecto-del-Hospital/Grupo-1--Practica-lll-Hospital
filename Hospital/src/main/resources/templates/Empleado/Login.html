@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Iniciar Sesión</title>
+    <link rel="stylesheet" th:href="@{/CSS/bootstrap.min.css}">
+</head>
+<body class="bg-light d-flex align-items-center justify-content-center" style="height: 100vh;">
+
+    <div class="card shadow-lg p-4" style="width: 25rem;">
+        <h3 class="text-center text-primary mb-4">Acceso al Sistema</h3>
+        
+        <div th:if="${error}" class="alert alert-danger text-center" th:text="${error}"></div>
+        
+        <form th:action="@{/Login/Registrado}" method="post" >
+            <div class="mb-3">
+                <label class="form-label fw-bold">Usuario</label>
+                <input type="text" class="form-control" name="nombreu">
+            </div>
+            <div class="mb-4">
+                <label class="form-label fw-bold">Contraseña</label>
+                <input type="password" class="form-control" name="contrasena" required>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Ingresar</button>
+        </form>
+    </div>
+
+</body>
+</html>

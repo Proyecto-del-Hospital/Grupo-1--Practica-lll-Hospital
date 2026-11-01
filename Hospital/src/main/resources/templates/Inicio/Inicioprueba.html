@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" th:href="@{/CSS/bootstrap.min.css}">
+	<link rel="stylesheet" th:href="@{/CSS/bootstrap.css}">
+	<title>Hospital</title>
+</head>
+
+<body>
+	<header>
+		<nav th:fragment="navbarprueba" class="navbar navbar-expand-lg bg-body-tertiary navbar navbar-dark bg-dark">
+			<div class="d-flex text-white align-items-center">
+			            <span class="me-3" th:text="'Hola, ' + ${session.empleadologueado.nombre} + ' (' + ${session.empleadologueado.usuario.rol.nombre} + ')'"></span>
+			</div>
+			<div class="container-fluid">
+				<a class="navbar-brand" th:href="@{/}">Inicio</a>
+				<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+					data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+					aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+					<ul class="navbar-nav me-auto mb-2 mb-lg-0" th:if="${session.empleadologueado.usuario.rol.nombre == 'Jefa de Cocina'}">
+					    <li class="nav-item"  >
+						<a class="nav-link active" aria-current="page" th:href="@{/dieta/ControlDieta}">Control de
+								Dieta</a>
+						</li>
+						<li class="nav-item">
+			     		<a class="nav-link active" aria-current="page" th:href="@{/paciente/formulario}">Control de
+								Paciente</a>
+						</li>
+						<li class="nav-item">
+						<a class="nav-link active" aria-current="page" th:href="@{/Alta/Empleado}">Control de Empleado</a>
+						</li>
+						<li class="nav-item">
+						<a class="nav-link active" aria-current="page" th:href="@{/controlproducto}">Control de
+							Producto</a>
+						</li>
+					</ul>
+					<ul class="navbar-nav me-auto mb-2 mb-lg-0" th:if="${session.empleadologueado.usuario.rol.nombre == 'Administrador'}">
+						<li class="nav-item">
+						<a class="nav-link active" aria-current="page" th:href="@{/proveedor/control}">Control de Proveedor</a>
+						</li>
+						<li class="nav-item">
+						<a class="nav-link active" aria-current="page" th:href="@{/Alta/Empleado}">Control de Empleado</a>
+						</li>
+						<li class="nav-item">
+						<a class="nav-link active" aria-current="page" th:href="@{/controlproducto}">Control de
+							Producto</a>
+						</li>
+					</ul>
+					<ul class="navbar-nav me-auto mb-2 mb-lg-0" th:if="${session.empleadologueado.usuario.rol.nombre == 'Cocinero'}">
+					   <li class="nav-item"  >
+						<a class="nav-link active" aria-current="page" th:href="@{/dieta/ControlDieta}">Control de
+								Dieta</a>
+						</li>
+						<li class="nav-item">
+						<a class="nav-link active" aria-current="page" th:href="@{/controlproducto}">Control de
+							Producto</a>
+						</li>
+					</ul>
+					<ul class="navbar-nav me-auto mb-2 mb-lg-0" th:if="${session.empleadologueado.usuario.rol.nombre == 'Encargado'}">
+						<li class="nav-item">
+					    <a class="nav-link active" aria-current="page" th:href="@{/controlproducto}">Control de
+							Producto</a>
+						</li>
+					</ul>
+					<li class="nav-item">
+							<a class="nav-link active" aria-current="page" th:href="@{/Inicio/Login}">Cerrar Sesion</a>
+					</li>			
+					
+				</div>
+			</div>
+		</nav>
+		<div th:if="${mensaje}" class="alert alert-danger">
+							<p th:text="${mensaje}"></p>
+						</div>
+	</header>
+	<script th:src="@{/js/bootstrap.min.js}"></script>
+	<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</body>
+
+</html>

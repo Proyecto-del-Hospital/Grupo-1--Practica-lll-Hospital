@@ -10,7 +10,7 @@
 
 <body>
 	<header>
-		<div th:replace="Inicio/Home::navbar"></div>
+		<div th:replace="Inicio/Inicioprueba::navbarprueba"></div>
 	</header>
 	<main>
 		<section>
@@ -20,7 +20,7 @@
 					<p th:text="${mensaje}">
 					</p>
 				</div>
-				<article>
+				<article th:if="${session.empleadologueado.usuario.rol.nombre == 'Jefa de Cocina'}">
 					<div class="justify-content-center pr-5 pl-5 ">
 							<a th:href="@{/}" class="btn btn-secondary mb-3">
 								← Volver al inicio
@@ -198,11 +198,11 @@
 										<!--Botones-->
 										<td>
 											<div>
-												<a class="btn btn-warning btn-sm"
+												<a class="btn btn-warning btn-sm" th:if="${session.empleadologueado.usuario.rol.nombre == 'Jefa de Cocina' }"
 													th:href="@{/dieta/editar(id=${d.id})}">
 													Editar
 												</a>
-												<a class="btn btn-danger btn-sm"
+												<a class="btn btn-danger btn-sm"th:if="${session.empleadologueado.usuario.rol.nombre == 'Jefa de Cocina' }"
 													th:href="@{/dieta/cambiarEstado(id=${d.id})}">
 													Cambiar Estado
 												</a>

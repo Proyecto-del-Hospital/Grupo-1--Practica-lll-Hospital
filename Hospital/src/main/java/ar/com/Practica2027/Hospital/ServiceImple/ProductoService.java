@@ -116,7 +116,7 @@ public class ProductoService implements IProducto {
 		if (productoExistente != null) {
 
 			productoExistente.setNombre(producto.getNombre());
-			productoExistente.setMotivo("-");
+			productoExistente.setMotivo(producto.getMotivo());
 			productoExistente.setStockactual(producto.getStockactual());
 			productoExistente.setStockminimo(producto.getStockminimo());
 
