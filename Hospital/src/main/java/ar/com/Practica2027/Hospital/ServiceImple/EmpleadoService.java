@@ -195,10 +195,14 @@ public class EmpleadoService implements IEmpledo{
 	    Usuario usuarioExistente = empleadoExistente.getUsuario();
 	    usuarioExistente.setNombreu(empleado.getUsuario().getNombreu());
 	    usuarioExistente.setRol(rol);
-
-	    String nuevaContrasena = empleado.getUsuario().getContrasena();
-	    if (nuevaContrasena != null) {
-	        usuarioExistente.setContrasena(nuevaContrasena);
+	    
+	    String empleadodesencritado = empleado.getUsuario().getContrasena();
+	    String empleadoencritado =  BCrypt.hashpw(empleadodesencritado, BCrypt.gensalt());
+		empleadoExistente.getUsuario().setContrasena(empleadoencritado);
+	    
+		
+	    if (empleadodesencritado != null) {
+	        usuarioExistente.setContrasena(empleadoencritado);
 	    }
 	    
 	    usuarioRepo.save(usuarioExistente);

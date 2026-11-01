@@ -15,7 +15,7 @@
 	<main>
 		<section>
 			<div class="justify-content-center w-100 p-5">
-				<article>
+				<article th:if="${session.empleadologueado.usuario.rol.nombre == 'Administrador'}">
 					<div class="row justify-content-center">
 						<div class="col-md-8">
 							<div th:if="${mensaje}" class="alert alert-info text-center">
@@ -122,9 +122,9 @@
 																th:text="${pr.estado.nombre}">
 															</span></td>
 														<td th:text="${pr.motivo}"></td>
-														<td><a class="btn btn-primary btn-sm"
+														<td><a class="btn btn-primary btn-sm" th:if="${session.empleadologueado.usuario.rol.nombre == 'Administrador' }"
 																th:href="@{/Formulario/Modificar/proveedor(id=${pr.id})}">Modificar</a>
-															<a class="btn btn-warning btn-sm"
+															<a class="btn btn-warning btn-sm" th:if="${session.empleadologueado.usuario.rol.nombre == 'Administrador' }"
 																th:href="@{/proveedor/cambiarEstado(id=${pr.id})}">Cambiar Estado</a>
 														</td>
 													</tr>

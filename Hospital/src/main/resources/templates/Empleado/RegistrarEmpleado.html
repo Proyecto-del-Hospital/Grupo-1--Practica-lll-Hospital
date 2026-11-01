@@ -82,6 +82,7 @@
 										<select th:if="${session.empleadologueado.usuario.rol.nombre == 'Administrador'}"  class="form-select form-select-sm" th:field="*{usuario.rol.nombre}" required>
 											<option value="">Seleccione un rol...</option>
 											<option value="Administrador"> Administrador</option>
+											<option value="Encargado">Encargado</option>
 											<option value="Jefa de Cocina">Jefa de cocina</option>
 											<option value="Cocinero">Cocinero/a</option>
 							            </select>
