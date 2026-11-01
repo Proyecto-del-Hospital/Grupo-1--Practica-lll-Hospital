@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import ar.com.Practica2027.Hospital.Entity.Empleado;
+import ar.com.Practica2027.Hospital.Service.IEmpledo;
 import ar.com.Practica2027.Hospital.Service.ILogin;
 import jakarta.servlet.http.HttpSession;
 
@@ -17,8 +18,14 @@ public class LoginController {
 	@Autowired
 	private ILogin loginService;
 	
+	@Autowired
+	private IEmpledo empleadoservice;
+	
 	@GetMapping ("/Inicio/Login")
-	public String MostrarInicio () {
+	public String MostrarInicio (HttpSession session) {
+		
+		empleadoservice.inicializardatos();
+		session.removeAttribute("empleadologueado");
 		
 		return "Empleado/Login";
 	}
@@ -29,11 +36,11 @@ public class LoginController {
 		
 		if (empleadoLogueado != null) {
 			session.setAttribute("empleadologueado", empleadoLogueado);
-			return "Inicio/Home";
+			return "Inicio/Inicioprueba";
 			
 			
 		}else {
-			model.addAttribute("error", "Usuario o Contraseña Incorrecta");
+			model.addAttribute("error", "Datos no Encontrados");
 			return "Empleado/Login";
 		}
 	}

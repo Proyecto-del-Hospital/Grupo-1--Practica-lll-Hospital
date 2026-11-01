@@ -15,4 +15,5 @@ public interface IEmpledo {
 	Empleado buscarporid(int id);
 	String modificarempleado(Empleado empleado);
 	String CambiarEstadoempleado(Empleado empleado);
+	void inicializardatos();
 }

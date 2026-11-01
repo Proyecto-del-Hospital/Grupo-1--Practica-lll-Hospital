@@ -22,11 +22,19 @@ public class LoginService implements ILogin{
 	@Override
 	public Empleado autenticar(String nombreu, String contraseña) {
 			Usuario loginempleado = loginrepo.findByNombreu(nombreu);
+		if(loginempleado == null) {
+			return null;
 		
+		}
 			if (loginempleado.getNombreu().equalsIgnoreCase(nombreu)) {
 				
 				if (BCrypt.checkpw(contraseña, loginempleado.getContrasena())) {
-					return loginempleado.getEmpleado();
+					
+					if (!loginempleado.getEmpleado().getEstado().getNombre().equalsIgnoreCase("Inhabilitado")) {
+
+						return loginempleado.getEmpleado();
+					}
+					
 				}
 			}
 		return null;

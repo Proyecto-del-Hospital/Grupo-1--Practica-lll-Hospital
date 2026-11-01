@@ -246,6 +246,60 @@ public class EmpleadoService implements IEmpledo{
 	      }
 		return "";
 		}
+
+	@Override
+	public void inicializardatos() {
+		if (rolRepo.findAll().isEmpty()) {
+	        Rol r1 = new Rol(); 
+	        r1.setNombre("Administrador");
+	        rolRepo.save(r1);
+	        Rol r2 = new Rol(); 
+	        r2.setNombre("Jefa de Cocina"); 
+	        rolRepo.save(r2);
+	        Rol r3 = new Rol(); 
+	        r3.setNombre("Cocinero"); 
+	        rolRepo.save(r3);
+	    }
+
+	    if (estadoRepo.findAll().isEmpty()) {
+	        Estado e1 = new Estado(); 
+	        e1.setNombre("Habilitado"); 
+	        estadoRepo.save(e1);
+	        Estado e2 = new Estado(); 
+	        e2.setNombre("Inhabilitado"); 
+	        estadoRepo.save(e2);
+	    }
+
+	    if (usuarioRepo.findAll().isEmpty()) {
+	        
+	        Direccion dir = new Direccion();
+	        dir = direccionRepo.save(dir);
+
+	        Contacto con = new Contacto();
+	        con = contactoRepo.save(con);
+
+	        Empleado admin = new Empleado();
+	        admin.setNombre("Super");
+	        admin.setApellido("Administrador");
+	        admin.setDNI("00000000");
+	        admin.setMotivo("-");
+	        admin.setDireccion(dir);
+	        admin.setContacto(con);
+	        admin.setEstado(estadoRepo.findBynombre("Habilitado"));
+	        
+	        admin = EmpleRepo.save(admin);
+
+	        Usuario usuAdmin = new Usuario();
+	        usuAdmin.setNombreu("admin");
+	        usuAdmin.setContrasena(BCrypt.hashpw("admin123", BCrypt.gensalt()));
+	        usuAdmin.setRol(rolRepo.findBynombre("Administrador"));
+	        usuAdmin.setEmpleado(admin);
+	        
+	        usuAdmin = usuarioRepo.save(usuAdmin);
+
+	        admin.setUsuario(usuAdmin);
+	        EmpleRepo.save(admin);
+	        
+	    }
 	}
-
-
+}
