@@ -11,12 +11,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ar.com.Practica2027.Hospital.Entity.Producto;
-import ar.com.Practica2027.Hospital.ServiceImple.ProductoService;
+import ar.com.Practica2027.Hospital.Service.IProducto;
+
 
 @Controller
 public class ProductoController {
 	@Autowired
-	private ProductoService productoserv;
+	private IProducto productoserv;
 	
 	@GetMapping ("/controlproducto")
 	public String ControlP (Model model) {

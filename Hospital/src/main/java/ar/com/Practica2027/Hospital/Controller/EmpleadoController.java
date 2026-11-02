@@ -1,6 +1,6 @@
 package ar.com.Practica2027.Hospital.Controller;
 
-import java.net.http.HttpClient;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,14 +13,15 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ar.com.Practica2027.Hospital.Entity.Empleado;
 import ar.com.Practica2027.Hospital.Entity.Sector;
-import ar.com.Practica2027.Hospital.ServiceImple.EmpleadoService;
-import jakarta.servlet.http.HttpSession;
+import ar.com.Practica2027.Hospital.Service.IEmpledo;
+
+
 
 @Controller
 public class EmpleadoController {
 
 	@Autowired
-	private EmpleadoService empleService;
+	private IEmpledo empleService;
 
 	@GetMapping("/Alta/Empleado")
 	public String RegistrarEmpleado(Model model) {
