@@ -17,16 +17,20 @@ public class Tipo {
 
 	@OneToMany(mappedBy = "tipo")
 	private List<Producto> productos;
+	
+	@OneToMany (mappedBy = "tipo")
+	private List<ProductoCocina> productosCocina;
 
 	public Tipo() {
 		super();
 	}
 
-	public Tipo(int id, String nombre, List<Producto> productos) {
+	public Tipo(int id, String nombre, List<Producto> productos, List<ProductoCocina> productosCocina) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
 		this.productos = productos;
+		this.productosCocina = productosCocina;
 	}
 
 	public int getId() {
@@ -52,5 +56,15 @@ public class Tipo {
 	public void setProductos(List<Producto> productos) {
 		this.productos = productos;
 	}
+
+	public List<ProductoCocina> getProductosCocina() {
+		return productosCocina;
+	}
+
+	public void setProductosCocina(List<ProductoCocina> productosCocina) {
+		this.productosCocina = productosCocina;
+	}
+	
+	
 
 }

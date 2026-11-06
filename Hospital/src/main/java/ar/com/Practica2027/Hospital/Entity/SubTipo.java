@@ -17,16 +17,20 @@ public class SubTipo {
 
 	@OneToMany(mappedBy = "subtipo")
 	private List<Producto> productos;
+	
+	@OneToMany (mappedBy = "subtipo")
+	private List<ProductoCocina> productosCocina;
 
 	public SubTipo() {
 		super();
 	}
 
-	public SubTipo(int id, String nombre, List<Producto> productos) {
+	public SubTipo(int id, String nombre, List<Producto> productos, List<ProductoCocina> productosCocina) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
 		this.productos = productos;
+		this.productosCocina = productosCocina;
 	}
 
 	public int getId() {
@@ -53,4 +57,13 @@ public class SubTipo {
 		this.productos = productos;
 	}
 
+	public List<ProductoCocina> getProductosCocina() {
+		return productosCocina;
+	}
+
+	public void setProductosCocina(List<ProductoCocina> productosCocina) {
+		this.productosCocina = productosCocina;
+	}
+	
+	
 }

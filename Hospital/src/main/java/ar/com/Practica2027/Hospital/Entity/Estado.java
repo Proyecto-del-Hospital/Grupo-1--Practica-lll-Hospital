@@ -35,6 +35,9 @@ public class Estado {
 	
 	@OneToMany (mappedBy = "estado")
 	private List<Dieta> dietas;
+	
+	@OneToMany (mappedBy = "estado")
+	private List<ProductoCocina> productosCocina;
 
 	public Estado() {
 		super();
@@ -42,7 +45,7 @@ public class Estado {
 
 	public Estado(int id, String nombre, List<Empleado> empleados, List<Paciente> pacientes,
 			List<Proveedor> proveedores, List<Pedido> pedidos, List<Solicitud> solicitudes, List<Producto> productos,
-			List<Dieta> dietas) {
+			List<Dieta> dietas, List<ProductoCocina> productosCocina) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
@@ -53,6 +56,7 @@ public class Estado {
 		this.solicitudes = solicitudes;
 		this.productos = productos;
 		this.dietas = dietas;
+		this.productosCocina = productosCocina;
 	}
 
 	public int getId() {
@@ -125,6 +129,14 @@ public class Estado {
 
 	public void setDietas(List<Dieta> dietas) {
 		this.dietas = dietas;
+	}
+
+	public List<ProductoCocina> getProductosCocina() {
+		return productosCocina;
+	}
+
+	public void setProductosCocina(List<ProductoCocina> productosCocina) {
+		this.productosCocina = productosCocina;
 	}
 	
 	

@@ -17,16 +17,20 @@ public class Unidad {
 
 	@OneToMany(mappedBy = "unidad")
 	private List<Producto> productos;
+	
+	@OneToMany(mappedBy = "unidad")
+	private List<ProductoCocina> productosCocina;
 
 	public Unidad() {
 		super();
 	}
 
-	public Unidad(int id, String nombre, List<Producto> productos) {
+	public Unidad(int id, String nombre, List<Producto> productos, List<ProductoCocina> productosCocina) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
 		this.productos = productos;
+		this.productosCocina = productosCocina;
 	}
 
 	public int getId() {
@@ -53,4 +57,13 @@ public class Unidad {
 		this.productos = productos;
 	}
 
+	public List<ProductoCocina> getProductosCocina() {
+		return productosCocina;
+	}
+
+	public void setProductosCocina(List<ProductoCocina> productosCocina) {
+		this.productosCocina = productosCocina;
+	}
+
+	
 }

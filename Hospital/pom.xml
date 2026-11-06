@@ -75,7 +75,12 @@
 			<artifactId>jbcrypt</artifactId>
 			<version>0.4</version>
 		</dependency>
-    			
+
+		<dependency>
+			<groupId>com.practica2026</groupId>
+			<artifactId>banco</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 
 	<build>

@@ -44,18 +44,18 @@ public class Producto {
 	private List<Det_Solicitud> detallesSolicitud = new ArrayList<>();
 
 	@OneToMany(mappedBy = "producto")
+	private List<Det_Entrega> detallesEntrega = new ArrayList<>();
+	
+	@OneToMany(mappedBy = "producto")
 	private List<Det_Pedido> detallesPedido = new ArrayList<>();
 
-	@OneToMany(mappedBy = "producto")
-	private List<Det_Consumo> detallesConsumo = new ArrayList<>();
-
-	@OneToMany(mappedBy = "producto")
-	private List<Det_Entrega> detallesEntrega = new ArrayList<>();
+	public Producto() {
+		super();
+	}
 
 	public Producto(int id, String nombre, Double stockactual, Double stockminimo, String motivo, Unidad unidad,
 			SubTipo subtipo, Tipo tipo, Estado estado, List<Det_Factura> detallesFactura,
-			List<Det_Solicitud> detallesSolicitud, List<Det_Pedido> detallesPedido, List<Det_Consumo> detallesConsumo,
-			List<Det_Entrega> detallesEntrega) {
+			List<Det_Solicitud> detallesSolicitud, List<Det_Entrega> detallesEntrega, List<Det_Pedido> detallesPedido) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
@@ -68,13 +68,8 @@ public class Producto {
 		this.estado = estado;
 		this.detallesFactura = detallesFactura;
 		this.detallesSolicitud = detallesSolicitud;
-		this.detallesPedido = detallesPedido;
-		this.detallesConsumo = detallesConsumo;
 		this.detallesEntrega = detallesEntrega;
-	}
-
-	public Producto() {
-		super();
+		this.detallesPedido = detallesPedido;
 	}
 
 	public int getId() {
@@ -165,22 +160,6 @@ public class Producto {
 		this.detallesSolicitud = detallesSolicitud;
 	}
 
-	public List<Det_Pedido> getDetallesPedido() {
-		return detallesPedido;
-	}
-
-	public void setDetallesPedido(List<Det_Pedido> detallesPedido) {
-		this.detallesPedido = detallesPedido;
-	}
-
-	public List<Det_Consumo> getDetallesConsumo() {
-		return detallesConsumo;
-	}
-
-	public void setDetallesConsumo(List<Det_Consumo> detallesConsumo) {
-		this.detallesConsumo = detallesConsumo;
-	}
-
 	public List<Det_Entrega> getDetallesEntrega() {
 		return detallesEntrega;
 	}
@@ -189,4 +168,13 @@ public class Producto {
 		this.detallesEntrega = detallesEntrega;
 	}
 
+	public List<Det_Pedido> getDetallesPedido() {
+		return detallesPedido;
+	}
+
+	public void setDetallesPedido(List<Det_Pedido> detallesPedido) {
+		this.detallesPedido = detallesPedido;
+	}
+	
+	
 }

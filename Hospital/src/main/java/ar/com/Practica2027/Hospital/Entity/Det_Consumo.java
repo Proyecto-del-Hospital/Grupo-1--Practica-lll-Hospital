@@ -24,25 +24,26 @@ public class Det_Consumo {
     private Empleado empleado;
 	
 	@ManyToOne
-    @JoinColumn(name = "id_producto")
-    private Producto producto;
+    @JoinColumn(name = "id_productococina")
+    private ProductoCocina productococina;
 	
 	@ManyToOne
     @JoinColumn(name = "id_turno")
     private Turno turno;
 
-	public Det_Consumo(int id, double cantidad, Consumo consumo, Empleado empleado, Producto producto, Turno turno) {
+	public Det_Consumo() {
+		super();
+	}
+
+	public Det_Consumo(int id, double cantidad, Consumo consumo, Empleado empleado, ProductoCocina productococina,
+			Turno turno) {
 		super();
 		this.id = id;
 		this.cantidad = cantidad;
 		this.consumo = consumo;
 		this.empleado = empleado;
-		this.producto = producto;
+		this.productococina = productococina;
 		this.turno = turno;
-	}
-
-	public Det_Consumo() {
-		super();
 	}
 
 	public int getId() {
@@ -77,12 +78,12 @@ public class Det_Consumo {
 		this.empleado = empleado;
 	}
 
-	public Producto getProducto() {
-		return producto;
+	public ProductoCocina getProductococina() {
+		return productococina;
 	}
 
-	public void setProducto(Producto producto) {
-		this.producto = producto;
+	public void setProductococina(ProductoCocina productococina) {
+		this.productococina = productococina;
 	}
 
 	public Turno getTurno() {
