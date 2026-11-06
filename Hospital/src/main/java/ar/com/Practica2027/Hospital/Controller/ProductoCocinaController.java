@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import ar.com.Practica2027.Hospital.Entity.Producto;
 import ar.com.Practica2027.Hospital.Entity.ProductoCocina;
 import ar.com.Practica2027.Hospital.Service.IProductoCocina;
 
@@ -37,7 +36,7 @@ public class ProductoCocinaController {
 	public String buscarproducto(Model model, String nombre) {
 		ProductoCocina p = productocService.buscarProductoC(nombre);
 		model.addAttribute("productoC", new ProductoCocina());
-		model.addAttribute("ListaProductos", p);
+		model.addAttribute("ListaProductosC", p);
 		return "ProductoCocina/ControlProductoCocina";
 	}
 
