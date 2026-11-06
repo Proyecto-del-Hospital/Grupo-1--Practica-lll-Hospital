@@ -13,7 +13,7 @@ public interface IEmpledo {
 	List<Empleado> ListarEmpleados(); 
 	List<Empleado> buscarEmpleado(String DNI);
 	Empleado buscarporid(int id);
-	String modificarempleado(Empleado empleado);
+	String modificarempleado(Empleado empleado, List<Integer>sectoresids );
 	String CambiarEstadoempleado(Empleado empleado);
 	void inicializardatos();
 }

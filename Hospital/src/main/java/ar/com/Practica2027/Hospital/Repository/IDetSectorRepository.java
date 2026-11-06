@@ -9,5 +9,6 @@ import ar.com.Practica2027.Hospital.Entity.Det_Sector;
 public interface IDetSectorRepository extends JpaRepository<Det_Sector, Integer> {
 
 	List<Det_Sector> findBySectorId(int id);
+	List<Det_Sector> findByEmpleadoId(int id);
 	
 }

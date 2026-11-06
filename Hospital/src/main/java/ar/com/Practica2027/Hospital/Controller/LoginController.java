@@ -37,20 +37,11 @@ public class LoginController {
 		if (empleadoLogueado != null) {
 			session.setAttribute("empleadologueado", empleadoLogueado);
 			return "Inicio/Inicioprueba";
-			
-			
+				
 		}else {
 			model.addAttribute("error", "Datos no Encontrados");
 			return "Empleado/Login";
 		}
 	}
-	
-	@GetMapping("/Inicioprueba")
-	public String mostrarinicio(HttpSession session) {
-	if (session.getAttribute("empleadologueado") == null) {
-		return "redirect:/Login";
-	}
-	return "Inicio/Home";
-	
-	}
+
 }

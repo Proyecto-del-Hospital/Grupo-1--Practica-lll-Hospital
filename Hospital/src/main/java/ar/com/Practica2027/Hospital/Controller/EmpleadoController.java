@@ -79,8 +79,8 @@ public class EmpleadoController {
 	}
 
 	@PostMapping("/guardar/empleado/modificado")
-	public String guardarempleadoodificar(Empleado empleado, RedirectAttributes redirect) {
-	    redirect.addFlashAttribute("mensaje", empleService.modificarempleado(empleado));
+	public String guardarempleadoodificar(Empleado empleado, RedirectAttributes redirect,@RequestParam(required = false) List<Integer> sectorids) {
+	    redirect.addFlashAttribute("mensaje", empleService.modificarempleado(empleado, sectorids));
 
 		return "redirect:/Alta/Empleado";
 	}

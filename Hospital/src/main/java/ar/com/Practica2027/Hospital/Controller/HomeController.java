@@ -9,6 +9,6 @@ public class HomeController {
 	@GetMapping ("/")
 	public String MostrarInicio () {
 		
-		return "Inicio/Home";
+		return "redirect:/Inicio/Login";
 	}
 }

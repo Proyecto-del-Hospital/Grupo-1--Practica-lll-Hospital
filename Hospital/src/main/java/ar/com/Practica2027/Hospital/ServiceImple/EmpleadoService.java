@@ -146,7 +146,7 @@ public class EmpleadoService implements IEmpledo{
 	}
 
 	@Override
-	public String modificarempleado(Empleado empleado) {
+	public String modificarempleado(Empleado empleado, List<Integer>sectoresids ) {
 		
 		Empleado empleadoExistente = EmpleRepo.findByid(empleado.getId());
 
@@ -196,19 +196,34 @@ public class EmpleadoService implements IEmpledo{
 	    usuarioExistente.setNombreu(empleado.getUsuario().getNombreu());
 	    usuarioExistente.setRol(rol);
 	    
+	    String NuevaContraseña = empleado.getUsuario().getContrasena();
+	    
+		if(NuevaContraseña!=null && !NuevaContraseña.isEmpty()) {
 	    String empleadodesencritado = empleado.getUsuario().getContrasena();
 	    String empleadoencritado =  BCrypt.hashpw(empleadodesencritado, BCrypt.gensalt());
 		empleadoExistente.getUsuario().setContrasena(empleadoencritado);
-	    
-		
-	    if (empleadodesencritado != null) {
-	        usuarioExistente.setContrasena(empleadoencritado);
-	    }
-	    
+		}
+
 	    usuarioRepo.save(usuarioExistente);
-
 	    EmpleRepo.save(empleadoExistente);
-
+	    
+	    if(sectoresids!=null && !sectoresids.isEmpty()) {
+	    	List<Det_Sector> sectoresAnteriores=DetSectorRepo.findByEmpleadoId(empleadoExistente.getId());
+	    	if(sectoresAnteriores!=null && !sectoresAnteriores.isEmpty()) {
+	    		DetSectorRepo.deleteAll(sectoresAnteriores);
+	    	}
+	    	if(sectoresids!=null && !sectoresids.isEmpty()) {
+	    	for(Integer idsec :sectoresids) {
+	    		Sector sector = sectorRepo.findByid(idsec);
+	    		if(sector!=null) {
+	    			Det_Sector detallesector= new Det_Sector();
+	    			detallesector.setEmpleado(empleadoExistente);
+	    			detallesector.setSector(sector);
+	    			DetSectorRepo.save(detallesector);
+	    		}
+	    	}
+	    }
+	    }
 	    return "Empleado modificado con éxito";
 	}
 
@@ -282,6 +297,12 @@ public class EmpleadoService implements IEmpledo{
 	        Contacto con = new Contacto();
 	        con = contactoRepo.save(con);
 
+	        Usuario usuAdmin = new Usuario();
+	        usuAdmin.setNombreu("admin");
+	        usuAdmin.setContrasena(BCrypt.hashpw("admin123", BCrypt.gensalt()));
+	        usuAdmin.setRol(rolRepo.findBynombre("Administrador"));
+	        usuAdmin = usuarioRepo.save(usuAdmin);
+	       
 	        Empleado admin = new Empleado();
 	        admin.setNombre("Super");
 	        admin.setApellido("Administrador");
@@ -290,18 +311,8 @@ public class EmpleadoService implements IEmpledo{
 	        admin.setDireccion(dir);
 	        admin.setContacto(con);
 	        admin.setEstado(estadoRepo.findBynombre("Habilitado"));
-	        
-	        admin = EmpleRepo.save(admin);
-
-	        Usuario usuAdmin = new Usuario();
-	        usuAdmin.setNombreu("admin");
-	        usuAdmin.setContrasena(BCrypt.hashpw("admin123", BCrypt.gensalt()));
-	        usuAdmin.setRol(rolRepo.findBynombre("Administrador"));
-	        usuAdmin.setEmpleado(admin);
-	        
-	        usuAdmin = usuarioRepo.save(usuAdmin);
-
 	        admin.setUsuario(usuAdmin);
+
 	        EmpleRepo.save(admin);
 	        
 	    }

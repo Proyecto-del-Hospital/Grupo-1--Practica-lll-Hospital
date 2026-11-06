@@ -43,7 +43,6 @@
 											<option value="">Seleccione el subtipo</option>
 											<option value="Fresco">Fresco</option>
 											<option value="Seco">Seco</option>
-											<option value="Ninguno">Ninguno</option>
 										</select>
 									</div>
 									<div class="col-md-6">
@@ -134,10 +133,10 @@
 										                          (${p.estado.nombre == 'Bajo Stock'} ? 'bg-warning text-dark' : 'bg-secondary'))"
 												th:text="${p.estado.nombre}">
 											</span></td>
-										<td><a class="btn btn-primary btn-sm"
+										<td><a class="btn btn-primary btn-sm"th:if="${session.empleadologueado.usuario.rol.nombre == 'Jefa de Cocina'}"
 												th:href="@{/productoC/formularioM(id=${p.id})}">Modificar</a>
 											<a class="btn btn-warning btn-sm"
-												th:if="${session.empleadologueado.usuario.rol.nombre == 'Administrador' or session.empleadologueado.usuario.rol.nombre == 'Jefa de Cocina'}"
+												
 												th:href="@{/productoC/cambiarEstado(id=${p.id})}">Cambiar Estado</a>
 										</td>
 									</tr>
