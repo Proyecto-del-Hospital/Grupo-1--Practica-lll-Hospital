@@ -45,7 +45,7 @@ public class SolicitudController {
 		}
 		model.addAttribute("ListDetallSolicitud", ListDetallSolicitud);
 		model.addAttribute("ListaProductos", productoService.ListarProductos());
-		
+		model.addAttribute("listaSolicitudes", solicitudService.listasolictudes());
 		
 	return "Solicitud/ControlSolicitud";}
 	
@@ -66,8 +66,8 @@ public class SolicitudController {
 	public String GuardarSolicitud(HttpSession session,@RequestParam ("motivo") String motivo) {
 		List<Det_Solicitud>ListDetallSolicitud=(List<Det_Solicitud>) session.getAttribute("ListaTemporal");
 		Empleado empleadologueado=(Empleado)session.getAttribute("empleadologueado");
-		session.removeAttribute("ListaTemporal");
 		solicitudService.altaSolicitud(ListDetallSolicitud, empleadologueado, motivo);
+		session.removeAttribute("ListaTemporal");
 		
 	return"redirect:/ControlSolicitud";
 	}

@@ -58,6 +58,11 @@ public class SolicitudService implements ISolicitud {
 		}
 		return "Solicitud Guardado con Existo";
 	}
+	@Override
+	public List<Solicitud> listasolictudes() {
+		
+		return solicitudRepo.findAll();
+	}
 	
 	
 	

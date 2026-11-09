@@ -5,6 +5,8 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" th:href="@{/CSS/bootstrap.min.css}">
+	<link rel="stylesheet" th:href="@{/CSS/style.css}">
+	<script src="https://kit.fontawesome.com/57faba85b1.js" crossorigin="anonymous"></script>
 	<title>Control de Solicitud</title>
 </head>
 
@@ -12,68 +14,128 @@
 	<header>
 		<div th:replace="Inicio/Inicioprueba::navbarprueba"></div>
 	</header>
-	<main>
+	
+	<main class="container my-4">
 		<section>
-			<div class="justify-content-center pt-3 pl-5 pr-5">
-
+			<div class="w-100 p-3">
 				<div th:if="${mensaje}" class="alert alert-success text-center">
-					<p th:text="${mensaje}">
-					</p>
+					<p th:text="${mensaje}" class="mb-0"></p>
 				</div>
-				<article>
-					<div class="justify-content-center pr-5 pl-5 ">
-							<a th:href="@{/}" class="btn btn-secondary mb-3">
-								← Volver al inicio
-							</a>
-							<div class="shadow-lg p-2 bg-body-tertiary rounded">
-							<form th:action="@{/Agregar}"class="row g-2" method="post" > 
-								<select name="productoId" required>
-									<option value=" ">
-										Selccione un Producto
-										</option>
-										<br>
-											<option th:each="p : ${ListaProductos}" th:value="${p.id}" th:text="${p.nombre}">
+
+				<div class="row justify-content-center mb-3">
+					<div class="col-md-11">
+						<a th:href="@{/}" class="btn btn-secondary">
+							← Volver al inicio
+						</a>
+					</div>
+				</div>
+
+				<article class="mb-4">
+					<div class="row justify-content-center">
+						<div class="col-md-11">
+							<div class="shadow-lg p-4 bg-body-tertiary rounded">
+								<h3 class="mb-4 text-center text-info">Control de Solicitud - Agregar Productos</h3>
+								<form class="row g-3" method="post" th:action="@{/Agregar}">
+									<div class="col-md-6">
+										<label class="form-label fw-bold">Producto</label>
+										<select class="form-control form-control-sm" name="productoId" required>
+											<option value="">Seleccione un producto</option>
+											<option th:each="p : ${ListaProductos}"
+												th:text="${p.nombre}"
+												th:value="${p.id}">
 											</option>
-									</select>
-										<input type="number" step="any" placeholder="Ingrese cantidad" class="form-control form-control-sm" name="cantidad" min="0">
-										<button type="submit" class="btn btn-primary w-100" >agregar a la lista</button>
-								</form>	
-								<br>
-								<h2> Lista de Productos seleccionados</h2>
-								<div class="table-responsive">
-															<table class="table table-bordered table-striped table-hover mb-0 ">
-																<thead class="table-dark">
-																	<tr class="text-center">
-																		<th>Producto</th>
-																		<th>Cantidad</th>
-																		<th>Accion</th>
-																	</tr>
-																</thead>
-																<tbody>
-																	<tr class="text-center " th:each="d : ${ListDetallSolicitud}">
-																		<td th:text="${d.producto.nombre}"></td>
-																		<td th:text=${d.cantidad}></td>
-																		<td>
-																		<form th:action="@{/QuitarProductoListaS}"class="row g-2" method="post">
-																			<input type="hidden" name="posicion" th:value= "${d.producto.id}">
-																			<button type="submit" class="btn btn-danger" >Quitar de la Lista</button>
-																		</form>
-																		</td>
-																		</tr>
-																</tbody>
-															</table>
-															<form th:action="@{/GuardarSolicitud}"class="row g-2" method="post">
-																<div class="col-6">
-																	<label class="form-label">motivo: </label>
-														<input type="text" name="motivo" placeholder="motivo de la solicitud">	
-														</div>
-														<div class="col-12 mt-2">
-															<button type="submit" class="btn btn-danger" >Guardar Solicitud</button>
-															</div>
-														</form>
-														</div>
+										</select>
+									</div>
+									<div class="col-md-6">
+										<label class="form-label fw-bold">Cantidad</label>
+										<input type="number" class="form-control form-control-sm" name="cantidad"
+											step="any" placeholder="Ingrese la cantidad" min="0" required>
+									</div>
+									<div class="col-12 mt-4">
+										<button type="submit" class="btn btn-info w-100 text-white">Agregar a la lista</button>
+									</div>
+								</form>
 							</div>
-							
+						</div>
+					</div>
+				</article>
+
+				<article class="mb-4">
+					<div class="row justify-content-center">
+						<div class="col-md-11">
+							<div class="shadow-lg p-4 bg-body-tertiary rounded">
+								<h3 class="text-center text-info pb-3"> Productos Seleccionados </h3>
+								
+								<div class="table-responsive mb-4">
+									<table class="table table-bordered table-striped table-hover align-middle mb-0">
+										<thead class="table-dark">
+											<tr class="text-center">
+												<th>Producto</th>
+												<th>Cantidad</th>
+												<th>Acción</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr th:each="d : ${ListDetallSolicitud}" class="text-center">
+												<td th:text="${d.producto.nombre}"></td>
+												<td th:text="${d.cantidad}"></td>
+												<td>
+													<form method="post" th:action="@{/QuitarProductoListaS}">
+														<input type="hidden" name="posicion" th:value="${d.producto.id}">
+														<button type="submit" class="btn btn-danger btn-sm">Quitar</button>
+													</form>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+
+								<form th:action="@{/GuardarSolicitud}" class="row g-2" method="post">
+									<div class="col-12">
+										<label class="form-label fw-bold">Motivo de la Solicitud:</label>
+										<input type="text" name="motivo" class="form-control" placeholder="Ingrese el motivo de la solicitud" required>
+									</div>
+									<div class="col-12 mt-4">
+										<button type="submit" class="btn btn-success w-100">Guardar Solicitud</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</article>
+				
+				<article class="mb-4">
+					<div class="row justify-content-center">
+						<div class="col-md-11">
+							<div class="shadow-lg p-4 bg-body-tertiary rounded">
+								<h3 class="text-center text-info pb-3"> Solicitudes Registradas </h3>
+								<div class="table-responsive">
+									<table class="table table-bordered table-striped table-hover align-middle mb-0">
+										<thead class="table-secondary">
+											<tr class="text-center">
+												<th>ID</th>
+												<th>Fecha</th>
+												<th>Motivo</th>
+												<th>Estado</th>
+												<th>Acciones</th>
+											</tr>
+										</thead>
+										<tbody>
+											<td th:each="sol : ${listaSolicitudes}" class="text-center">
+												<td th:text="${sol.id}"></td>
+												<td th:text="${sol.fecha}"> </td>
+												<td th:text="${sol.motivo}"></td>
+												<td th:text="${sol.estado.nombre}"></td>
+												<td>
+												<a class="btn btn-primary btn-sm" >Modificar</a>
+												<a class="btn btn-warning btn-sm" >Ver</a>
+											</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
 					</div>
 				</article>
 
