@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" th:href="@{/CSS/bootstrap.min.css}">
+	<link rel="stylesheet" th:href="@{/CSS/style.css}">
+	<script src="https://kit.fontawesome.com/57faba85b1.js" crossorigin="anonymous"></script>
+	<title>Control de Entrega</title>
+</head>
+
+<body>
+	<header>
+		<div th:replace="Inicio/Inicioprueba::navbarprueba"></div>
+	</header>
+	<main>
+		<section>
+			<div class="justify-content-center w-100 p-5">
+				<article>
+					<div class="row justify-content-center">
+						<div class="col-md-8">
+							<div class="shadow-lg p-2 bg-body-tertiary rounded">
+								<h3 class="mb-4 text-center text-info">Entregar Productos</h3>
+								<form class="row g-2" method="post" th:action="@{/Agregarproducto}">
+									<div class="col-md-6">
+										<label class="form-label fw-bold">Producto</label>
+										<select class="form-control form-control-sm" name="productoId" required>
+											<option value="">Seleccione un producto</option>
+											<option th:each="p : ${ListaProductos}"
+												th:text="${p.nombre + ', Tipo: '+ p.tipo.nombre + ', Unidad: ' + p.unidad.nombre}"
+												th:value="${p.id}">
+											</option>
+										</select>
+									</div>
+									<div class="col-md-6">
+										<label class="form-label">Cantidad</label>
+										<input type="number" class="form-control form-control-sm" name="cantidad"
+											step="any" placeholder="Ingrese la cantidad" required>
+									</div>
+									<div class="col-12 mt-4">
+										<button type="submit" class="btn btn-info w-100">Agregar a Lista</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</article>
+				<br>
+				<article>
+					<div class="row justify-content-center">
+						<div class="col-md-8">
+							<div class="align-items-center shadow-lg p-3 mb-5 bg-body-tertiary rounded">
+								<div class="table-responsive">
+									<table class="table table-bordered table-striped table-hover tabla-pacientes mb-0">
+										<h2 class="text-center text-info pb-2">Lista de Productos a Entregar</h2>
+										<thead class="table-dark">
+											<tr class="text-center">
+												<th>Producto</th>
+												<th>Tipo</th>
+												<th>Cantidad</th>
+												<th>Unidad</th>
+												<th>ACCIÓN</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr th:each="d : ${listaDetalles}" class="text-center">
+												<td th:text="${d.producto.nombre}"></td>
+												<td th:text="${d.producto.tipo.nombre}"></td>
+												<td th:text="${d.cantidad}"></td>
+												<td th:text="${d.producto.unidad.nombre}"></td>
+												<td>
+													<form method="post" th:action="@{/Quitarproductos}">
+														<input type="hidden" name="posicion"
+															th:value="${d.producto.id}">
+														<button type="submit" class="btn btn-danger">Cancelar</button>
+													</form>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</article>
+				<article>
+					<div class="row justify-content-center">
+						<div class="col-md-8">
+							<div class="shadow-lg p-2 bg-body-tertiary rounded">
+								<h3 class="mb-4 text-center text-info">Registrar Entrega</h3>
+								<form class="row g-2" method="post" th:action="@{/Guardarentrega}">
+									<div class="col-md-6">
+										<label class="form-label">Fecha de Entrega</label>
+										<input type="date" class="form-control form-control-sm" name="fecha">
+									</div>
+									<div class="col-md-6">
+										<label class="form-label">Hora</label>
+										<input type="time" class="form-control form-control-sm" name="hora">
+									</div>
+									<div class="col-12 mt-4">
+										<label class="form-label fw-bold">Empleado</label>
+										<select class="form-control form-control-sm" name="id_empleado" required>
+											<option value="">Seleccione el empleado</option>
+											<option th:each="e : ${ListaEmpleados}" th:text="${e.nombre}"
+												th:value="${e.id}">
+											</option>
+										</select>
+									</div>
+									<div class="col-12 mt-4">
+										<button type="submit" class="btn btn-success w-100">Guardar</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</article>
+			</div>
+			</article>
+			</div>
+		</section>
+	</main>
+</body>
+
+</html>
