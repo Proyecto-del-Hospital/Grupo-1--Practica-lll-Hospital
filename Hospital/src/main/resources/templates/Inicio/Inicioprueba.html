@@ -39,9 +39,13 @@
 						<a class="nav-link active" aria-current="page" th:href="@{/controlproductoC}">Control de
 							Producto</a>
 						</li>
+						<li class="nav-item">
+						<a class="nav-link active" aria-current="page" th:href="@{/LimpiarControlSolicitud}">Solicitar Producto</a>
+						</li>
 					</ul>
 					<ul class="navbar-nav me-auto mb-2 mb-lg-0" th:if="${session.empleadologueado.usuario.rol.nombre == 'Administrador'}">
 						<li class="nav-item">
+						
 						<a class="nav-link active" aria-current="page" th:href="@{/proveedor/control}">Control de Proveedor</a>
 						</li>
 						<li class="nav-item">
@@ -50,6 +54,9 @@
 						<li class="nav-item">
 						<a class="nav-link active" aria-current="page" th:href="@{/controlproducto}">Control de
 							Producto</a>
+						</li>
+						<li class="nav-item">
+						<a class="nav-link active" aria-current="page" th:href="@{/LimpiarControlSolicitud}">Control Solicitud</a>
 						</li>
 					</ul>
 					<ul class="navbar-nav me-auto mb-2 mb-lg-0" th:if="${session.empleadologueado.usuario.rol.nombre == 'Cocinero'}">
@@ -64,8 +71,11 @@
 					</ul>
 					<ul class="navbar-nav me-auto mb-2 mb-lg-0" th:if="${session.empleadologueado.usuario.rol.nombre == 'Encargado'}">
 						<li class="nav-item">
-					    <a class="nav-link active" aria-current="page" th:href="@{/controlproducto}">Control de
+					    <a class="nav-link active" aria-current="page" th:href="@{/LimpiarControlSolicitud}">Control de
 							Producto</a>
+						</li>
+						<li class="nav-item">
+						<a class="nav-link active" aria-current="page" th:href="@{/ControlSolicitud}">Solicitar Producto</a>
 						</li>
 					</ul>
 					<li class="nav-item">
