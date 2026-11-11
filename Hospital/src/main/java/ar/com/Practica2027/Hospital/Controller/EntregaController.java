@@ -44,6 +44,7 @@ public class EntregaController {
 		model.addAttribute("listaDetalles", detallesEntregas);
 		model.addAttribute("ListaEmpleados", empledoserv.ListarEmpleados());
 		model.addAttribute("ListaProductos", productoserv.ListarProductos());
+		model.addAttribute("ListaEntregas", entregaserv.listarEntregas());
 
 		return "Entrega/ControlEntrega";
 	}
@@ -92,5 +93,13 @@ public class EntregaController {
 		List<Det_Entrega> detallesEntregas = (List<Det_Entrega>) session.getAttribute("ListaTemporalEntrega");
 		session.removeAttribute("ListaTemporalEntrega");
 		return "redirect:/controlentrega";
+	}
+	@GetMapping ("/MostrarDetalle")
+	public String detalles (@RequestParam ("id") int id, Model model) {
+		
+		Entrega entrega = entregaserv.BuscarEntregaId(id);
+		model.addAttribute("Entrega", entrega);
+		
+		return "Entrega/DetallesEntrega";
 	}
 }

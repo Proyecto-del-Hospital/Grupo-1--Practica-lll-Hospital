@@ -21,7 +21,7 @@
 					<div class="row justify-content-center">
 						<div class="col-md-8">
 							<div class="shadow-lg p-2 bg-body-tertiary rounded">
-								<h3 class="mb-4 text-center text-info">Entregar Productos</h3>
+								<h2 class="mb-4 text-center text-info">Entregar Productos</h2>
 								<form class="row g-2" method="post" th:action="@{/Agregarproducto}">
 									<div class="col-md-6">
 										<label class="form-label fw-bold">Producto</label>
@@ -88,7 +88,7 @@
 					<div class="row justify-content-center">
 						<div class="col-md-8">
 							<div class="shadow-lg p-2 bg-body-tertiary rounded">
-								<h3 class="mb-4 text-center text-info">Registrar Entrega</h3>
+								<h2 class="mb-4 text-center text-info">Registrar Entrega</h2>
 								<form class="row g-2" method="post" th:action="@{/Guardarentrega}">
 									<div class="col-md-6">
 										<label class="form-label">Fecha de Entrega</label>
@@ -115,8 +115,40 @@
 						</div>
 					</div>
 				</article>
-			</div>
-			</article>
+				<br>
+				<article>
+					<div class="row justify-content-center">
+						<div class="col-md-8">
+							<div class="align-items-center shadow-lg p-3 mb-5 bg-body-tertiary rounded">
+								<div class="table-responsive">
+									<table class="table table-bordered table-striped table-hover tabla-pacientes mb-0">
+										<h2 class="text-center text-info pb-2">Entregas Realizadas</h2>
+										<thead class="table-dark">
+											<tr class="text-center">
+												<th>Id</th>
+												<th>Fecha</th>
+												<th>Hora</th>
+												<th>Empleado</th>
+												<th>ACCIÓN</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr th:each="e : ${ListaEntregas}" class="text-center">
+												<td th:text="${e.id}"></td>
+												<td th:text="${e.fecha}"></td>
+												<td th:text="${e.hora}"></td>
+												<td th:text="${e.empleado.nombre}"></td>
+												<td><a class="btn btn-primary btn-sm"
+														th:href="@{/MostrarDetalle(id=${e.id})}">Ver detalle</a>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</article>
 			</div>
 		</section>
 	</main>

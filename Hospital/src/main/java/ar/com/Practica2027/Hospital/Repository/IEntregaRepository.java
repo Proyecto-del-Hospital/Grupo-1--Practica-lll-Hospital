@@ -7,5 +7,5 @@ import ar.com.Practica2027.Hospital.Entity.Entrega;
 
 @Repository
 public interface IEntregaRepository extends JpaRepository<Entrega, Integer>{
-
+	Entrega findById (int id);
 }

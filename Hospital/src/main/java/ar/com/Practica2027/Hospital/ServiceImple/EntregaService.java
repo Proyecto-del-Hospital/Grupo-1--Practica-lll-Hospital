@@ -42,5 +42,17 @@ public class EntregaService implements IEntrega{
 		return "Entrega guardada";
 	}
 
+	@Override
+	public List<Entrega> listarEntregas() {
+		
+		return entregaRepo.findAll();
+	}
+
+	@Override
+	public Entrega BuscarEntregaId(int id) {
+		
+		return entregaRepo.findById(id);
+	}
+
 
 }
