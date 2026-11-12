@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" th:href="@{/CSS/bootstrap.min.css}">
+	<link rel="stylesheet" th:href="@{/CSS/bootstrap.css}">
+	<title>Control de Entrega</title>
+</head>
+
+<body>
+	<header>
+		<div th:replace="Inicio/Inicioprueba::navbarprueba"></div>
+	</header>
+	<main>
+		<section>
+			<div class="justify-content-center w-100 p-5">
+				<div th:if="${mensaje}" class="alert alert-success text-center">
+					<p th:text="${mensaje}">
+					</p>
+				</div>
+				<article>
+					<div class="row justify-content-center">
+						<div class="col-md-8">
+							<div class="shadow-lg p-2 bg-body-tertiary rounded">
+								<h3 class="mb-4 text-center text-info">Registrar Consumo de Insumos</h3>
+								<form class="row g-2" method="post" th:action="@{/agregarProductoConsumo}">
+									<div class="col-md-6">
+										<label class="form-label fw-bold">Producto</label>
+										<select class="form-control form-control-sm" name="productoIdC" required>
+											<option value="">Seleccione un producto</option>
+											<option th:each="p : ${listaProductosC}" th:text="${'[' + p.subtipo.nombre + '] ' + p.nombre + ' -- Stock: '
+											 + p.stockactual + ' ' + p.unidad.nombre}" th:value="${p.id}">
+											</option>
+										</select>
+									</div>
+									<div class="col-md-6">
+										<label class="form-label">Cantidad Consumida</label>
+										<input type="number" class="form-control form-control-sm" name="cantidad"
+											step="any" placeholder="Ingrese la cantidad" required>
+									</div>
+
+									<div class="col-12 mt-4">
+										<button type="submit" class="btn btn-info w-100">Agregar a Lista</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</article>
+				<br>
+				<article>
+					<div class="row justify-content-center">
+						<div class="col-md-8">
+							<div class="align-items-center shadow-lg p-3 mb-5 bg-body-tertiary rounded">
+								<div class="table-responsive">
+									<table class="table table-bordered table-striped table-hover tabla-pacientes mb-0">
+										<h2 class="text-center text-info pb-2">Insumos Utilizados</h2>
+										<thead class="table-dark">
+											<tr class="text-center">
+												<th>Producto</th>
+												<th>Tipo</th>
+												<th>Cantidad</th>
+												<th>Unidad</th>
+												<th>Accion</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr th:each="d : ${listaDetallesC}" class="text-center">
+												<td th:text="${d.productococina.nombre}"></td>
+												<td th:text="${d.productococina.tipo.nombre}"></td>
+												<td th:text="${d.cantidad}"></td>
+												<td th:text="${d.productococina.unidad.nombre}"></td>
+												<td>
+													<form method="post" th:action="@{/Quitarproductos}">
+														<input type="hidden" name="posicion"
+															th:value="${d.productococina.id}">
+														<button type="submit" class="btn btn-danger">Cancelar</button>
+													</form>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</article>
+				<article>
+					<div class="row justify-content-center">
+						<div class="col-md-5">
+							<div class="shadow-lg p-2 bg-body-tertiary rounded">
+								<h3 class="mb-4 text-center text-info">Guardar Consumo</h3>
+								<form class="row g-2" method="post" th:action="@{/GuardarConsumo}">
+									<div class="col-md-5">
+										<label class="form-label fw-bold">Turno de Trabajo:</label>
+										<select name="turno" class="form-select" required>
+											<option value="">Seleccionar el Turno Actual</option>
+											<option value="Mañana">Mañana</option>
+											<option value="Tarde">Tarde</option>
+											<option value="Noche">Noche</option>
+										</select>
+									</div>
+									<button type="button" class="btn btn-success" data-bs-toggle="modal"
+										data-bs-target="#modalGuardar">
+										Guardar Consumo
+									</button>
+									<div class="modal fade" id="modalGuardar" tabindex="-1"
+										aria-labelledby="exampleModalLabel" aria-hidden="true">
+										<div class="modal-dialog">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h5 class="modal-title" id="exampleModalLabel">Confirmar Guardado
+													</h5>
+													<button type="button" class="btn-close" data-bs-dismiss="modal"
+														aria-label="Close"></button>
+												</div>
+												<div class="modal-body">
+													¿Estás seguro de que deseas guardar este consumo?
+												</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-secondary"
+														data-bs-dismiss="modal">Cerrar</button>
+													<button type="submit" class="btn btn-success">Confirmar
+														Guardado</button>
+												</div>
+											</div>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</article>
+			</div>
+		</section>
+	</main>
+</body>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+
+</html>
