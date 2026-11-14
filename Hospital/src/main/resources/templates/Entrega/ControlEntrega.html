@@ -31,7 +31,7 @@
 										<select class="form-control form-control-sm" name="productoId" required>
 											<option value="">Seleccione un producto</option>
 											<option th:each="p : ${ListaProductos}"
-												th:text="${p.nombre + ', Tipo: '+ p.tipo.nombre + ', Unidad: ' + p.unidad.nombre}"
+												th:text="${p.nombre + ', Tipo: '+ p.tipo.nombre + ', Unidad: ' + p.unidad.nombre +', Stock Actual: '+p.stockactual} "
 												th:value="${p.id}">
 											</option>
 										</select>

@@ -63,7 +63,7 @@ public class EntregaService implements IEntrega {
 		entrega.setFecha(fecha);
 		entrega.setHora(hora);
 		entrega.setEmpleado(empleado);
-		entrega = entregaRepo.save(entrega);
+		
 
 		for (Det_Entrega det_Entrega : listaSinRepetir) {
 
@@ -86,7 +86,7 @@ public class EntregaService implements IEntrega {
 			double nuevoStock = productoExistente.getStockactual() - det_Entrega.getCantidad();
 			productoExistente.setStockactual(nuevoStock);
 			productoRepo.save(productoExistente);
-
+			entrega = entregaRepo.save(entrega);
 			det_Entrega.setEntrega(entrega);
 			detalleRepo.save(det_Entrega);
 		}
