@@ -102,4 +102,10 @@ public class EntregaController {
 		
 		return "Entrega/DetallesEntrega";
 	}
+	@PostMapping("/buscarentrega")
+	public String BuscarEntrega (@RequestParam ("fecha") String fecha, Model model) {
+		List<Entrega> entregas = entregaserv.buscarEntregas(fecha);
+		model.addAttribute("ListaEntregas", entregas);
+		return "Entrega/ControlEntrega";
+	}
 }

@@ -120,9 +120,15 @@
 					<div class="row justify-content-center">
 						<div class="col-md-8">
 							<div class="align-items-center shadow-lg p-3 mb-5 bg-body-tertiary rounded">
+								<h2 class="text-center text-info pb-2">Entregas Realizadas</h2>
+								<form class="d-flex me-2" th:action="@{/buscarentrega}" method="post">
+									<input class="form-control me-2" type="text" name="fecha"
+										placeholder="Buscar entrega">
+									<button class="btn btn-outline-success" type="submit">Buscar</button>
+								</form>
+								<br>
 								<div class="table-responsive">
 									<table class="table table-bordered table-striped table-hover tabla-pacientes mb-0">
-										<h2 class="text-center text-info pb-2">Entregas Realizadas</h2>
 										<thead class="table-dark">
 											<tr class="text-center">
 												<th>Id</th>

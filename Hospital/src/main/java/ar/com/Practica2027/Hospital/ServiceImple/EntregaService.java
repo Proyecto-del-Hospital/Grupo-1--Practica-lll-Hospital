@@ -54,5 +54,13 @@ public class EntregaService implements IEntrega{
 		return entregaRepo.findById(id);
 	}
 
+	@Override
+	public List<Entrega> buscarEntregas(String fecha) {
+		
+		return entregaRepo.findByFecha(fecha);
+	}
+
+
+
 
 }
