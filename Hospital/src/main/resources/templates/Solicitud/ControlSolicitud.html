@@ -30,7 +30,7 @@
 					</div>
 				</div>
 
-				<article class="mb-4">
+				<article class="mb-4" th:if="${(session.empleadologueado.usuario.rol.nombre != 'Administrador')}">
 					<div class="row justify-content-center">
 						<div class="col-md-11">
 							<div class="shadow-lg p-4 bg-body-tertiary rounded">
@@ -42,9 +42,7 @@
 											<option value="">Seleccione un producto</option>
 											<option th:each="p : ${ListaProductos}" th:if="${(session.empleadologueado.usuario.rol.nombre == 'Jefa de Cocina' 
 											and p.tipo.nombre == 'Alimenticio') or (session.empleadologueado.usuario.rol.nombre == 'Encargado' and 
-											p.tipo.nombre == 'Limpieza')}"
-											th:text="${p.nombre}"
-											th:value="${p.id}">
+											p.tipo.nombre == 'Limpieza')}" th:text="${p.nombre}" th:value="${p.id}">
 											</option>
 										</select>
 									</div>
@@ -63,7 +61,7 @@
 					</div>
 				</article>
 
-				<article class="mb-4">
+				<article class="mb-4" th:if="${(session.empleadologueado.usuario.rol.nombre != 'Administrador')}">
 					<div class="row justify-content-center">
 						<div class="col-md-11">
 							<div class="shadow-lg p-4 bg-body-tertiary rounded">
@@ -143,14 +141,17 @@
 										<thead class="table-dark">
 											<tr class="text-center">
 												<th>Fecha</th>
+												<th>Solicitud del Empleado</th>
 												<th>Motivo</th>
 												<th>Estado</th>
 												<th>Acciones</th>
 											</tr>
 										</thead>
 										<tbody>
-											<tr th:each="sol : ${listaSolicitudes}" class="text-center">
+											<tr th:each="sol : ${listaSolicitudes}" class="text-center" th:if="${session.empleadologueado.usuario.rol.nombre == 'Administrador' 
+or sol.empleado.usuario.rol.nombre == session.empleadologueado.usuario.rol.nombre}">
 												<td th:text="${sol.fecha}"> </td>
+												<td th:text="${sol.empleado.nombre}"> </td>
 												<td th:text="${sol.motivo}"></td>
 												<td><span class="badge estado-badge" th:classappend="${sol.estado.nombre == 'Aceptado'} ? 'bg-success' :
 	              (${sol.estado.nombre == 'Rechazado'} ? 'bg-danger' :
