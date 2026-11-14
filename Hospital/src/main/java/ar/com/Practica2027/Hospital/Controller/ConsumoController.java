@@ -34,6 +34,7 @@ public class ConsumoController {
 		
 		return "redirect:/ControlConsumo";
 	}
+	
 	@GetMapping("/ControlConsumo")
 	public String MostrarControlConsumo(Model model,HttpSession session) {
 		List<Det_Consumo> listDetallesConsumo = (List<Det_Consumo>) session.getAttribute("listaTemporalC");
@@ -43,6 +44,7 @@ public class ConsumoController {
 		}
 		model.addAttribute("listaProductosC", productoCService.ListarProductosC());
 		model.addAttribute("listaDetallesC", listDetallesConsumo);
+		model.addAttribute("listconsumo", consumoService.listaConsumo());
 	return "Consumo/ControlConsumo";
 	}
 	
@@ -80,5 +82,11 @@ public class ConsumoController {
 	return"redirect:/ControlConsumo";
 	}
 	
-
+	@GetMapping("DetalleConsumo")
+	public String DetalleConsumo(@RequestParam("id") int id, Model model) {
+		Consumo Miconsumo = consumoService.BuscarPorID(id);
+		model.addAttribute("consumo", Miconsumo);
+		model.addAttribute("ListaDetConsumo", consumoService.listaDetConsumo(id));
+		return "Consumo/detalleConsumo";
+	}
 }

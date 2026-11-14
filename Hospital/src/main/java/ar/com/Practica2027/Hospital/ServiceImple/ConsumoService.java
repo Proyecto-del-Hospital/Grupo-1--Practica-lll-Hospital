@@ -1,6 +1,7 @@
 package ar.com.Practica2027.Hospital.ServiceImple;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,23 +33,36 @@ public class ConsumoService implements IConsumo {
 	IProductoCocinaRepository productoCRepo;
 	@Override
 	public String registrarConsuDiario(List<Det_Consumo> detalles, Empleado empleadoLog, String turno) {
-		
-	    if (detalles == null || detalles.isEmpty()) {
-	        return "No hay productos en la Lista";
-	    }
-	    for (Det_Consumo det_Consumo : detalles) {
-	    	ProductoCocina productoC = productoCRepo.findByid(det_Consumo.getProductococina().getId());
-	    	if(productoC==null) {
-	    		return "Un producto seleccionado ya no existe en la base de datos."+ det_Consumo.getProductococina().getNombre();
-	    	}
+		if (detalles == null || detalles.isEmpty()) {
+			return "No hay productos en la Lista";
 		}
-	 
+		
+		List<Det_Consumo> listaSinRepetir = new ArrayList<>();
+	    for (Det_Consumo det : detalles) {
+	        boolean encontrado = false;
+	        for (Det_Consumo s: listaSinRepetir) {
+	            if (s.getProductococina().getId() == det.getProductococina().getId()) {
+	                s.setCantidad(s.getCantidad() + det.getCantidad());
+	                encontrado = true;
+	            }
+	        }
+	        if (!encontrado) {
+	            listaSinRepetir.add(det);
+	        }  }
+	    
+	    for (Det_Consumo det_Consumo : listaSinRepetir) {
+	        ProductoCocina productoC = productoCRepo.findByid(det_Consumo.getProductococina().getId());
+	        if (det_Consumo.getCantidad() > productoC.getStockactual()) {
+	            return "Stock insuficiente para " + productoC.getNombre() + " (Disponible: " + productoC.getStockactual() + ")";
+	        } }
 	    
 	    String fechaHoy = LocalDate.now().toString();
-	    Consumo consumo = new Consumo();
-	    consumo.setFecha(fechaHoy);
-
-	    consumo = consumoRepo.save(consumo);
+	    Consumo consumo = consumoRepo.findByFecha(fechaHoy);
+	    if (consumo == null) {
+	        consumo = new Consumo();
+	        consumo.setFecha(fechaHoy);
+	        consumo = consumoRepo.save(consumo);
+	    }
 	    Turno turnohoy = turnoRepo.findByNombre(turno);
 		if (turnohoy == null) {
 			turnohoy = new Turno();
@@ -56,7 +70,7 @@ public class ConsumoService implements IConsumo {
 			turnoRepo.save(turnohoy);
 		}
 	   
-	    for (Det_Consumo det : detalles) {
+	    for (Det_Consumo det : listaSinRepetir) {
 	    	ProductoCocina productoC = productoCRepo.findByid(det.getProductococina().getId());
 	    	double nuevoStock = productoC.getStockactual() - det.getCantidad();
 	    	productoC.setStockactual(nuevoStock);
@@ -72,6 +86,18 @@ public class ConsumoService implements IConsumo {
 	    return "Consumo Diario Guardado con Éxito";
 		
 	}
-
+	@Override
+	public Consumo BuscarPorID(int id) {
+		return consumoRepo.findByid(id);
+	}
+	@Override
+	public List<Consumo> listaConsumo() {
+		return consumoRepo.findAllByOrderByFechaDesc();
+	}
+	@Override
+	public List<Det_Consumo> listaDetConsumo(int idConsumo) {
+		
+		return detConsumoRepo.findByConsumoId(idConsumo);
+	}
 
 }
