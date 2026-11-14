@@ -17,9 +17,12 @@
 	<main>
 		<section>
 			<div class="justify-content-center w-100 p-5">
-				<article>
+				<article th:if="${session.empleadologueado.usuario.rol.nombre == 'Administrador'}">
 					<div class="row justify-content-center">
 						<div class="col-md-8">
+							<div th:if="${mensaje}" class="alert alert-info text-center pt-4" role="alert">
+								<p th:text="${mensaje}"></p>
+							</div>
 							<div class="shadow-lg p-2 bg-body-tertiary rounded">
 								<h2 class="mb-4 text-center text-info">Entregar Productos</h2>
 								<form class="row g-2" method="post" th:action="@{/Agregarproducto}">
@@ -47,7 +50,7 @@
 					</div>
 				</article>
 				<br>
-				<article>
+				<article th:if="${session.empleadologueado.usuario.rol.nombre == 'Administrador'}">
 					<div class="row justify-content-center">
 						<div class="col-md-8">
 							<div class="align-items-center shadow-lg p-3 mb-5 bg-body-tertiary rounded">
@@ -84,7 +87,7 @@
 						</div>
 					</div>
 				</article>
-				<article>
+				<article th:if="${session.empleadologueado.usuario.rol.nombre == 'Administrador'}">
 					<div class="row justify-content-center">
 						<div class="col-md-8">
 							<div class="shadow-lg p-2 bg-body-tertiary rounded">
@@ -92,11 +95,11 @@
 								<form class="row g-2" method="post" th:action="@{/Guardarentrega}">
 									<div class="col-md-6">
 										<label class="form-label">Fecha de Entrega</label>
-										<input type="date" class="form-control form-control-sm" name="fecha">
+										<input type="date" class="form-control form-control-sm" name="fecha" required>
 									</div>
 									<div class="col-md-6">
 										<label class="form-label">Hora</label>
-										<input type="time" class="form-control form-control-sm" name="hora">
+										<input type="time" class="form-control form-control-sm" name="hora" required>
 									</div>
 									<div class="col-12 mt-4">
 										<label class="form-label fw-bold">Empleado</label>
@@ -108,7 +111,30 @@
 										</select>
 									</div>
 									<div class="col-12 mt-4">
-										<button type="submit" class="btn btn-success w-100">Guardar</button>
+										<button type="button" class="btn btn-success w-100" data-bs-toggle="modal"
+											data-bs-target="#modalGuardar">
+											Guardar
+										</button>
+									</div>
+									<div class="modal fade" id="modalGuardar" tabindex="-1"
+										aria-labelledby="exampleModalLabel" aria-hidden="true">
+										<div class="modal-dialog">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h5 class="modal-title" id="exampleModalLabel">Confirmar Guardado
+													</h5>
+												</div>
+												<div class="modal-body">
+													¿Estás seguro de que deseas guardar la entrega?
+												</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-secondary"
+														data-bs-dismiss="modal">Cerrar</button>
+													<button type="submit" class="btn btn-success">Confirmar
+														Guardado</button>
+												</div>
+											</div>
+										</div>
 									</div>
 								</form>
 							</div>
@@ -116,7 +142,7 @@
 					</div>
 				</article>
 				<br>
-				<article>
+				<articl>
 					<div class="row justify-content-center">
 						<div class="col-md-8">
 							<div class="align-items-center shadow-lg p-3 mb-5 bg-body-tertiary rounded">
@@ -154,10 +180,13 @@
 							</div>
 						</div>
 					</div>
-				</article>
+					</article>
 			</div>
 		</section>
 	</main>
+
 </body>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
 
 </html>

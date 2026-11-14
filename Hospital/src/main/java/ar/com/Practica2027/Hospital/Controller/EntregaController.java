@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ar.com.Practica2027.Hospital.Entity.Det_Entrega;
 import ar.com.Practica2027.Hospital.Entity.Empleado;
@@ -64,12 +65,12 @@ public class EntregaController {
 
 	@PostMapping("/Guardarentrega")
 	public String GuardarEntrega(HttpSession session, @RequestParam("fecha") String fecha,
-			@RequestParam("hora") String hora, @RequestParam("id_empleado") int id_empleado) {
+			@RequestParam("hora") String hora, @RequestParam("id_empleado") int id_empleado, RedirectAttributes redirect) {
 		List<Det_Entrega> detallesEntregas = (List<Det_Entrega>) session.getAttribute("ListaTemporalEntrega");
 		session.removeAttribute("ListaTemporalEntrega");
 		Empleado empleadoExistente = empledoserv.buscarporid(id_empleado);
-		entregaserv.CrearEntrega(detallesEntregas, empleadoExistente, fecha, hora);
-
+		redirect.addFlashAttribute("mensaje", entregaserv.CrearEntrega(detallesEntregas, empleadoExistente, fecha, hora));
+		
 		return "redirect:/controlentrega";
 	}
 

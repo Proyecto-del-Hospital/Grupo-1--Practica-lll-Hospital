@@ -42,6 +42,10 @@
 							<a class="nav-link active" aria-current="page" th:href="@{/controlproductoC}">Control de
 								Producto</a>
 						</li>
+						<li class="nav-item">
+							<a class="nav-link active" aria-current="page" th:href="@{/Limpiarproductos}">Ver
+								entrega</a>
+						</li>
 					</ul>
 					<ul class="navbar-nav me-auto mb-2 mb-lg-0"
 						th:if="${session.empleadologueado.usuario.rol.nombre == 'Administrador'}">
@@ -72,12 +76,20 @@
 							<a class="nav-link active" aria-current="page" th:href="@{/controlproductoC}">Control de
 								Producto</a>
 						</li>
+						<li class="nav-item">
+							<a class="nav-link active" aria-current="page" th:href="@{/Limpiarproductos}">Ver
+								entrega</a>
+						</li>
 					</ul>
 					<ul class="navbar-nav me-auto mb-2 mb-lg-0"
 						th:if="${session.empleadologueado.usuario.rol.nombre == 'Encargado'}">
 						<li class="nav-item">
 							<a class="nav-link active" aria-current="page" th:href="@{/controlproducto}">Control de
 								Producto</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link active" aria-current="page" th:href="@{/Limpiarproductos}">Ver
+								entrega</a>
 						</li>
 					</ul>
 					<li class="nav-item">
