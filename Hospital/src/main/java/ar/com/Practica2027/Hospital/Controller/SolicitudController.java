@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import ar.com.Practica2027.Hospital.Entity.Det_Consumo;
 import ar.com.Practica2027.Hospital.Entity.Det_Solicitud;
 import ar.com.Practica2027.Hospital.Entity.Empleado;
+import ar.com.Practica2027.Hospital.Entity.Estado;
 import ar.com.Practica2027.Hospital.Entity.Producto;
+import ar.com.Practica2027.Hospital.Entity.Solicitud;
 import ar.com.Practica2027.Hospital.Service.IProducto;
 import ar.com.Practica2027.Hospital.Service.ISolicitud;
 import ar.com.Practica2027.Hospital.ServiceImple.ProductoService;
@@ -27,6 +29,8 @@ public class SolicitudController {
 	IProducto productoService;
 	@Autowired
 	ISolicitud solicitudService;
+	
+	
 	@GetMapping("/LimpiarControlSolicitud")
 	public String LimpiarSolicitud(HttpSession session) {
 		List<Det_Solicitud>ListDetallSolicitud=(List<Det_Solicitud>) session.getAttribute("ListaTemporal");
@@ -41,7 +45,6 @@ public class SolicitudController {
 		if(ListDetallSolicitud==null) {
 			ListDetallSolicitud=new ArrayList<>();
 			session.setAttribute("ListaTemporal", ListDetallSolicitud);
-			
 		}
 		model.addAttribute("ListDetallSolicitud", ListDetallSolicitud);
 		model.addAttribute("ListaProductos", productoService.ListarProductos());
@@ -87,6 +90,26 @@ public class SolicitudController {
 	}
 	
 	return "redirect:/ControlSolicitud";
+	}
+	
+	@GetMapping("/detalleSolicitud")
+	public String mostrardetallesolicitud(@RequestParam("id") int id, Model model){
+		Solicitud solicitud = solicitudService.buscarporid(id); 
+		model.addAttribute("solicitud", solicitud);
+		model.addAttribute("detallesolicitud", solicitudService.listadedetalles(id));
+	return "Solicitud/DetalleSolicitud";
+	}
+	
+	@GetMapping ("/solicitudAceptado")
+	public String CambiarEstado (@RequestParam("id") int id) {
+		solicitudService.CambiarEstadoaceptado(id);
+		return "redirect:/ControlSolicitud";
+	}
+	
+	@GetMapping("/solicitudrechazada")
+	public String cambiarRechazado(@RequestParam("id") int id) {
+		solicitudService.CambiarEstadorechazado(id);
+		return "redirect:/ControlSolicitud";
 	}
 
 }

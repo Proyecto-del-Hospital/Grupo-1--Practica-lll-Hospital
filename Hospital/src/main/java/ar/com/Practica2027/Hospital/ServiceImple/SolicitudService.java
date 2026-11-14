@@ -29,11 +29,22 @@ public class SolicitudService implements ISolicitud {
  @Autowired
  IEstadoRepository estadoSoliictudRepo;
 	@Override
-	public String altaSolicitud(List<Det_Solicitud> detalles, Empleado empleados, String motivo) {
-		if(detalles==null || detalles.isEmpty()) {
-			
-			
+    public String altaSolicitud(List<Det_Solicitud> detalles, Empleado empleados, String motivo) {
+		if(detalles==null || detalles.isEmpty()) {	
 		return "No hay productos en la Lista";	
+		}
+		List<Det_Solicitud> listaSinrepetir = new ArrayList<>(); 
+		for (Det_Solicitud listavista : detalles) {
+			boolean encontrado=false;
+			for (Det_Solicitud sinrepetir : listaSinrepetir) {
+				if (listavista.getProducto().getId() == sinrepetir.getProducto().getId()) {
+					sinrepetir.setCantidad(listavista.getCantidad()+sinrepetir.getCantidad());
+					encontrado=true;
+				}
+			}
+			if (!encontrado) {
+				listaSinrepetir.add(listavista);
+			}
 		}
 		
 		Estado estado= estadoSoliictudRepo.findBynombre("Pendiente");
@@ -52,16 +63,60 @@ public class SolicitudService implements ISolicitud {
 		solicitud=solicitudRepo.save(solicitud);
 		
 		
-		for (Det_Solicitud det_Solicitudes : detalles) {
+		for (Det_Solicitud det_Solicitudes : listaSinrepetir) {
 		det_Solicitudes.setSolicitud(solicitud);
 		detalleSolicitudRepo.save(det_Solicitudes);
 		}
 		return "Solicitud Guardado con Existo";
 	}
+	
 	@Override
 	public List<Solicitud> listasolictudes() {
 		
-		return solicitudRepo.findAll();
+		return solicitudRepo.findAllByOrderByFechaDesc();
+	}
+	
+	@Override
+	public Solicitud buscarporid(int id) {
+		// TODO Auto-generated method stub
+		return solicitudRepo.findByid(id);
+	}
+	@Override
+	public List<Det_Solicitud> listadedetalles(int id) {
+		// TODO Auto-generated method stub
+		return detalleSolicitudRepo.findBySolicitudId(id);
+	}
+
+	@Override
+	public String CambiarEstadoaceptado(int id) {
+		Solicitud solicitudexistente = solicitudRepo.findByid(id);
+		Estado estadocambiado = estadoSoliictudRepo.findBynombre("Aceptado");
+			if (estadocambiado == null) {
+				estadocambiado = new Estado();
+				estadocambiado.setNombre("Aceptado");
+				estadoSoliictudRepo.save(estadocambiado);
+			}
+
+			solicitudexistente.setEstado(estadocambiado);
+			solicitudRepo.save(solicitudexistente);
+			
+		return null;
+	}
+
+	@Override
+	public String CambiarEstadorechazado(int id) {
+		Solicitud solicitudexistente = solicitudRepo.findByid(id);
+		Estado estadocambiado = estadoSoliictudRepo.findBynombre("Rechazado");
+			if (estadocambiado == null) {
+				estadocambiado = new Estado();
+				estadocambiado.setNombre("Rechazado");
+				estadoSoliictudRepo.save(estadocambiado);
+			}
+
+			solicitudexistente.setEstado(estadocambiado);
+			solicitudRepo.save(solicitudexistente);
+		
+		return null;
 	}
 	
 	
