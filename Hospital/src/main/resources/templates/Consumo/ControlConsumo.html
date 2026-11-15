@@ -62,7 +62,7 @@
 												<th>Producto</th>
 												<th>Tipo</th>
 												<th>Cantidad</th>
-												<th>Unidad</th>
+												
 												<th>Accion</th>
 											</tr>
 										</thead>
@@ -70,8 +70,8 @@
 											<tr th:each="d : ${listaDetallesC}" class="text-center">
 												<td th:text="${d.productococina.nombre}"></td>
 												<td th:text="${d.productococina.tipo.nombre}"></td>
-												<td th:text="${d.cantidad}"></td>
-												<td th:text="${d.productococina.unidad.nombre}"></td>
+												<td th:text="${d.cantidad+ ' '+d.productococina.unidad.nombre}"></td>
+												
 												<td>
 													<form method="post" th:action="@{/Quitarproductos}">
 														<input type="hidden" name="posicion"

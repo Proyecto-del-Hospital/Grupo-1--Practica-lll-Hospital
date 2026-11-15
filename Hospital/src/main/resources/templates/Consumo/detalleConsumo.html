@@ -59,8 +59,8 @@
 										<td th:text="${d.turno.nombre}"></td>
 										<td class="text-start" th:text="${d.productococina.nombre}"></td>
 										<td th:text="${d.cantidad + ' ' + d.productococina.unidad.nombre}"></td>
-										<td th:text="${d.productococina.stockactual}"></td>
-										<td th:text="${d.productococina.stockminimo}"></td>
+										<td th:text="${d.productococina.stockactual + ' ' + d.productococina.unidad.nombre}"></td>
+										<td th:text="${d.productococina.stockminimo + ' ' + d.productococina.unidad.nombre}"></td>
 									</tr>
 								</tbody>
 							</table>
