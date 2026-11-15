@@ -42,7 +42,7 @@
 											<option value="">Seleccione un producto</option>
 											<option th:each="p : ${ListaProductos}" th:if="${(session.empleadologueado.usuario.rol.nombre == 'Jefa de Cocina' 
 											and p.tipo.nombre == 'Alimenticio') or (session.empleadologueado.usuario.rol.nombre == 'Encargado' and 
-											p.tipo.nombre == 'Limpieza')}" th:text="${p.nombre}" th:value="${p.id}">
+											p.tipo.nombre == 'Limpieza')}" th:text="${p.nombre+', Tipo: '+ p.tipo.nombre + ', Unidad:' + p.unidad.nombre}" th:value="${p.id}">
 											</option>
 										</select>
 									</div>
@@ -72,13 +72,17 @@
 										<thead class="table-dark">
 											<tr class="text-center">
 												<th>Producto</th>
-												<th>Cantidad</th>
+												<th>Tipo</th>
+												<th>SubTipo</th>
+												<th>Unidad</th>
 												<th>Acción</th>
 											</tr>
 										</thead>
 										<tbody>
 											<tr th:each="d : ${ListDetallSolicitud}" class="text-center">
 												<td th:text="${d.producto.nombre}"></td>
+												<td th:text="${d.producto.Tipo.nombre}"></td>
+												<td th:text="${d.producto.subtipo.nombre}"></td>
 												<td th:text="${d.cantidad}"></td>
 												<td>
 													<form method="post" th:action="@{/QuitarProductoListaS}">
@@ -177,7 +181,6 @@ or sol.empleado.usuario.rol.nombre == session.empleadologueado.usuario.rol.nombr
 						</div>
 					</div>
 				</article>
-
 			</div>
 		</section>
 	</main>
