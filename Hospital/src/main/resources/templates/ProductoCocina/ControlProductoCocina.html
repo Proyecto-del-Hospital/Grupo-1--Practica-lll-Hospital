@@ -60,12 +60,12 @@
 									<div class="col-md-6">
 										<label class="form-label">Stock actual</label>
 										<input type="number" class="form-control form-control-sm"
-											th:field="*{stockactual}" step="any" placeholder="Ingrese el stock actual">
+											th:field="*{stockactual}" step="any" min="0" placeholder="Ingrese el stock actual">
 									</div>
 									<div class="col-md-6">
 										<label class="form-label">Stock mínimo</label>
 										<input type="number" class="form-control form-control-sm"
-											th:field="*{stockminimo}" step="any" required
+											th:field="*{stockminimo}" step="any" min="0" required
 											placeholder="Ingrese el stock mínimo">
 									</div>
 									<div class="col-6" th:if="${Editar != null}">

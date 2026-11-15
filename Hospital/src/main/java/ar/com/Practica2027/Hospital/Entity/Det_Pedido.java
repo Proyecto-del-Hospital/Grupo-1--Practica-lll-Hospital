@@ -17,18 +17,18 @@ public class Det_Pedido {
 	private double cantidad;
 	
 	@ManyToOne
-    @JoinColumn(name = "id_solicitud")
-	private Solicitud solicitud;
+    @JoinColumn(name = "id_pedido")
+	private Pedido pedido;
 	
 	@ManyToOne
     @JoinColumn(name = "id_producto")
 	private Producto producto;
 
-	public Det_Pedido(int id, double cantidad, Solicitud solicitud, Producto producto) {
+	public Det_Pedido(int id, double cantidad, Pedido pedido, Producto producto) {
 		super();
 		this.id = id;
 		this.cantidad = cantidad;
-		this.solicitud = solicitud;
+		this.pedido = pedido;
 		this.producto = producto;
 	}
 
@@ -52,12 +52,12 @@ public class Det_Pedido {
 		this.cantidad = cantidad;
 	}
 
-	public Solicitud getSolicitud() {
-		return solicitud;
+	public Pedido getPedido() {
+		return pedido;
 	}
 
-	public void setSolicitud(Solicitud solicitud) {
-		this.solicitud = solicitud;
+	public void setPedido(Pedido pedido) {
+		this.pedido = pedido;
 	}
 
 	public Producto getProducto() {
@@ -67,6 +67,7 @@ public class Det_Pedido {
 	public void setProducto(Producto producto) {
 		this.producto = producto;
 	}
+
 	
 	
 }

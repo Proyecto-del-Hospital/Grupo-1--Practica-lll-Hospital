@@ -1,6 +1,5 @@
 package ar.com.Practica2027.Hospital.ServiceImple;
 
-
 import java.util.List;
 
 import org.mindrot.jbcrypt.BCrypt;
@@ -23,72 +22,71 @@ import ar.com.Practica2027.Hospital.Repository.IEstadoRepository;
 import ar.com.Practica2027.Hospital.Repository.IRolRepository;
 import ar.com.Practica2027.Hospital.Repository.ISectorRepository;
 import ar.com.Practica2027.Hospital.Repository.IUsuarioRepository;
-import ar.com.Practica2027.Hospital.Service.IEmpledo;
+import ar.com.Practica2027.Hospital.Service.IEmpleado;
 import org.mindrot.jbcrypt.BCrypt;
 
 @Service
-public class EmpleadoService implements IEmpledo{
+public class EmpleadoService implements IEmpleado {
 
 	@Autowired
 	private IEmpleadoRepository EmpleRepo;
 
 	@Autowired
 	private IRolRepository rolRepo;
-	
+
 	@Autowired
 	private IDireccionRepository direccionRepo;
-	
+
 	@Autowired
 	private IUsuarioRepository usuarioRepo;
-	
+
 	@Autowired
 	private IEstadoRepository estadoRepo;
-	
+
 	@Autowired
 	private IContactoRepository contactoRepo;
-	
+
 	@Autowired
 	private ISectorRepository sectorRepo;
-	
+
 	@Autowired
-	private IDetSectorRepository DetSectorRepo; 
-	
+	private IDetSectorRepository DetSectorRepo;
+
 	@Override
 	public String CrearEmpleado(Empleado empleado, List<Integer> sectoresids) {
-		
+
 		List<Empleado> empleados = EmpleRepo.findAll();
 		if (sectoresids == null || sectoresids.isEmpty()) {
-			
+
 			return "No Selecionaste Un Sector";
 		}
-		
+
 		// se agrego la validadcion de que no se repita el dni
 		for (Empleado e : empleados) {
-		  if (e.getDNI().equalsIgnoreCase(empleado.getDNI()) ) {
-		return "El dni ya existe";
-		}
-		// se agrego la validadcion de que no se repita el usuario
-		if (e.getUsuario().getNombreu().equalsIgnoreCase(empleado.getUsuario().getNombreu())) {
-			return "El Usuario ya Existe";
+			if (e.getDNI().equalsIgnoreCase(empleado.getDNI())) {
+				return "El dni ya existe";
+			}
+			// se agrego la validadcion de que no se repita el usuario
+			if (e.getUsuario().getNombreu().equalsIgnoreCase(empleado.getUsuario().getNombreu())) {
+				return "El Usuario ya Existe";
 			}
 		}
 
 		Rol rol = rolRepo.findBynombre(empleado.getUsuario().getRol().getNombre());
-		if(rol == null ) { 
+		if (rol == null) {
 			rol = new Rol();
 			rol.setNombre(empleado.getUsuario().getRol().getNombre());
 			rolRepo.save(rol);
 		}
-		
-		
+
 		empleado.getUsuario().setRol(rol);
-		
+
 		Usuario usuario = usuarioRepo.save(empleado.getUsuario());
 		Direccion direccion = direccionRepo.save(empleado.getDireccion());
 		Contacto contacto = contactoRepo.save(empleado.getContacto());
 		Estado estado = estadoRepo.findBynombre("Habilitado");
-		
-		if (estado == null ) {
+
+		if (estado == null) {
 			estado = new Estado();
 			estado.setNombre("Habilitado");
 			estadoRepo.save(estado);
@@ -98,13 +96,13 @@ public class EmpleadoService implements IEmpledo{
 		empleado.setContacto(contacto);
 		empleado.setEstado(estado);
 		empleado.setMotivo("-");
-		
+
 		String empleadodesencritado = empleado.getUsuario().getContrasena();
-	    String empleadoencritado =  BCrypt.hashpw(empleadodesencritado, BCrypt.gensalt());
+		String empleadoencritado = BCrypt.hashpw(empleadodesencritado, BCrypt.gensalt());
 		empleado.getUsuario().setContrasena(empleadoencritado);
-		
+
 		EmpleRepo.save(empleado);
-		
+
 		for (Integer id : sectoresids) {
 			Sector sector = sectorRepo.findByid(id);
 			Det_Sector detallesector = new Det_Sector();
@@ -112,13 +110,13 @@ public class EmpleadoService implements IEmpledo{
 			detallesector.setSector(sector);
 			DetSectorRepo.save(detallesector);
 		}
-		
+
 		return "Empleado Registrado Con Exito";
 	}
 
 	@Override
 	public List<Sector> listarSector() {
-		
+
 		return sectorRepo.findAll();
 	}
 
@@ -133,10 +131,11 @@ public class EmpleadoService implements IEmpledo{
 		// TODO Auto-generated method stub
 		return EmpleRepo.findAll();
 	}
-	//se agrego la subtares de buscar por dni
+
+	// se agrego la subtares de buscar por dni
 	@Override
 	public List<Empleado> buscarEmpleado(String DNI) {
-		
+
 		return EmpleRepo.findByDNI(DNI);
 	}
 
@@ -147,90 +146,90 @@ public class EmpleadoService implements IEmpledo{
 	}
 
 	@Override
-	public String modificarempleado(Empleado empleado, List<Integer>sectoresids ) {
-		
+	public String modificarempleado(Empleado empleado, List<Integer> sectoresids) {
+
 		Empleado empleadoExistente = EmpleRepo.findByid(empleado.getId());
 
-	    if (empleadoExistente == null) {
-	        return "El empleado no existe";
-	    }
-
-	    List<Empleado> empleados = EmpleRepo.findAll();
-	    for (Empleado e : empleados) {
-	        if (e.getId() != empleadoExistente.getId()) {
-
-	            if (e.getDNI().equalsIgnoreCase(empleado.getDNI())) {
-	                return "El dni ya existe";
-	            }
-	            if (e.getUsuario().getNombreu()
-	                    .equalsIgnoreCase(empleado.getUsuario().getNombreu())) {
-	                return "El Usuario ya Existe";
-	            }
-	        }
-	    }
-
-	    empleadoExistente.setNombre(empleado.getNombre());
-	    empleadoExistente.setApellido(empleado.getApellido());
-	    empleadoExistente.setDNI(empleado.getDNI());
-	    empleadoExistente.setFecha_nac(empleado.getFecha_nac());
-
-	    Contacto contactoExistente = empleadoExistente.getContacto();
-	    contactoExistente.setCorreo(empleado.getContacto().getCorreo());
-	    contactoExistente.setTelefono(empleado.getContacto().getTelefono());
-	    contactoRepo.save(contactoExistente);
-
-	    Direccion direccionExistente = empleadoExistente.getDireccion();
-	    direccionExistente.setBarrio(empleado.getDireccion().getBarrio());
-	    direccionExistente.setCalle(empleado.getDireccion().getCalle());
-	    direccionExistente.setLocalidad(empleado.getDireccion().getLocalidad());
-	    direccionExistente.setNumer_calle(empleado.getDireccion().getNumer_calle());
-	    direccionRepo.save(direccionExistente);
-
-	    Rol rol = rolRepo.findBynombre(empleado.getUsuario().getRol().getNombre());
-	    if (rol == null) {
-	        rol = new Rol();
-	        rol.setNombre(empleado.getUsuario().getRol().getNombre());
-	        rol = rolRepo.save(rol);
-	    }
-
-	    Usuario usuarioExistente = empleadoExistente.getUsuario();
-	    usuarioExistente.setNombreu(empleado.getUsuario().getNombreu());
-	    usuarioExistente.setRol(rol);
-	    
-	    String NuevaContraseña = empleado.getUsuario().getContrasena();
-	    
-		if(NuevaContraseña!=null && !NuevaContraseña.isEmpty()) {
-	    String empleadodesencritado = empleado.getUsuario().getContrasena();
-	    String empleadoencritado =  BCrypt.hashpw(empleadodesencritado, BCrypt.gensalt());
-		empleadoExistente.getUsuario().setContrasena(empleadoencritado);
+		if (empleadoExistente == null) {
+			return "El empleado no existe";
 		}
 
-	    usuarioRepo.save(usuarioExistente);
-	    EmpleRepo.save(empleadoExistente);
-	    
-	    if(sectoresids!=null && !sectoresids.isEmpty()) {
-	    	List<Det_Sector> sectoresAnteriores=DetSectorRepo.findByEmpleadoId(empleadoExistente.getId());
-	    	if(sectoresAnteriores!=null && !sectoresAnteriores.isEmpty()) {
-	    		DetSectorRepo.deleteAll(sectoresAnteriores);
-	    	}
-	    	if(sectoresids!=null && !sectoresids.isEmpty()) {
-	    	for(Integer idsec :sectoresids) {
-	    		Sector sector = sectorRepo.findByid(idsec);
-	    		if(sector!=null) {
-	    			Det_Sector detallesector= new Det_Sector();
-	    			detallesector.setEmpleado(empleadoExistente);
-	    			detallesector.setSector(sector);
-	    			DetSectorRepo.save(detallesector);
-	    		}
-	    	}
-	    }
-	    }
-	    return "Empleado modificado con éxito";
+		List<Empleado> empleados = EmpleRepo.findAll();
+		for (Empleado e : empleados) {
+			if (e.getId() != empleadoExistente.getId()) {
+
+				if (e.getDNI().equalsIgnoreCase(empleado.getDNI())) {
+					return "El dni ya existe";
+				}
+				if (e.getUsuario().getNombreu().equalsIgnoreCase(empleado.getUsuario().getNombreu())) {
+					return "El Usuario ya Existe";
+				}
+			}
+		}
+
+		empleadoExistente.setNombre(empleado.getNombre());
+		empleadoExistente.setApellido(empleado.getApellido());
+		empleadoExistente.setDNI(empleado.getDNI());
+		empleadoExistente.setFecha_nac(empleado.getFecha_nac());
+		empleadoExistente.setMotivo(empleado.getMotivo());
+		
+		Contacto contactoExistente = empleadoExistente.getContacto();
+		contactoExistente.setCorreo(empleado.getContacto().getCorreo());
+		contactoExistente.setTelefono(empleado.getContacto().getTelefono());
+		contactoRepo.save(contactoExistente);
+
+		Direccion direccionExistente = empleadoExistente.getDireccion();
+		direccionExistente.setBarrio(empleado.getDireccion().getBarrio());
+		direccionExistente.setCalle(empleado.getDireccion().getCalle());
+		direccionExistente.setLocalidad(empleado.getDireccion().getLocalidad());
+		direccionExistente.setNumer_calle(empleado.getDireccion().getNumer_calle());
+		direccionRepo.save(direccionExistente);
+
+		Rol rol = rolRepo.findBynombre(empleado.getUsuario().getRol().getNombre());
+		if (rol == null) {
+			rol = new Rol();
+			rol.setNombre(empleado.getUsuario().getRol().getNombre());
+			rol = rolRepo.save(rol);
+		}
+
+		Usuario usuarioExistente = empleadoExistente.getUsuario();
+		usuarioExistente.setNombreu(empleado.getUsuario().getNombreu());
+		usuarioExistente.setRol(rol);
+
+		String NuevaContraseña = empleado.getUsuario().getContrasena();
+
+		if (NuevaContraseña != null && !NuevaContraseña.isEmpty()) {
+			String empleadodesencritado = empleado.getUsuario().getContrasena();
+			String empleadoencritado = BCrypt.hashpw(empleadodesencritado, BCrypt.gensalt());
+			empleadoExistente.getUsuario().setContrasena(empleadoencritado);
+		}
+
+		usuarioRepo.save(usuarioExistente);
+		EmpleRepo.save(empleadoExistente);
+
+		if (sectoresids != null && !sectoresids.isEmpty()) {
+			List<Det_Sector> sectoresAnteriores = DetSectorRepo.findByEmpleadoId(empleadoExistente.getId());
+			if (sectoresAnteriores != null && !sectoresAnteriores.isEmpty()) {
+				DetSectorRepo.deleteAll(sectoresAnteriores);
+			}
+			if (sectoresids != null && !sectoresids.isEmpty()) {
+				for (Integer idsec : sectoresids) {
+					Sector sector = sectorRepo.findByid(idsec);
+					if (sector != null) {
+						Det_Sector detallesector = new Det_Sector();
+						detallesector.setEmpleado(empleadoExistente);
+						detallesector.setSector(sector);
+						DetSectorRepo.save(detallesector);
+					}
+				}
+			}
+		}
+		return "Empleado modificado con éxito";
 	}
 
 	@Override
 	public String CambiarEstadoempleado(Empleado empleado) {
-		
+
 		Empleado empleadoexistente = EmpleRepo.findByid(empleado.getId());
 		Estado nuevoEstado;
 
@@ -254,68 +253,68 @@ public class EmpleadoService implements IEmpledo{
 
 		empleadoexistente.setEstado(nuevoEstado);
 		EmpleRepo.save(empleadoexistente);
-		
+
 		if (nuevoEstado.getNombre().equalsIgnoreCase("Inhabilitado")) {
-	        
-	        Estado estadoSuspendido = estadoRepo.findBynombre("Suspendida");
-	        if (estadoSuspendido == null) {
-	            estadoSuspendido = new Estado();
-	            estadoSuspendido.setNombre("Suspendida");
-	            estadoSuspendido = estadoRepo.save(estadoSuspendido);
-	        }
-	      }
-		return "";
+
+			Estado estadoSuspendido = estadoRepo.findBynombre("Suspendida");
+			if (estadoSuspendido == null) {
+				estadoSuspendido = new Estado();
+				estadoSuspendido.setNombre("Suspendida");
+				estadoSuspendido = estadoRepo.save(estadoSuspendido);
+			}
 		}
+		return "";
+	}
 
 	@Override
 	public void inicializardatos() {
 		if (rolRepo.findAll().isEmpty()) {
-	        Rol r1 = new Rol(); 
-	        r1.setNombre("Administrador");
-	        rolRepo.save(r1);
-	        Rol r2 = new Rol(); 
-	        r2.setNombre("Jefa de Cocina"); 
-	        rolRepo.save(r2);
-	        Rol r3 = new Rol(); 
-	        r3.setNombre("Cocinero"); 
-	        rolRepo.save(r3);
-	    }
+			Rol r1 = new Rol();
+			r1.setNombre("Administrador");
+			rolRepo.save(r1);
+			Rol r2 = new Rol();
+			r2.setNombre("Jefa de Cocina");
+			rolRepo.save(r2);
+			Rol r3 = new Rol();
+			r3.setNombre("Cocinero");
+			rolRepo.save(r3);
+		}
 
-	    if (estadoRepo.findAll().isEmpty()) {
-	        Estado e1 = new Estado(); 
-	        e1.setNombre("Habilitado"); 
-	        estadoRepo.save(e1);
-	        Estado e2 = new Estado(); 
-	        e2.setNombre("Inhabilitado"); 
-	        estadoRepo.save(e2);
-	    }
+		if (estadoRepo.findAll().isEmpty()) {
+			Estado e1 = new Estado();
+			e1.setNombre("Habilitado");
+			estadoRepo.save(e1);
+			Estado e2 = new Estado();
+			e2.setNombre("Inhabilitado");
+			estadoRepo.save(e2);
+		}
 
-	    if (usuarioRepo.findAll().isEmpty()) {
-	        
-	        Direccion dir = new Direccion();
-	        dir = direccionRepo.save(dir);
+		if (usuarioRepo.findAll().isEmpty()) {
 
-	        Contacto con = new Contacto();
-	        con = contactoRepo.save(con);
+			Direccion dir = new Direccion();
+			dir = direccionRepo.save(dir);
 
-	        Usuario usuAdmin = new Usuario();
-	        usuAdmin.setNombreu("admin");
-	        usuAdmin.setContrasena(BCrypt.hashpw("admin123", BCrypt.gensalt()));
-	        usuAdmin.setRol(rolRepo.findBynombre("Administrador"));
-	        usuAdmin = usuarioRepo.save(usuAdmin);
-	       
-	        Empleado admin = new Empleado();
-	        admin.setNombre("Super");
-	        admin.setApellido("Administrador");
-	        admin.setDNI("00000000");
-	        admin.setMotivo("-");
-	        admin.setDireccion(dir);
-	        admin.setContacto(con);
-	        admin.setEstado(estadoRepo.findBynombre("Habilitado"));
-	        admin.setUsuario(usuAdmin);
+			Contacto con = new Contacto();
+			con = contactoRepo.save(con);
 
-	        EmpleRepo.save(admin);
-	        
-	    }
+			Usuario usuAdmin = new Usuario();
+			usuAdmin.setNombreu("admin");
+			usuAdmin.setContrasena(BCrypt.hashpw("admin123", BCrypt.gensalt()));
+			usuAdmin.setRol(rolRepo.findBynombre("Administrador"));
+			usuAdmin = usuarioRepo.save(usuAdmin);
+
+			Empleado admin = new Empleado();
+			admin.setNombre("Super");
+			admin.setApellido("Administrador");
+			admin.setDNI("00000000");
+			admin.setMotivo("-");
+			admin.setDireccion(dir);
+			admin.setContacto(con);
+			admin.setEstado(estadoRepo.findBynombre("Habilitado"));
+			admin.setUsuario(usuAdmin);
+
+			EmpleRepo.save(admin);
+
+		}
 	}
 }

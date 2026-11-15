@@ -15,7 +15,7 @@ import ar.com.Practica2027.Hospital.Entity.Det_Entrega;
 import ar.com.Practica2027.Hospital.Entity.Empleado;
 import ar.com.Practica2027.Hospital.Entity.Entrega;
 import ar.com.Practica2027.Hospital.Entity.Producto;
-import ar.com.Practica2027.Hospital.Service.IEmpledo;
+import ar.com.Practica2027.Hospital.Service.IEmpleado;
 import ar.com.Practica2027.Hospital.Service.IEntrega;
 import ar.com.Practica2027.Hospital.Service.IProducto;
 import jakarta.servlet.http.HttpSession;
@@ -30,7 +30,7 @@ public class EntregaController {
 	IEntrega entregaserv;
 
 	@Autowired
-	IEmpledo empledoserv;
+	IEmpleado empledoserv;
 
 	@GetMapping("/controlentrega")
 	public String controlEntrega(Model model, HttpSession session) {

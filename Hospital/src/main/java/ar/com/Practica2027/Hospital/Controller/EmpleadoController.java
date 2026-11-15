@@ -13,7 +13,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ar.com.Practica2027.Hospital.Entity.Empleado;
 import ar.com.Practica2027.Hospital.Entity.Sector;
-import ar.com.Practica2027.Hospital.Service.IEmpledo;
+import ar.com.Practica2027.Hospital.Service.IEmpleado;
 
 
 
@@ -21,7 +21,7 @@ import ar.com.Practica2027.Hospital.Service.IEmpledo;
 public class EmpleadoController {
 
 	@Autowired
-	private IEmpledo empleService;
+	private IEmpleado empleService;
 
 	@GetMapping("/Alta/Empleado")
 	public String RegistrarEmpleado(Model model) {

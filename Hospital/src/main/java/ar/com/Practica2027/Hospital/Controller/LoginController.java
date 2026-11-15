@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import ar.com.Practica2027.Hospital.Entity.Empleado;
-import ar.com.Practica2027.Hospital.Service.IEmpledo;
+import ar.com.Practica2027.Hospital.Service.IEmpleado;
 import ar.com.Practica2027.Hospital.Service.ILogin;
 import jakarta.servlet.http.HttpSession;
 
@@ -19,7 +19,7 @@ public class LoginController {
 	private ILogin loginService;
 	
 	@Autowired
-	private IEmpledo empleadoservice;
+	private IEmpleado empleadoservice;
 	
 	@GetMapping ("/Inicio/Login")
 	public String MostrarInicio (HttpSession session) {

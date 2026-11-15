@@ -5,7 +5,7 @@ import java.util.List;
 import ar.com.Practica2027.Hospital.Entity.Empleado;
 import ar.com.Practica2027.Hospital.Entity.Sector;
 
-public interface IEmpledo {
+public interface IEmpleado {
 
     String CrearEmpleado (Empleado empleado, List<Integer>sectoresids );
 	List<Sector> listarSector();
