@@ -61,6 +61,7 @@ public class EmpleadoService implements IEmpledo{
 			
 			return "No Selecionaste Un Sector";
 		}
+		
 		// se agrego la validadcion de que no se repita el dni
 		for (Empleado e : empleados) {
 		  if (e.getDNI().equalsIgnoreCase(empleado.getDNI()) ) {

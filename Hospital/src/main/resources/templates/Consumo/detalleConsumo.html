@@ -41,8 +41,6 @@
 							<table class="table table-bordered table-striped table-hover mb-0">
 								<thead class="table-dark">
 									<tr class="text-center">
-										<th>ID</th>
-
 										<th>Empleado</th>
 										<th>Turno</th>
 										<th>producto</th>
@@ -53,8 +51,6 @@
 								</thead>
 								<tbody class="text-center">
 									<tr class="text-center" th:each="d : ${ListaDetConsumo}">
-										<td th:text="${d.id}"> </td>
-
 										<td th:text="${d.empleado.nombre}"></td>
 										<td th:text="${d.turno.nombre}"></td>
 										<td class="text-start" th:text="${d.productococina.nombre}"></td>
