@@ -16,13 +16,14 @@
 	<main>
 		<section>
 			<div class="justify-content-center w-100 p-5">
-				<div th:if="${mensaje}" class="alert alert-success text-center">
-					<p th:text="${mensaje}">
-					</p>
-				</div>
+
 				<article>
 					<div class="row justify-content-center">
 						<div class="col-md-8">
+							<div th:if="${mensaje}" class="alert alert-info text-center pt-4">
+								<p th:text="${mensaje}">
+								</p>
+							</div>
 							<div class="shadow-lg p-2 bg-body-tertiary rounded">
 								<h3 class="mb-4 text-center text-info">Registrar Consumo de Insumos</h3>
 								<form class="row g-2" method="post" th:action="@{/agregarProductoConsumo}">
@@ -38,7 +39,7 @@
 									<div class="col-md-6">
 										<label class="form-label">Cantidad Consumida</label>
 										<input type="number" class="form-control form-control-sm" name="cantidad"
-											step="any" placeholder="Ingrese la cantidad" required>
+											step="any" min="1" placeholder="Ingrese la cantidad" required>
 									</div>
 
 									<div class="col-12 mt-4">
@@ -62,7 +63,6 @@
 												<th>Producto</th>
 												<th>Tipo</th>
 												<th>Cantidad</th>
-
 												<th>Accion</th>
 											</tr>
 										</thead>
@@ -73,7 +73,7 @@
 												<td th:text="${d.cantidad+ ' '+d.productococina.unidad.nombre}"></td>
 
 												<td>
-													<form method="post" th:action="@{/Quitarproductos}">
+													<form method="post" th:action="@{/QuitarproductosConsumo}">
 														<input type="hidden" name="posicion"
 															th:value="${d.productococina.id}">
 														<button type="submit" class="btn btn-danger">Cancelar</button>
@@ -89,7 +89,7 @@
 				</article>
 				<article>
 					<div class="row justify-content-center">
-						<div class="col-md-5">
+						<div class="col-md-8">
 							<div class="shadow-lg p-2 bg-body-tertiary rounded">
 								<h3 class="mb-4 text-center text-info">Guardar Consumo</h3>
 								<form class="row g-2" method="post" th:action="@{/GuardarConsumo}">
@@ -102,10 +102,12 @@
 											<option value="Noche">Noche</option>
 										</select>
 									</div>
-									<button type="button" class="btn btn-success" data-bs-toggle="modal"
-										data-bs-target="#modalGuardar">
-										Guardar Consumo
-									</button>
+									<div class="col-12 mt-2">
+										<button type="button" class="btn btn-success w-100" data-bs-toggle="modal"
+											data-bs-target="#modalGuardar">
+											Guardar Consumo
+										</button>
+									</div>
 									<div class="modal fade" id="modalGuardar" tabindex="-1"
 										aria-labelledby="exampleModalLabel" aria-hidden="true">
 										<div class="modal-dialog">
@@ -136,7 +138,7 @@
 				<br>
 				<article>
 					<div class="row justify-content-center">
-						<div class="col-md-5">
+						<div class="col-8 md-4">
 							<div class="shadow-lg p-4 bg-body-tertiary rounded">
 								<h3 class="text-center text-info pb-3"> Solicitudes Registradas </h3>
 								<div class="table-responsive">

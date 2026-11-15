@@ -13,6 +13,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ar.com.Practica2027.Hospital.Entity.Consumo;
 import ar.com.Practica2027.Hospital.Entity.Det_Consumo;
+import ar.com.Practica2027.Hospital.Entity.Det_Entrega;
 import ar.com.Practica2027.Hospital.Entity.Empleado;
 import ar.com.Practica2027.Hospital.Entity.ProductoCocina;
 import ar.com.Practica2027.Hospital.Service.IConsumo;
@@ -72,17 +73,33 @@ public class ConsumoController {
 		return "redirect:/ControlConsumo";
 	}
 	
+	@PostMapping("/QuitarproductosConsumo")
+	public String QuitarProductos(HttpSession session, @RequestParam("posicion") int posicion) {
+		List<Det_Consumo> listDetallesConsumo = (List<Det_Consumo>) session.getAttribute("listaTemporalC");
+		if (listDetallesConsumo != null && posicion >= 0) {
+			for (int i = 0; i < listDetallesConsumo.size(); i++) {
+				if (listDetallesConsumo.get(i).getProductococina().getId() == posicion) {
+					listDetallesConsumo.remove(i);
+					break;
+				}
+			}
+			session.setAttribute("listaTemporalC", listDetallesConsumo);
+		}
+		return "redirect:/ControlConsumo";
+	}
+
+	
 	@PostMapping("/GuardarConsumo")
-	public String GuardarSolicitud(HttpSession session,@RequestParam ("turno") String turno) {
+	public String GuardarSolicitud(HttpSession session,@RequestParam ("turno") String turno,RedirectAttributes redirect) {
 		List<Det_Consumo> listDetallesConsumo = (List<Det_Consumo>) session.getAttribute("listaTemporalC");
 		Empleado empleadologueado=(Empleado)session.getAttribute("empleadologueado");
 		session.removeAttribute("ListaTemporal");
-		consumoService.registrarConsuDiario(listDetallesConsumo, empleadologueado, turno);
+		 redirect.addFlashAttribute("mensaje",consumoService.registrarConsuDiario(listDetallesConsumo, empleadologueado, turno));
 		session.removeAttribute("listaTemporalC");
 	return"redirect:/ControlConsumo";
 	}
 	
-	@GetMapping("DetalleConsumo")
+	@GetMapping("/DetalleConsumo")
 	public String DetalleConsumo(@RequestParam("id") int id, Model model) {
 		Consumo Miconsumo = consumoService.BuscarPorID(id);
 		model.addAttribute("consumo", Miconsumo);
