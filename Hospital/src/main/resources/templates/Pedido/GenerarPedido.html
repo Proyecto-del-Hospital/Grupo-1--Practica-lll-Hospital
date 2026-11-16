@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" th:href="@{/CSS/bootstrap.min.css}">
+	<link rel="stylesheet" th:href="@{/CSS/style.css}">
+	<script src="https://kit.fontawesome.com/57faba85b1.js" crossorigin="anonymous"></script>
+	<title>Control de Solicitud</title>
+</head>
+
+<body>
+	<header>
+		<div th:replace="Inicio/Inicioprueba::navbarprueba"></div>
+	</header>
+	<main class="container my-4">
+		<section>
+				<div class="justify-content-center pt-3 pl-5 pr-5" th:if="${session.empleadologueado.usuario.rol.nombre == 'Administrador'}">
+				<div th:if="${mensaje}" class="alert alert-success text-center">
+					<p th:text="${mensaje}" class="mb-0"></p>
+				</div>
+
+				<div class="row justify-content-center mb-3">
+					<div class="col-md-11 d-flex justify-content-between ">
+						<a th:href="@{/ControlSolicitud}" class="btn btn-secondary">
+							← Volver a Solicitudes
+						</a>
+						<h4><span class="badge" th:text="${'Solicitud #' + solicitud.id}"></span></h4>
+					</div>
+				</div>
+				<article class="mb-4">
+					<div class="row justify-content-center">
+						<div class="col-md-11">
+							<div class="shadow-lg p-4 bg-body-tertiary rounded">
+								<h3 class="mb-3 text-center text-info">Generar Pedido</h3>
+
+								<form class="row g-3" method="post" th:action="@{/GuardarPedido}">
+
+									<input type="hidden" name="idSolicitud" th:value="${solicitud.id}" />
+
+									<div class="table-responsive mb-4">
+										<table class="table table-bordered table-striped table-hover align-middle mb-0">
+											<thead class="table-dark">
+												<tr class="text-center">
+													<th>Producto</th>
+													<th>Tipo</th>
+													<th>Cantidad Solicitada</th>
+													<th>Cantidad a Pedir</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr th:each="d : ${detallesSolicitud}" class="text-center">
+													<td th:text="${d.producto.nombre}"></td>
+													<td th:text="${d.producto.Tipo.nombre}"></td>
+													<td th:text="${d.cantidad+ ' '+d.producto.unidad.nombre}"></td>
+													<td>
+														<input type="hidden" name="productoIds"
+															th:value="${d.producto.id}">
+														<input type="number" class="form-control form-control-sm"
+															name="cantidades" step="any" th:value="${d.cantidad}"
+															min="0" required>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+									<div class="col-12 mt-4">
+										<button type="button" class="btn btn-success w-100" data-bs-toggle="modal"
+											data-bs-target="#modalGuardar">
+											Guardar Pedido
+										</button>
+									</div>
+									<div class="modal fade" id="modalGuardar" tabindex="-1"
+										aria-labelledby="exampleModalLabel" aria-hidden="true">
+										<div class="modal-dialog">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h5 class="modal-title" id="exampleModalLabel">Confirmar El Pedido
+													</h5>
+												</div>
+												<div class="modal-body">
+													¿Estás seguro de que deseas guardar el Pedido?
+												</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-secondary"
+														data-bs-dismiss="modal">Cerrar</button>
+													<button type="submit" class="btn btn-success">Confirmar
+														Pedido</button>
+												</div>
+											</div>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</article>
+			</div>
+		</section>
+	</main>
+
+</body>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</html>

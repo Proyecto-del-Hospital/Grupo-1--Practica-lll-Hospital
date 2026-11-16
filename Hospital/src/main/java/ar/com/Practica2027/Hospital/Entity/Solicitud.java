@@ -35,12 +35,6 @@ public class Solicitud {
 	@OneToMany(mappedBy = "solicitud")
 	private List<Det_Solicitud> detallesSolicitudes = new ArrayList<>();
 
-	
-	public Solicitud() {
-		super();
-	}
-
-
 	public Solicitud(int id, String fecha, String motivo, Empleado empleado, Estado estado, List<Pedido> pedidos,
 			List<Det_Solicitud> detallesSolicitudes) {
 		super();
@@ -52,7 +46,6 @@ public class Solicitud {
 		this.pedidos = pedidos;
 		this.detallesSolicitudes = detallesSolicitudes;
 	}
-
 
 	public int getId() {
 		return id;
@@ -103,11 +96,9 @@ public class Solicitud {
 		this.estado = estado;
 	}
 
-
 	public List<Pedido> getPedidos() {
 		return pedidos;
 	}
-
 
 	public void setPedidos(List<Pedido> pedidos) {
 		this.pedidos = pedidos;
@@ -123,6 +114,10 @@ public class Solicitud {
 		this.detallesSolicitudes = detallesSolicitudes;
 	}
 
+	public Solicitud() {
+		super();
+	}
+ 
 	
 
 }

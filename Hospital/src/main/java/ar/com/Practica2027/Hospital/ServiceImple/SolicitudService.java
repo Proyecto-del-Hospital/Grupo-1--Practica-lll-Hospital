@@ -78,12 +78,10 @@ public class SolicitudService implements ISolicitud {
 	
 	@Override
 	public Solicitud buscarporid(int id) {
-		// TODO Auto-generated method stub
 		return solicitudRepo.findByid(id);
 	}
 	@Override
 	public List<Det_Solicitud> listadedetalles(int id) {
-		// TODO Auto-generated method stub
 		return detalleSolicitudRepo.findBySolicitudId(id);
 	}
 

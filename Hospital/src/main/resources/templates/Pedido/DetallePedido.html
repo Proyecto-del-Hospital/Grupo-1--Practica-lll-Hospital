@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" th:href="@{/CSS/bootstrap.min.css}">
+	<title>Detalle del Pedido</title>
+</head>
+
+<body>
+	<header>
+		<div th:replace="Inicio/Inicioprueba::navbarprueba"></div>
+	</header>
+
+	<main class="container my-4">
+		<section>
+			<div class="justify-content-center pt-3 pl-5 pr-5">
+
+				<div class="row justify-content-center mb-3">
+					<div class="col-md-11 d-flex justify-content-between align-items-center">
+						<a th:href="@{/ControlPedidos}" class="btn btn-secondary">
+							← Volver a Pedidos
+						</a>
+						<h4><span class="badge" th:text="${'Pedido #' + pedido.id}"></span></h4>
+
+					</div>
+				</div>
+
+				<article class="mb-4" th:if="${session.empleadologueado.usuario.rol.nombre == 'Administrador'}">
+					<div class="row justify-content-center">
+						<div class="col-md-11">
+							<div class="shadow-lg p-4 bg-body-tertiary rounded">
+								<h3 class="text-center text-primary pb-3"
+									th:text="${'Detalle del Pedido #' + pedido.id}"></h3>
+								<div class="row mb-4 p-3 bg-white border rounded">
+									<div class="col-md-3">
+										<strong>Fecha:</strong>
+										<p class="mb-0" th:text="${pedido.fecha}"></p>
+									</div>
+									<div class="col-md-3">
+										<strong>Solicitud Origen:</strong>
+										<p class="mb-0"
+											th:text="${pedido.solicitud != null ? '#' + pedido.solicitud.id : '-'}"></p>
+									</div>
+									<div class="col-md-3">
+										<strong>Solicitud de:</strong>
+										<p class="mb-0"
+											th:text="${pedido.solicitud != null ? '#' + pedido.solicitud.empleado.nombre : '-'}"></p>
+									</div>
+									<div class="col-md-3">
+										<strong>Estado:</strong>
+										<p class="mb-0">
+											<span class="badge"
+												th:classappend="${pedido.estado.nombre == 'Pendiente' ? 'bg-warning text-dark' : 'bg-success'}"
+												th:text="${pedido.estado.nombre}">
+											</span>
+										</p>
+									</div>
+									<div class="col-md-3">
+										<strong>Responsable:</strong>
+										<p class="mb-0"
+											th:text="${pedido.empleado != null ? pedido.empleado.nombre : '-'}"></p>
+									</div>
+									<div class="col-12 mt-3">
+										<strong>Motivo / Observación:</strong>
+										<p class="mb-0" th:text="${pedido.motivo}"></p>
+									</div>
+								</div>
+
+								<div class="table-responsive">
+									<table class="table table-bordered table-striped table-hover align-middle mb-0">
+										<thead class="table-dark">
+											<tr class="text-center">
+												<th>Producto</th>
+												<th>Tipo</th>
+												<th>Cantidad Solicitada</th>
+												<th>Cantidad Pedida</th>
+												<th>Cantidad Faltante</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr th:each="det: ${detallesPedido}" class="text-center">
+												<td th:text="${det.producto.nombre}"></td>
+
+												<td th:text="${det.producto.tipo.nombre}"></td>
+												<td>
+													<span th:each="detsol: ${detallesSolicitud}" class="text-center"
+														th:if="${detsol.producto.id==det.producto.id}"
+														th:text="${detsol.cantidad+ ''+detsol.producto.unidad.nombre}"></span>
+												</td>
+												<td class="fw-bold"
+													th:text="${det.cantidad+ ' '+det.producto.unidad.nombre}"></td>
+												<td>
+													<span class="text-center" th:each="detsol2: ${detallesSolicitud}"
+														th:if="${detsol2.producto.id==det.producto.id}"
+														th:text="${detsol2.cantidad-det.cantidad}"></span>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</article>
+			</div>
+		</section>
+	</main>
+</body>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+
+</html>

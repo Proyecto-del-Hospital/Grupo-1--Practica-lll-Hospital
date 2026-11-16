@@ -90,7 +90,7 @@ public class EntregaService implements IEntrega {
 			det_Entrega.setEntrega(entrega);
 			detalleRepo.save(det_Entrega);
 		}
-
+		
 		return "Entrega guardada";
 	}
 
