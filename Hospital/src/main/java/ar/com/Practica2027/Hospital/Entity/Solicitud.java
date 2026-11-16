@@ -30,13 +30,13 @@ public class Solicitud {
 	@JoinColumn(name = "id_estado")
 	private Estado estado;
 
-	@OneToOne(mappedBy = "solicitud")
-	private Pedido pedido;
+	@OneToMany(mappedBy = "solicitud")
+	private List<Pedido> pedidos = new ArrayList<>();
 
 	@OneToMany(mappedBy = "solicitud")
 	private List<Det_Solicitud> detallesSolicitudes = new ArrayList<>();
 
-	public Solicitud(int id, String fecha, String motivo, Empleado empleado, Estado estado, Pedido pedido,
+	public Solicitud(int id, String fecha, String motivo, Empleado empleado, Estado estado, List<Pedido> pedidos,
 			List<Det_Solicitud> detallesSolicitudes) {
 		super();
 		this.id = id;
@@ -44,12 +44,8 @@ public class Solicitud {
 		this.motivo = motivo;
 		this.empleado = empleado;
 		this.estado = estado;
-		this.pedido = pedido;
+		this.pedidos = pedidos;
 		this.detallesSolicitudes = detallesSolicitudes;
-	}
-
-	public Solicitud() {
-		super();
 	}
 
 	public int getId() {
@@ -92,12 +88,12 @@ public class Solicitud {
 		this.estado = estado;
 	}
 
-	public Pedido getPedido() {
-		return pedido;
+	public List<Pedido> getPedidos() {
+		return pedidos;
 	}
 
-	public void setPedido(Pedido pedido) {
-		this.pedido = pedido;
+	public void setPedidos(List<Pedido> pedidos) {
+		this.pedidos = pedidos;
 	}
 
 	public List<Det_Solicitud> getDetallesSolicitudes() {
@@ -107,5 +103,11 @@ public class Solicitud {
 	public void setDetallesSolicitudes(List<Det_Solicitud> detallesSolicitudes) {
 		this.detallesSolicitudes = detallesSolicitudes;
 	}
+
+	public Solicitud() {
+		super();
+	}
+ 
+	
 
 }

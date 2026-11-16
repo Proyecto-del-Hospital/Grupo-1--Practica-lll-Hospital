@@ -1,11 +1,15 @@
 package ar.com.Practica2027.Hospital.Entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 
 @Entity
@@ -19,20 +23,23 @@ public class Pedido {
 	@OneToOne(mappedBy = "pedido")
 	private Factura factura;
 
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name = "id_solicitud")
 	private Solicitud solicitud;
 
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name = "id_empleado")
 	private Empleado empleado;
 
 	@ManyToOne
 	@JoinColumn(name = "id_estado")
 	private Estado estado;
+	
+	@OneToMany(mappedBy = "pedido")
+	private List<Det_Pedido> detallesPedidos = new ArrayList<>();
 
 	public Pedido(int id, String fecha, String motivo, Factura factura, Solicitud solicitud, Empleado empleado,
-			Estado estado) {
+			Estado estado, List<Det_Pedido> detallesPedidos) {
 		super();
 		this.id = id;
 		this.fecha = fecha;
@@ -41,6 +48,7 @@ public class Pedido {
 		this.solicitud = solicitud;
 		this.empleado = empleado;
 		this.estado = estado;
+		this.detallesPedidos = detallesPedidos;
 	}
 
 	public Pedido() {
@@ -102,5 +110,15 @@ public class Pedido {
 	public void setEstado(Estado estado) {
 		this.estado = estado;
 	}
+
+	public List<Det_Pedido> getDetallesPedidos() {
+		return detallesPedidos;
+	}
+
+	public void setDetallesPedidos(List<Det_Pedido> detallesPedidos) {
+		this.detallesPedidos = detallesPedidos;
+	}
+	
+	
 
 }

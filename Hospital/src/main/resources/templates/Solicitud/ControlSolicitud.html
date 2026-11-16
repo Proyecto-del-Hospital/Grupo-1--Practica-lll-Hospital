@@ -42,7 +42,8 @@
 											<option value="">Seleccione un producto</option>
 											<option th:each="p : ${ListaProductos}" th:if="${(session.empleadologueado.usuario.rol.nombre == 'Jefa de Cocina' 
 											and p.tipo.nombre == 'Alimenticio') or (session.empleadologueado.usuario.rol.nombre == 'Encargado' and 
-											p.tipo.nombre == 'Limpieza')}" th:text="${p.nombre+', Tipo: '+ p.tipo.nombre + ', Unidad:' + p.unidad.nombre}" th:value="${p.id}">
+											p.tipo.nombre == 'Limpieza')}" th:text="${p.nombre+', Tipo: '+ p.tipo.nombre + ', Unidad:' + p.unidad.nombre}"
+												th:value="${p.id}">
 											</option>
 										</select>
 									</div>
@@ -172,6 +173,8 @@ or sol.empleado.usuario.rol.nombre == session.empleadologueado.usuario.rol.nombr
 														Rechazar </a>
 													<a class="btn btn-warning btn-sm"
 														th:href="@{/detalleSolicitud(id=${sol.id})}"> Ver detalles </a>
+													<a class="btn btn-warning btn-sm" th:if="${session.empleadologueado.usuario.rol.nombre == 'Administrador'}"
+														th:href="@{/GenerarPedido(idSolicitud=${sol.id})}"> Generar Pedido </a>
 												</td>
 											</tr>
 										</tbody>
