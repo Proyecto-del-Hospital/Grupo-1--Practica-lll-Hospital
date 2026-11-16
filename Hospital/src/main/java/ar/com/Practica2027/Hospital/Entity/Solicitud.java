@@ -10,7 +10,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 
 @Entity
 public class Solicitud {
@@ -52,37 +51,46 @@ public class Solicitud {
 		return id;
 	}
 
+
 	public void setId(int id) {
 		this.id = id;
 	}
+
 
 	public String getFecha() {
 		return fecha;
 	}
 
+
 	public void setFecha(String fecha) {
 		this.fecha = fecha;
 	}
+
 
 	public String getMotivo() {
 		return motivo;
 	}
 
+
 	public void setMotivo(String motivo) {
 		this.motivo = motivo;
 	}
+
 
 	public Empleado getEmpleado() {
 		return empleado;
 	}
 
+
 	public void setEmpleado(Empleado empleado) {
 		this.empleado = empleado;
 	}
 
+
 	public Estado getEstado() {
 		return estado;
 	}
+
 
 	public void setEstado(Estado estado) {
 		this.estado = estado;
@@ -96,9 +104,11 @@ public class Solicitud {
 		this.pedidos = pedidos;
 	}
 
+
 	public List<Det_Solicitud> getDetallesSolicitudes() {
 		return detallesSolicitudes;
 	}
+
 
 	public void setDetallesSolicitudes(List<Det_Solicitud> detallesSolicitudes) {
 		this.detallesSolicitudes = detallesSolicitudes;
