@@ -38,17 +38,16 @@ public class PedidoService implements IPedido {
 	}
 
 	@Override
-	public String GenerarPedido(int idSolicitud, String motivo, List<Integer> productosIds, List<Double> cantidades,
+	public String GenerarPedido(int idSolicitud, List<Integer> productosIds, List<Double> cantidades,
 			Empleado empleadologueado) {
 		Solicitud solicitud = solicitudRepo.findByid(idSolicitud);
 		if (solicitud == null || productosIds == null || productosIds.isEmpty()) {
 			return "Datos invalidos para generar el pedido";
 		}
-		
 		Pedido pedido = new Pedido();
 		pedido.setFecha(LocalDate.now().toString());
 		pedido.setEmpleado(empleadologueado);
-		pedido.setMotivo(motivo);
+		pedido.setMotivo("-");
 		
 		Estado estado = estadoRepo.findBynombre("Pendiente");
 		if (estado == null) {
@@ -62,16 +61,17 @@ public class PedidoService implements IPedido {
 		
 		for (int i = 0; i < productosIds.size(); i++) {
 		Double cantidadDePedido = cantidades.get(i);
-		Producto prodEncontrado= productoRepo.findByid(productosIds.get(i));
-		if(prodEncontrado!=null) {
-			Det_Pedido detPedido= new Det_Pedido();
-			detPedido.setPedido(pedido);
-			detPedido.setProducto(prodEncontrado);
-			detPedido.setCantidad(cantidadDePedido);
-			detPedidoRepo.save(detPedido);
-		}
+			Producto prodEncontrado= productoRepo.findByid(productosIds.get(i));
+			if(prodEncontrado!=null) {
+				Det_Pedido detPedido= new Det_Pedido();
+				detPedido.setPedido(pedido);
+				detPedido.setProducto(prodEncontrado);
+				detPedido.setCantidad(cantidadDePedido);
+				detPedidoRepo.save(detPedido);
+			}
 		
 		}
+		
 		Estado estadoSolicitud = estadoRepo.findBynombre("En Proceso de Compra");
 		if (estadoSolicitud == null) {
 			estadoSolicitud = new Estado();
@@ -81,6 +81,17 @@ public class PedidoService implements IPedido {
 		solicitud.setEstado(estadoSolicitud);
 		solicitudRepo.save(solicitud);
 		return "Pedido Generado con exito";
+	}
+
+	@Override
+	public List<Det_Pedido> listarDetallePedido(int id) {
+		return detPedidoRepo.findByPedidoId(id);
+	}
+
+	@Override
+	public Pedido BuscarporId(int id) {
+		
+		return pedidoRepo.findByid(id);
 	}
 
 }

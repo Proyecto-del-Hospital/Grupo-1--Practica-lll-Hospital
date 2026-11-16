@@ -54,7 +54,6 @@
 						<li class="nav-item">
 							<a class="nav-link active" aria-current="page"
 								th:href="@{/LimpiarControlSolicitud}">Solicitar Producto</a>
-
 						</li>
 					</ul>
 					<ul class="navbar-nav me-auto mb-2 mb-lg-0"
@@ -81,9 +80,11 @@
 						<li class="nav-item">
 							<a class="nav-link active" aria-current="page" th:href="@{/LimpiarControlSolicitud}">Control
 								Solicitud</a>
-
 						</li>
-
+						<li class="nav-item">
+							<a class="nav-link active" aria-current="page" th:href="@{/ListaPedido}">Control
+								Pedido</a>
+						</li>
 					</ul>
 					<ul class="navbar-nav me-auto mb-2 mb-lg-0"
 						th:if="${session.empleadologueado.usuario.rol.nombre == 'Cocinero'}">

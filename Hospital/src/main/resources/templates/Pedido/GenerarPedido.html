@@ -14,10 +14,9 @@
 	<header>
 		<div th:replace="Inicio/Inicioprueba::navbarprueba"></div>
 	</header>
-
 	<main class="container my-4">
 		<section>
-			<div class="w-100 p-3">
+				<div class="justify-content-center pt-3 pl-5 pr-5" th:if="${session.empleadologueado.usuario.rol.nombre == 'Administrador'}">
 				<div th:if="${mensaje}" class="alert alert-success text-center">
 					<p th:text="${mensaje}" class="mb-0"></p>
 				</div>
@@ -27,7 +26,7 @@
 						<a th:href="@{/ControlSolicitud}" class="btn btn-secondary">
 							← Volver a Solicitudes
 						</a>
-						<h3><span class="badge text-bg-primary" th:text="${'Solicitud #' + solicitud.id}"></span></h3>
+						<h4><span class="badge" th:text="${'Solicitud #' + solicitud.id}"></span></h4>
 					</div>
 				</div>
 				<article class="mb-4">
@@ -65,11 +64,6 @@
 												</tr>
 											</tbody>
 										</table>
-									</div>
-									<div class="col-12">
-										<label class="form-label fw-bold">Motivo/Observacion del Pedido :</label>
-										<textarea type="text" name="motivo" class="form-control"
-											placeholder="Ingrese el motivo del pedido" required> </textarea>
 									</div>
 									<div class="col-12 mt-4">
 										<button type="button" class="btn btn-success w-100" data-bs-toggle="modal"

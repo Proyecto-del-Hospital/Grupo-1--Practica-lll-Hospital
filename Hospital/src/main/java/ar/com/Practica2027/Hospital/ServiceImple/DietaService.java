@@ -264,7 +264,7 @@ public class DietaService implements IDieta {
 		            // Si el estado es Finalizada o Suspendida, guardamos la fecha actual
 		            dietaExistente.setFechaFin(LocalDate.now().toString());
 		        } else if (nombreEstado.equalsIgnoreCase("Habilitada")) {
-		            // Opcional: si vuelve a habilitarse, poner la fecha fin acorde
+		            // Opcional: si vuelve a habilitarse, poner la fecha fin acorde con la nueva Habilitacion
 		            dietaExistente.setFechaFin("en tratamiento");
 		        }
 		        

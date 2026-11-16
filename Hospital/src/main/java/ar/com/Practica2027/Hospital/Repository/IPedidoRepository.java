@@ -7,5 +7,5 @@ import ar.com.Practica2027.Hospital.Entity.Pedido;
 
 @Repository
 public interface IPedidoRepository extends JpaRepository<Pedido, Integer>{
-
+Pedido findByid(int id);
 }
