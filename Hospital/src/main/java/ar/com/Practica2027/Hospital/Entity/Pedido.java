@@ -19,7 +19,7 @@ public class Pedido {
 	@OneToOne(mappedBy = "pedido")
 	private Factura factura;
 
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name = "id_solicitud")
 	private Solicitud solicitud;
 
@@ -102,5 +102,7 @@ public class Pedido {
 	public void setEstado(Estado estado) {
 		this.estado = estado;
 	}
+
+	
 
 }
