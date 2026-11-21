@@ -1,4 +1,4 @@
-package ar.com.Practica2027.Hospital.Entity;
+	package ar.com.Practica2027.Hospital.Entity;
 
 import java.util.ArrayList;
 import java.util.List;

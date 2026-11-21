@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" th:href="@{/CSS/bootstrap.min.css}">
+	<title>Detalle del Pedido</title>
+</head>
+
+<body>
+	<header>
+		<div th:replace="Inicio/Inicioprueba::navbarprueba"></div>
+	</header>
+
+	<main class="container my-4">
+		<section>
+			<div class="justify-content-center pt-3 pl-5 pr-5">
+
+				<div class="row justify-content-center mb-3">
+					<div class="col-md-11 d-flex justify-content-between align-items-center">
+						<a th:href="@{/ListarF}" class="btn btn-secondary">
+							← Volver a Facturas
+						</a>
+						<h4><span class="badge" th:text="${'Factura #' + factura.id}"></span></h4>
+
+					</div>
+				</div>
+
+				<article class="mb-4" th:if="${session.empleadologueado.usuario.rol.nombre == 'Administrador'}">
+					<div class="row justify-content-center">
+						<div class="col-md-11">
+							<div class="shadow-lg p-4 bg-body-tertiary rounded">
+								<h3 class="text-center text-primary pb-3"
+									th:text="${'Detalle de la Factura #' + factura.id}"></h3>
+								<div class="mb-4 p-3 bg-white border rounded">
+									<div class="row">
+										<div class="col-md-3">
+											<strong>Numero de la Factura:</strong>
+											<p class="mb-0" th:text="${factura.numfactura}"></p>
+										</div>
+										<div class="col-md-3">
+											<strong>Fecha de Emisión:</strong>
+											<p class="mb-0" th:text="${factura.fechaemision}"></p>
+										</div>
+										<div class="col-md-3">
+											<strong>Pedido de Origen:</strong>
+											<p class="mb-0" th:text="${'#' + factura.pedido.id}"></p>
+										</div>
+										<div class="col-md-3">
+											<strong>Proveedor:</strong>
+											<p class="mb-0" th:text="${factura.proveedor.nombre}">
+											</p>
+										</div>
+									</div>
+								</div>
+								<div class="table-responsive">
+									<table class="table table-bordered table-striped table-hover align-middle mb-0">
+										<thead class="table-dark">
+											<tr class="text-center">
+												<th>Producto</th>
+												<th>Tipo</th>
+												<th>Cantidad Pedida</th>
+												<th>Cantidad Comprada</th>
+												<th>Cantidad Faltante</th>
+												<th>Precio Unitario</th>
+												<th>Subtotal</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr th:each="det: ${factura.detallesFactura}" class="text-center">
+												<td th:text="${det.producto.nombre}"></td>
+												<td th:text="${det.producto.tipo.nombre}"></td>
+												<td>
+													<span th:each="detped: ${factura.pedido.detallesPedidos}"
+														class="text-center"
+														th:if="${detped.producto.id==det.producto.id}"
+														th:text="${detped.cantidad+ ''+detped.producto.unidad.nombre}"></span>
+												</td>
+												<td class="fw-bold"
+													th:text="${det.cantidad+ ' '+det.producto.unidad.nombre}"></td>
+												<td>
+													<span class="text-center"
+														th:each="detped2: ${factura.pedido.detallesPedidos}"
+														th:if="${detped2.producto.id==det.producto.id}"
+														th:text="${detped2.cantidad-det.cantidad}"></span>
+												</td>
+												<td th:text="${'$'+det.preciounitario}"></td>
+												<td th:text="${'$'+det.subtotal}"></td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+								<div class="d-flex justify-content-end">
+									<h5><span class="badge mt-4" th:text="${'Total $' + factura.total}"></span></h5>
+								</div>
+							</div>
+						</div>
+					</div>
+				</article>
+			</div>
+		</section>
+	</main>
+</body>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+
+</html>
