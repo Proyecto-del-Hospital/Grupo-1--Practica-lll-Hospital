@@ -6,5 +6,6 @@ import ar.com.Practica2027.Hospital.Entity.Factura;
 
 @Repository
 public interface IFacturaRepository extends JpaRepository<Factura, Integer>{
-
+	Factura findById (int id);
+	Factura findBynumfactura (String numfactura);
 }

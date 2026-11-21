@@ -124,9 +124,21 @@ public class FacturaService implements IFactura {
 	}
 
 	@Override
-	public List<Det_Factura> listarDetFactura() {
+	public List<Factura> listarfacturas() {
+		
+		return facturarepo.findAll();
+	}
 
-		return detFacturaRepo.findAll();
+	@Override
+	public Factura buscarFacturaID(int id) {
+		
+		return facturarepo.findById(id);
+	}
+
+	@Override
+	public Factura buscarFacturaNumero(String numfactura) {
+		
+		return facturarepo.findBynumfactura(numfactura);
 	}
 
 }

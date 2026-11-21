@@ -1,7 +1,5 @@
 package ar.com.Practica2027.Hospital.Controller;
 
-
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import ar.com.Practica2027.Hospital.Entity.Factura;
 import ar.com.Practica2027.Hospital.Entity.Pedido;
 import ar.com.Practica2027.Hospital.Entity.Proveedor;
 import ar.com.Practica2027.Hospital.Service.IFactura;
@@ -37,22 +36,45 @@ public class FacturaController {
 		model.addAttribute("pedido", pedidoExistente);
 		model.addAttribute("detallesPedido", pedidoServ.listarDetallePedido(idPedido));
 		model.addAttribute("ListaProveedores", proveedorServ.ListarProveedores());
-		
 
 		return "Factura/GenerarFactura";
 	}
 
 	@PostMapping("/GuardarFactura")
-	public String guardarfactura(@RequestParam("idPedido") int idPedido,@RequestParam("productoIds") List<Integer> productosIds,
-			@RequestParam("cantidades") List<Double> cantidades,String numfactura,
+	public String guardarfactura(@RequestParam("idPedido") int idPedido,
+			@RequestParam("productoIds") List<Integer> productosIds,
+			@RequestParam("cantidades") List<Double> cantidades, String numfactura,
 			@RequestParam("id_proveedor") int id_proveedor, @RequestParam("preciounitario") List<Double> preciounitario,
-			 String motivo, String fechaemision, RedirectAttributes redirect) {
+			String motivo, String fechaemision, RedirectAttributes redirect) {
 
 		Proveedor proveedorExistente = proveedorServ.BuscarProveedor(id_proveedor);
 
 		redirect.addFlashAttribute("mensaje", facturaServ.GuardarFactura(idPedido, productosIds, cantidades, numfactura,
 				proveedorExistente, preciounitario, motivo, fechaemision));
 		return "redirect:/ListaPedido";
+	}
+
+	@GetMapping("/ListarF")
+	public String listaF(Model model) {
+		model.addAttribute("ListaFacturas", facturaServ.listarfacturas());
+		return "Factura/ListaFactura";
+	}
+
+	@GetMapping("/detalleFactura")
+	public String verDetallesFactura(@RequestParam("idFactura") int idFactura, Model model) {
+
+		Factura factura = facturaServ.buscarFacturaID(idFactura);
+
+		model.addAttribute("factura", factura);
+
+		return "Factura/detalleFactura";
+	}
+
+	@PostMapping("/busquedafactura")
+	public String busqueda(String numfactura, Model model) {
+		Factura factura = facturaServ.buscarFacturaNumero(numfactura);
+		model.addAttribute("ListaFacturas", factura);
+		return "Factura/ListaFactura";
 	}
 
 }

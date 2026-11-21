@@ -56,13 +56,13 @@
 												<td th:text="${ped.empleado.nombre}"></td>
 												<td>
 													<span class="badge"
-														th:classappend="${ped.estado.nombre == 'Pendiente' ? 'bg-warning text-dark' : 'bg-success'}"
+														th:classappend="${ped.estado.nombre == 'Pendiente' ? 'bg-warning text-dark' : ped.estado.nombre == 'Recibida Parcialmente' ? 'bg-primary' : 'bg-success'}"
 														th:text="${ped.estado.nombre}">
 													</span>
 												</td>
 												<td>
 													<div class="d-flex justify-content-center align-items-center gap-2 text-nowrap"
-													 style="gap: 8px;">
+														style="gap: 8px;">
 														<a class="btn btn-info btn-sm"
 															th:href="@{/detallePedido(idPedido=${ped.id})}">
 															Ver Detalles
@@ -72,6 +72,7 @@
 															Ver Solicitud
 														</a>
 														<a class="btn btn-danger btn-sm"
+															th:if="${(ped.estado.nombre == 'Pendiente')}"
 															th:href="@{/Generarfactura(idPedido=${ped.id})}">
 															Generar Factura
 														</a>
