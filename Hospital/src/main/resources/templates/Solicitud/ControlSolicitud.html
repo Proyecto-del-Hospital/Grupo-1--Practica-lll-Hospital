@@ -161,7 +161,10 @@
 											<tr th:each="sol : ${listaSolicitudes}" class="text-center" th:if="${session.empleadologueado.usuario.rol.nombre == 'Administrador' 
 											or sol.empleado.DNI == session.empleadologueado.usuario.empleado.DNI}">
 												<td th:text="${sol.fecha}"> </td>
-												<td th:text="${sol.empleado.nombre}"> </td>
+												<td>
+													<span th:text="${sol.empleado.nombre + ' ' + sol.empleado.apellido}"></span>
+													<span class="text-muted" th:text="' (' + ${sol.empleado.usuario.rol.nombre} + ')'"></span>
+												</td>
 												<td th:text="${sol.motivo}"></td>
 												<td><span class="badge estado-badge" th:classappend="${sol.estado.nombre == 'Aceptado'} ? 'bg-success' :
 												                (${sol.estado.nombre == 'Rechazado'} ? 'bg-danger' :

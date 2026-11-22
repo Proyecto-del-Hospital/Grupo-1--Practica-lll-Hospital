@@ -25,10 +25,19 @@
 										<tr class="text-center">
 										<tr>
 											<th class="table-light">Usuario del Empleado que Solicitud</th>
-											<td th:text="${solicitud.empleado.nombre}"> </td>
+											<td th:text="${solicitud.empleado.usuario.nombreu}"> </td>
 										</tr>
 										<tr>
 											<th class="table-light">Solicitud del Empleado</th>
+											<td>
+												<span
+													th:text="${solicitud.empleado.nombre + ' ' + solicitud.empleado.apellido}"></span>
+												<span class="text-muted"
+													th:text="' (' + ${solicitud.empleado.usuario.rol.nombre} + ')'"></span>
+											</td>
+										</tr>
+										<tr>
+											<th class="table-light">Fecha de la Solicitud</th>
 											<td th:text="${solicitud.fecha}"></td>
 										</tr>
 										<tr>
@@ -37,10 +46,12 @@
 										</tr>
 										<tr>
 											<th class="table-light">Estado de la Solicitud</th>
-											<td> <span class="badge estado-badge" th:classappend="${solicitud.estado.nombre == 'Pendiente'} ? 'bg-warning text-dark' :        
-                                                           (${solicitud.estado.nombre == 'Rechazado'} ? 'bg-danger' :
-                                                           (${solicitud.estado.nombre == 'Aceptado'} ? 'bg-success'))"
-													th:text="${solicitud.estado.nombre}">
+											<td> <span class="badge estado-badge"
+												 th:classappend="${solicitud.estado.nombre == 'Aceptado'} ? 'bg-success' :
+												(${solicitud.estado.nombre == 'Rechazado'} ? 'bg-danger' :
+												(${solicitud.estado.nombre == 'Pendiente'} ? 'bg-warning text-dark' :
+												(${solicitud.estado.nombre == 'En Proceso de Compra'} ? 'bg-info' : 'bg-warning')))"
+												th:text="${solicitud.estado.nombre}"></span></td>
 										</tr>
 									</tbody>
 								</table>

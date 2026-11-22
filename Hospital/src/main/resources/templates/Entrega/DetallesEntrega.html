@@ -26,8 +26,13 @@
 									<table class="table table-bordered table-striped align-middle mb-0">
 										<tbody>
 											<tr>
-												<th class="table-light">Entregado por:</th>
-												<td th:text="${Entrega.empleado.nombre}"></td>
+												<th class="table-light">Entregado a:</th>
+												<td>
+													<span
+														th:text="${Entrega.empleado.nombre + ' ' + Entrega.empleado.apellido}"></span>
+													<span class="text-muted"
+														th:text="' (' + ${Entrega.empleado.usuario.rol.nombre} + ')'"></span>
+												</td>
 											</tr>
 											<tr>
 												<th class="table-light">Fecha</th>
@@ -57,7 +62,7 @@
 												<th>Producto</th>
 												<th>Tipo</th>
 												<th>Cantidad Entregada</th>
-												
+
 											</tr>
 										</thead>
 										<tbody>
@@ -66,7 +71,7 @@
 												<td th:text="${e.producto.nombre}"></td>
 												<td th:text="${e.producto.tipo.nombre}"></td>
 												<td th:text="${e.cantidad+ ' '+e.producto.unidad.nombre}"></td>
-												
+
 											</tr>
 										</tbody>
 									</table>

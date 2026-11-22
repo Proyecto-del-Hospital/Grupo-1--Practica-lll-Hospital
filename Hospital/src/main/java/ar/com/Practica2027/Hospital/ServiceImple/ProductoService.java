@@ -7,10 +7,12 @@ import org.springframework.stereotype.Service;
 
 import ar.com.Practica2027.Hospital.Entity.Estado;
 import ar.com.Practica2027.Hospital.Entity.Producto;
+import ar.com.Practica2027.Hospital.Entity.ProductoCocina;
 import ar.com.Practica2027.Hospital.Entity.SubTipo;
 import ar.com.Practica2027.Hospital.Entity.Tipo;
 import ar.com.Practica2027.Hospital.Entity.Unidad;
 import ar.com.Practica2027.Hospital.Repository.IEstadoRepository;
+import ar.com.Practica2027.Hospital.Repository.IProductoCocinaRepository;
 import ar.com.Practica2027.Hospital.Repository.IProductoRepository;
 import ar.com.Practica2027.Hospital.Repository.ISubTipoRepository;
 import ar.com.Practica2027.Hospital.Repository.ITipoRepository;
@@ -22,7 +24,8 @@ public class ProductoService implements IProducto {
 
 	@Autowired
 	private IProductoRepository productoRepo;
-
+	@Autowired
+	private IProductoCocinaRepository productocRepo;
 	@Autowired
 	private ISubTipoRepository subtipoRepo;
 
@@ -89,7 +92,25 @@ public class ProductoService implements IProducto {
 		
 
 		productoRepo.save(producto);
+		if ("Alimenticio".equalsIgnoreCase(tipo.getNombre())) {
 
+			ProductoCocina existente = productocRepo.findBynombre(producto.getNombre());
+
+			if (existente == null) {
+				ProductoCocina prodCocina = new ProductoCocina();
+				prodCocina.setNombre(producto.getNombre());
+				prodCocina.setStockactual(0d);
+				prodCocina.setStockminimo(producto.getStockminimo());
+				prodCocina.setMotivo("-");
+				prodCocina.setTipo(tipo);
+				prodCocina.setSubtipo(subtipo);
+				prodCocina.setUnidad(unidad);
+				Estado estado = estadoRepo.findBynombre("Bajo Stock");
+				prodCocina.setEstado(estado);
+
+				productocRepo.save(prodCocina);
+			}
+		}
 		return "Producto creado correctamente";
 	}
 
@@ -161,7 +182,7 @@ public class ProductoService implements IProducto {
 				productoExistente.setEstado(estado);
 			}
 			productoRepo.save(productoExistente);
-
+			
 			return "Producto modificado con éxito";
 		}
 		return null;

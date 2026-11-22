@@ -33,7 +33,7 @@
 									<div class="col-md-6">
 										<label class="form-label">Nombre del Producto</label>
 										<input type="text" class="form-control form-control-sm" th:field="*{nombre}"
-										required placeholder="Ingrese el nombre del producto">
+											required placeholder="Ingrese el nombre del producto">
 									</div>
 									<div class="col-md-6">
 										<label class="form-label">Tipo del Producto</label>
@@ -68,7 +68,8 @@
 									<div class="col-md-6">
 										<label class="form-label">Stock actual</label>
 										<input type="number" class="form-control form-control-sm"
-											th:field="*{stockactual}" step="any" min="0" placeholder="Ingrese el stock actual">
+											th:field="*{stockactual}" step="any" min="0"
+											placeholder="Ingrese el stock actual">
 									</div>
 									<div class="col-md-6">
 										<label class="form-label">Stock mínimo</label>
@@ -77,8 +78,8 @@
 											placeholder="Ingres el stock mínimo">
 									</div>
 									<div class="col-6" th:if="${Editar != null}">
-									<label class="form-label">Motivo</label>
-									<input type="text" class="form-control form-control-sm" th:field="*{motivo}"
+										<label class="form-label">Motivo</label>
+										<input type="text" class="form-control form-control-sm" th:field="*{motivo}"
 											placeholder="Ej: Control general" required>
 									</div>
 									<div class="col-12 mt-4">
@@ -101,7 +102,8 @@
 							<a class="btn btn-success m-2" th:href="@{/producto/filtrar(nombre='Disponible')}">
 								Disponible
 							</a>
-							<a class="btn btn-warning text-dark m-2" th:href="@{/producto/filtrar(nombre='Bajo Stock')}">
+							<a class="btn btn-warning text-dark m-2"
+								th:href="@{/producto/filtrar(nombre='Bajo Stock')}">
 								Bajo Stock
 							</a>
 							<a class="btn btn-danger m-2" th:href="@{/producto/filtrar(nombre='Deshabilitado')}">
@@ -122,11 +124,14 @@
 										<th>STOCK MINIMO</th>
 										<th>MOTIVO</th>
 										<th>ESTADO</th>
-										<th th:if="${session.empleadologueado.usuario.rol.nombre == 'Administrador'}">ACCIÓN</th>
+										<th th:if="${session.empleadologueado.usuario.rol.nombre == 'Administrador'}">
+											ACCIÓN</th>
 									</tr>
 								</thead>
 								<tbody>
-									<tr th:each="p : ${ListaProductos}" class="text-center">
+									<tr th:each="p : ${ListaProductos}" class="text-center" 
+									th:if="${session.empleadologueado.usuario.rol.nombre == 'Administrador' 
+									 or (session.empleadologueado.usuario.rol.nombre == 'Encargado' and p.tipo.nombre == 'Limpieza')}">>
 										<td th:text="${p.id}"></td>
 										<td th:text="${p.nombre}"></td>
 										<td th:text="${p.tipo.nombre}"></td>
@@ -140,9 +145,12 @@
 										                          (${p.estado.nombre == 'Bajo Stock'} ? 'bg-warning text-dark' : 'bg-secondary'))"
 												th:text="${p.estado.nombre}">
 											</span></td>
-										<td th:if="${session.empleadologueado.usuario.rol.nombre == 'Administrador'}"><a class="btn btn-primary btn-sm"  th:if="${session.empleadologueado.usuario.rol.nombre == 'Administrador' }"
+										<td th:if="${session.empleadologueado.usuario.rol.nombre == 'Administrador'}"><a
+												class="btn btn-primary btn-sm"
+												th:if="${session.empleadologueado.usuario.rol.nombre == 'Administrador' }"
 												th:href="@{/producto/formularioM(id=${p.id})}">Modificar</a>
-											<a class="btn btn-warning btn-sm"  th:if="${session.empleadologueado.usuario.rol.nombre == 'Administrador' or session.empleadologueado.usuario.rol.nombre == 'Jefa de Cocina'}"
+											<a class="btn btn-warning btn-sm"
+												th:if="${session.empleadologueado.usuario.rol.nombre == 'Administrador' or session.empleadologueado.usuario.rol.nombre == 'Jefa de Cocina'}"
 												th:href="@{/producto/cambiarEstado(id=${p.id})}">Cambiar Estado</a>
 										</td>
 									</tr>

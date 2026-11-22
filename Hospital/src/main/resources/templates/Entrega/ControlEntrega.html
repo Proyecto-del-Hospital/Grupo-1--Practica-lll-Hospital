@@ -160,7 +160,7 @@
 												<th>Id</th>
 												<th>Fecha</th>
 												<th>Hora</th>
-												<th>Empleado</th>
+												<th>Empleado Entregado</th>
 												<th>ACCIÓN</th>
 											</tr>
 										</thead>
@@ -170,7 +170,12 @@
 												<td th:text="${e.id}"></td>
 												<td th:text="${e.fecha}"></td>
 												<td th:text="${e.hora}"></td>
-												<td th:text="${e.empleado.nombre}"></td>
+												<td>
+													<span
+														th:text="${e.empleado.nombre + ' ' + e.empleado.apellido}"></span>
+													<span class="text-muted"
+														th:text="' (' + ${e.empleado.usuario.rol.nombre} + ')'"></span>
+												</td>
 												<td><a class="btn btn-primary btn-sm"
 														th:href="@{/MostrarDetalle(id=${e.id})}">Ver detalle</a>
 												</td>
