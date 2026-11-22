@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ar.com.Practica2027.Hospital.Entity.Paciente;
 import ar.com.Practica2027.Hospital.Service.IPaciente;
@@ -16,11 +17,13 @@ import ar.com.Practica2027.Hospital.Service.IPaciente;
 public class PacienteController {
 	
 	@Autowired
-	private IPaciente pacienteServ;
+	IPaciente pacienteServ;
 	
 	@PostMapping ("/Pacientes/Crear")
-	public String GuardarPaciente (Paciente paciente) {
-		pacienteServ.CrearPaciente(paciente);
+	public String GuardarPaciente (Paciente paciente, RedirectAttributes redirect) {
+		
+		redirect.addFlashAttribute("mensaje", pacienteServ.CrearPaciente(paciente));
+		
 		return "redirect:/paciente/formulario";
 	}
 	
@@ -46,8 +49,10 @@ public class PacienteController {
 		return "Paciente/ModificarPaciente";
 	}
 	@PostMapping ("/modificarpaciente")
-	public String ModificarPaciente (Paciente paciente) {
-		pacienteServ.ModificarPaciente(paciente);
+	public String ModificarPaciente (Paciente paciente, RedirectAttributes redirect) {
+		
+		redirect.addFlashAttribute("mensaje", pacienteServ.ModificarPaciente(paciente));
+		
 		return "redirect:/paciente/formulario";
 	}
 	@GetMapping ("/paciente/cambiarEstado")

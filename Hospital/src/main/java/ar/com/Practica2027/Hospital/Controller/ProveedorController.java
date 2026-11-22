@@ -18,7 +18,7 @@ import ar.com.Practica2027.Hospital.ServiceImple.ProveedorService;
 
 public class ProveedorController {
 	@Autowired
-	private IProveedor proveedorService;
+	IProveedor proveedorService;
 
 	@GetMapping("/proveedor/control")
 	public String controlProveedor(Model model) {

@@ -16,120 +16,120 @@
 		<section>
 			<div class="justify-content-center pt-3 pl-5 pr-5">
 
-				<div th:if="${mensaje}" class="alert alert-success text-center">
-					<p th:text="${mensaje}">
-					</p>
-				</div>
+
 				<article th:if="${session.empleadologueado.usuario.rol.nombre == 'Jefa de Cocina'}">
 					<div class="justify-content-center pr-5 pl-5 ">
-							<a th:href="@{/}" class="btn btn-secondary mb-3">
-								← Volver al inicio
-							</a>
-							<div class="shadow-lg p-2 bg-body-tertiary rounded">
-								
-								<h1 class="mb-4 text-center text-primary"
-									th:text="${Editar == null} ? 'Registrar Dieta' : 'Modificar Dieta'"></h1>
-								<form class="row g-2" method="post"
-									th:action="${Editar == null} ? @{/dieta/crear} : @{/dieta/editar/crear}"
-									th:object="${dieta}">
-									<input type="hidden" th:field="*{id}" />
-									<!--Seleccion de Paciente-->
-									<div class="col-12 mb-2">
-										<label class="form-label fw-bold">Paciente</label>
-										<select class="form-select form-select-sm" th:field="*{paciente.id}" required>
-											<option value="0" selected>Seleccione un paciente...</option>
-											<option th:each="p : ${ListaPacientes}"
-												th:if="${p.estado.nombre == 'Habilitado'}" th:value="${p.id}"
-												th:text="${p.nombre + ' ' + p.apellido + ' (DNI: ' + p.dni + ')'}">
-											</option>
-										</select>
-									</div>
+						<a th:href="@{/}" class="btn btn-secondary mb-3">
+							← Volver al inicio
+						</a>
+						<div th:if="${mensaje}" class="alert alert-success text-center">
+							<p th:text="${mensaje}">
+							</p>
+						</div>
+						<div class="shadow-lg p-2 bg-body-tertiary rounded">
 
-									<!--Apartado de Dieta-->
-									<div class="col-md-6">
-										<label class="form-label">Fecha Inicial</label>
-										<input type="date" class="form-control form-control-sm"
-											th:field="*{fechaInicio}" required>
-									</div>
-									<div class="col-md-6">
-										<label class="form-label">Fecha Fin</label>
-										<input type="date" class="form-control form-control-sm" th:field="*{fechaFin}">
-									</div>
+							<h1 class="mb-4 text-center text-primary"
+								th:text="${Editar == null} ? 'Registrar Dieta' : 'Modificar Dieta'"></h1>
+							<form class="row g-2" method="post"
+								th:action="${Editar == null} ? @{/dieta/crear} : @{/dieta/editar/crear}"
+								th:object="${dieta}">
+								<input type="hidden" th:field="*{id}" />
+								<!--Seleccion de Paciente-->
+								<div class="col-12 mb-2">
+									<label class="form-label fw-bold">Paciente</label>
+									<select class="form-select form-select-sm" th:field="*{paciente.id}" required>
+										<option value="0" selected>Seleccione un paciente...</option>
+										<option th:each="p : ${ListaPacientes}"
+											th:if="${p.estado.nombre == 'Habilitado'}" th:value="${p.id}"
+											th:text="${p.nombre + ' ' + p.apellido + ' (DNI: ' + p.dni + ')'}">
+										</option>
+									</select>
+								</div>
 
-									<!--Seleccion De Sala-->
-									<div class="col-md-6">
-										<br>
-										<label class="form-label">
-											Sala Existente
+								<!--Apartado de Dieta-->
+								<div class="col-md-6">
+									<label class="form-label">Fecha Inicial</label>
+									<input type="date" class="form-control form-control-sm" th:field="*{fechaInicio}"
+										required>
+								</div>
+								<div class="col-md-6">
+									<label class="form-label">Fecha Fin</label>
+									<input type="date" class="form-control form-control-sm" th:field="*{fechaFin}">
+								</div>
 
-										</label>
-										<select class="form-select form-select-sm" name="SalaId">
-											<option value="">
-												Seleccione una sala...
-											</option>
-											<option th:each="s : ${listaSalas}" th:value="${s.id}"
-												th:text="${s.nombre}">
-											</option>
-										</select>
-									</div>
-									<div class="col-md-6">
-										<label class="form-label">
-											O Nueva Sala
-										</label>
-										<input type="text" class="form-control form-control-sm" name="SalaNueva"
-											placeholder="Ej: Sala 3B">
-									</div>
+								<!--Seleccion De Sala-->
+								<div class="col-md-6">
+									<br>
+									<label class="form-label">
+										Sala Existente
 
-									<div class="col-12 mb-2" th:if="${Editar != null}">
-										<label class="form-label fw-bold text-secondary">Estado de la Dieta</label>
-										<select class="form-select" th:field="*{estado.nombre}">
-											<option value="">-- Seleccione un estado --</option>
-											<option value="Habilitada">Habilitada</option>
-											<option value="Finalizada">Finalizada</option>
-											<option value="Suspendida">Suspendida</option>
-										</select>
-									</div>
+									</label>
+									<select class="form-select form-select-sm" name="SalaId">
+										<option value="">
+											Seleccione una sala...
+										</option>
+										<option th:each="s : ${listaSalas}" th:value="${s.id}" th:text="${s.nombre}">
+										</option>
+									</select>
+								</div>
+								<div class="col-md-6">
+									<label class="form-label">
+										O Nueva Sala
+									</label>
+									<input type="text" class="form-control form-control-sm" name="SalaNueva"
+										placeholder="Ej: Sala 3B">
+								</div>
 
-									<div class="col-12">
-										<label class="form-label">Motivo</label>
-										<input type="text" class="form-control form-control-sm" th:field="*{motivo}"
-											placeholder="Ej: Control general" required>
-									</div>
+								<div class="col-12 mb-2" th:if="${Editar != null}">
+									<label class="form-label fw-bold text-secondary">Estado de la Dieta</label>
+									<select class="form-select" th:field="*{estado.nombre}">
+										<option value="">-- Seleccione un estado --</option>
+										<option value="Habilitada">Habilitada</option>
+										<option value="Finalizada">Finalizada</option>
+										<option value="Suspendida">Suspendida</option>
+									</select>
+								</div>
 
-									<div class="col-12">
-										<label class="form-label">Descripción</label>
-										<textarea class="form-control form-control-sm" rows="2"
-											th:field="*{descripcion}" placeholder="Detalles..."></textarea>
-									</div>
+								<div class="col-12">
+									<label class="form-label">Motivo</label>
+									<input type="text" class="form-control form-control-sm" th:field="*{motivo}"
+										placeholder="Ej: Control general" required>
+								</div>
 
-									<div class="col-12 mt-4 border-top pt-3">
-										<label class="form-label fw-bold text-secondary">Patologías Asociadas</label>
-										<p>Marque las patologías existentes o escriba una nueva:</p>
+								<div class="col-12">
+									<label class="form-label">Descripción</label>
+									<textarea class="form-control form-control-sm" rows="2" th:field="*{descripcion}"
+										placeholder="Detalles..."></textarea>
+								</div>
 
-										<!--Seleccion De Patologia -->
-										<div class="d-flex flex-row">
-											<div class="form-check form-check-inline"
-												th:each="patologia : ${listaPatologias}">
-												<input class="form-check-input" type="checkbox" name="patologiasIds"
-													th:value="${patologia.id}" th:id="${patologia.id}">
-												<label class="form-check-label" th:for="${patologia.id}"
-													th:text="${patologia.nombre}">
-													Patología
-												</label>
-											</div>
-										</div>
-										<div>
-											<a th:href="@{/patologia/formulario}">
-												Registre una patología.
-											</a>
+								<div class="col-12 mt-4 border-top pt-3">
+									<label class="form-label fw-bold text-secondary">Patologías Asociadas</label>
+									<p>Marque las patologías existentes o escriba una nueva:</p>
 
+									<!--Seleccion De Patologia -->
+									<div class="d-flex flex-row">
+										<div class="form-check form-check-inline"
+											th:each="patologia : ${listaPatologias}">
+											<input class="form-check-input" type="checkbox" name="patologiasIds"
+												th:value="${patologia.id}" th:id="${patologia.id}">
+											<label class="form-check-label" th:for="${patologia.id}"
+												th:text="${patologia.nombre}">
+												Patología
+											</label>
 										</div>
 									</div>
-									<div class="col-12 mt-4">
-										<button type="submit" class="btn btn-primary btn-sm w-100">Guardar</button>
+									<div>
+										<a th:href="@{/patologia/formulario}">
+											Registre una patología.
+										</a>
+
 									</div>
-								</form>
-							</div>
+								</div>
+								<div class="col-12 mt-4">
+									<button type="submit" class="btn btn-primary btn-sm w-100">Guardar</button>
+								</div>
+							</form>
+						</div>
 					</div>
 				</article>
 
@@ -198,11 +198,13 @@
 										<!--Botones-->
 										<td>
 											<div>
-												<a class="btn btn-warning btn-sm" th:if="${session.empleadologueado.usuario.rol.nombre == 'Jefa de Cocina' }"
+												<a class="btn btn-warning btn-sm"
+													th:if="${session.empleadologueado.usuario.rol.nombre == 'Jefa de Cocina' }"
 													th:href="@{/dieta/editar(id=${d.id})}">
 													Editar
 												</a>
-												<a class="btn btn-danger btn-sm"th:if="${session.empleadologueado.usuario.rol.nombre == 'Jefa de Cocina' }"
+												<a class="btn btn-danger btn-sm"
+													th:if="${session.empleadologueado.usuario.rol.nombre == 'Jefa de Cocina' }"
 													th:href="@{/dieta/cambiarEstado(id=${d.id})}">
 													Cambiar Estado
 												</a>

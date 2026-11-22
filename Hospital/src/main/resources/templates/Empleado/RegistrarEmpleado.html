@@ -15,16 +15,15 @@
 	<main>
 		<section>
 			<div class="justify-content-center pt-3 pl-5 pr-5">
-
-				<div th:if="${mensaje}" class="alert alert-success text-center">
-					<p th:text="${mensaje}">
-					</p>
-				</div>
 				<article>
 					<div class="row justify-content-center">
 						<div class="col-md-8">
+							<div th:if="${mensaje}" class="alert alert-success text-center">
+								<p th:text="${mensaje}">
+								</p>
+							</div>
 							<div class="shadow-lg p-2 bg-body-tertiary rounded">
-								<h3 class="mb-4 text-center text-primary"> Registra Empleado</h3>
+								<h3 class="mb-4 text-center text-primary"> Registrar Empleado</h3>
 								<form class="row g-2" method="post"
 									th:action="${editar == null }? @{/GuardarEmpleado} : @{/guardar/empleado/modificado}"
 									th:object="${empleado}">
@@ -159,17 +158,15 @@
 						</div>
 					</div>
 				</article>
-				<br>
-				<article>
+				<article class="mt-4">
 
 					<div class="align-items-center shadow-lg p-3 mb-5 bg-body-tertiary rounded">
 
-						<form class="d-flex me-2" th:action="@{/Empleado/buscar}" method="post">
+						<form class="d-flex me-2 mb-3" th:action="@{/Empleado/buscar}" method="post">
 							<input class="form-control me-2" type="text" name="DNI"
 								placeholder="Buscar Empleado por su DNI">
 							<button class="btn btn-outline-success" type="submit">Buscar</button>
 						</form>
-						<br>
 
 						<div class="table-responsive">
 							<table class="table table-bordered table-striped table-hover mb-0">
@@ -220,7 +217,7 @@
 												th:href="@{/modificar/empleado(id=${e.id})}">Modificar</a>
 											<a class="btn btn-warning btn-sm"
 												th:if="${e.id != session.empleadologueado.id}"
-												th:href="@{/empleado/cambiarestado(id=${e.id})}">Baja</a>
+												th:href="@{/empleado/cambiarestado(id=${e.id})}">Cambiar Estado</a>
 										</td>
 									</tr>
 								</tbody>

@@ -17,7 +17,7 @@ import ar.com.Practica2027.Hospital.Service.IProducto;
 @Controller
 public class ProductoController {
 	@Autowired
-	private IProducto productoserv;
+	IProducto productoserv;
 	
 	@GetMapping ("/controlproducto")
 	public String ControlP (Model model) {

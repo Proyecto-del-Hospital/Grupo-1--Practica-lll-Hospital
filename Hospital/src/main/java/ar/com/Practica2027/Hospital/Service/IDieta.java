@@ -10,7 +10,7 @@ import ar.com.Practica2027.Hospital.Entity.Sala;
 public interface IDieta {
 	
 	List<Patologia>ListarPatologias();
-	void CrearPatologia(Patologia patologia);
+	String CrearPatologia(Patologia patologia);
 	List<Sala>ListarSala();
 	public List<Dieta>ListarDieta();
 	public String CrearDieta (Dieta dieta,List<Integer> patologiasid,String SalaNueva,Integer SalaId);

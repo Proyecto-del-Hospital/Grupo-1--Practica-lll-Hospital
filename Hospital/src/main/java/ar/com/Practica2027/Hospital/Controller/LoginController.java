@@ -16,10 +16,10 @@ import jakarta.servlet.http.HttpSession;
 public class LoginController {
 
 	@Autowired
-	private ILogin loginService;
+	ILogin loginService;
 	
 	@Autowired
-	private IEmpleado empleadoservice;
+	IEmpleado empleadoservice;
 	
 	@GetMapping ("/Inicio/Login")
 	public String MostrarInicio (HttpSession session) {

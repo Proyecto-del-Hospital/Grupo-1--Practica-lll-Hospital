@@ -21,7 +21,7 @@ import ar.com.Practica2027.Hospital.Service.IEmpleado;
 public class EmpleadoController {
 
 	@Autowired
-	private IEmpleado empleService;
+	IEmpleado empleService;
 
 	@GetMapping("/Alta/Empleado")
 	public String RegistrarEmpleado(Model model) {

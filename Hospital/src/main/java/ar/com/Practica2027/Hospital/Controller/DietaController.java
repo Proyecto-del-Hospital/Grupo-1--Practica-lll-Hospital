@@ -19,10 +19,10 @@ import ar.com.Practica2027.Hospital.Service.IPaciente;
 public class DietaController {
 
 	@Autowired
-	private IDieta dietaService;
+	IDieta dietaService;
 
 	@Autowired
-	private IPaciente pacienteService;
+	IPaciente pacienteService;
 
 	@PostMapping("/dieta/crear")
 	public String GuardarDieta(Model model, Dieta dieta,@RequestParam(name = "patologiasIds", required = false) List<Integer> patologiasIds,
@@ -88,8 +88,10 @@ public class DietaController {
 	}
 
 	@PostMapping("patologia/crear")
-	public String GuardarPatologia(Patologia patologia) {
-		dietaService.CrearPatologia(patologia);
+	public String GuardarPatologia(Patologia patologia, RedirectAttributes redirect) {
+		
+		redirect.addFlashAttribute("mensaje", dietaService.CrearPatologia(patologia));
+		
 		return "redirect:/patologia/formulario";
 	}
 	
