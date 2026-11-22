@@ -122,7 +122,7 @@
 										<th>STOCK MINIMO</th>
 										<th>MOTIVO</th>
 										<th>ESTADO</th>
-										<th>ACCIÓN</th>
+										<th th:if="${session.empleadologueado.usuario.rol.nombre == 'Administrador'}">ACCIÓN</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -140,7 +140,7 @@
 										                          (${p.estado.nombre == 'Bajo Stock'} ? 'bg-warning text-dark' : 'bg-secondary'))"
 												th:text="${p.estado.nombre}">
 											</span></td>
-										<td><a class="btn btn-primary btn-sm"  th:if="${session.empleadologueado.usuario.rol.nombre == 'Administrador' }"
+										<td th:if="${session.empleadologueado.usuario.rol.nombre == 'Administrador'}"><a class="btn btn-primary btn-sm"  th:if="${session.empleadologueado.usuario.rol.nombre == 'Administrador' }"
 												th:href="@{/producto/formularioM(id=${p.id})}">Modificar</a>
 											<a class="btn btn-warning btn-sm"  th:if="${session.empleadologueado.usuario.rol.nombre == 'Administrador' or session.empleadologueado.usuario.rol.nombre == 'Jefa de Cocina'}"
 												th:href="@{/producto/cambiarEstado(id=${p.id})}">Cambiar Estado</a>

@@ -26,7 +26,7 @@
 									<table class="table table-bordered table-striped align-middle mb-0">
 										<tbody>
 											<tr>
-												<th class="table-light">Empleado</th>
+												<th class="table-light">Entregado por:</th>
 												<td th:text="${Entrega.empleado.nombre}"></td>
 											</tr>
 											<tr>
@@ -56,8 +56,8 @@
 												<th>ID</th>
 												<th>Producto</th>
 												<th>Tipo</th>
-												<th>Cantidad</th>
-												<th>Unidad</th>
+												<th>Cantidad Entregada</th>
+												
 											</tr>
 										</thead>
 										<tbody>
@@ -65,8 +65,8 @@
 												<td th:text="${e.id}"></td>
 												<td th:text="${e.producto.nombre}"></td>
 												<td th:text="${e.producto.tipo.nombre}"></td>
-												<td th:text="${e.cantidad}"></td>
-												<td th:text="${e.producto.unidad.nombre}"></td>
+												<td th:text="${e.cantidad+ ' '+e.producto.unidad.nombre}"></td>
+												
 											</tr>
 										</tbody>
 									</table>

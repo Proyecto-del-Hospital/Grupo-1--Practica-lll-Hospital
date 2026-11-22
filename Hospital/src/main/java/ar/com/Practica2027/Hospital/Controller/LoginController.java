@@ -36,7 +36,7 @@ public class LoginController {
 		
 		if (empleadoLogueado != null) {
 			session.setAttribute("empleadologueado", empleadoLogueado);
-			return "Inicio/Inicioprueba";
+			return "Inicio/Menu";
 				
 		}else {
 			model.addAttribute("error", "Datos no Encontrados");

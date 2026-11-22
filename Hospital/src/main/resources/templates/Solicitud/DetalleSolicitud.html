@@ -37,10 +37,9 @@
 										</tr>
 										<tr>
 											<th class="table-light">Estado de la Solicitud</th>
-											<td> <span class="badge estado-badge"
-											th:classappend="${solicitud.estado.nombre == 'Pendiente'} ? 'bg-warning text-dark' :        
-					                          (${solicitud.estado.nombre == 'Rechazado'} ? 'bg-danger' :
-							                    (${solicitud.estado.nombre == 'Aceptado'} ? 'bg-success'))"
+											<td> <span class="badge estado-badge" th:classappend="${solicitud.estado.nombre == 'Pendiente'} ? 'bg-warning text-dark' :        
+                                                           (${solicitud.estado.nombre == 'Rechazado'} ? 'bg-danger' :
+                                                           (${solicitud.estado.nombre == 'Aceptado'} ? 'bg-success'))"
 													th:text="${solicitud.estado.nombre}">
 										</tr>
 									</tbody>
@@ -58,17 +57,29 @@
 									<thead class="table-dark">
 										<tr class="text-center">
 											<th>Nombre del producto</th>
-											<th>Cantidad del producto</th>
-											<th>Stock actual</th>
-											<th>Stock minimo</th>
+											<th>Cantidad Solicitada</th>
+											<th>Cantidad Entregada</th>
+											<th>Cantidad Faltante</th>
+											<th
+												th:if="${session.empleadologueado.usuario.rol.nombre == 'Administrador'}">
+												Stock actual</th>
+											<th
+												th:if="${session.empleadologueado.usuario.rol.nombre == 'Administrador'}">
+												Stock minimo</th>
 										</tr>
 									</thead>
 									<tbody>
-										<tr class="text-center" th:each="e : ${detallesolicitud}">	
+										<tr class="text-center" th:each="e : ${detallesolicitud}">
 											<td th:text="${e.producto.nombre}"></td>
 											<td th:text="${e.cantidad+ ' ' +e.producto.unidad.nombre}"></td>
-											<td th:text="${e.producto.stockactual+ ' ' +e.producto.unidad.nombre}"></td>
-											<td th:text="${e.producto.stockminimo+ ' ' +e.producto.unidad.nombre}"></td>
+											<td th:text="${e.cantidadEntregado+ ' ' +e.producto.unidad.nombre}"></td>
+											<td th:classappend="${e.cantidad - e.cantidadEntregado > 0 ? 'text-danger' : 'text-success' }"
+												th:text="${(e.cantidad - e.cantidadEntregado < 0 ? 0 : e.cantidad - e.cantidadEntregado ) + ' ' + e.producto.unidad.nombre}">
+											</td>
+											<td th:if="${session.empleadologueado.usuario.rol.nombre == 'Administrador'}"
+												th:text="${e.producto.stockactual+ ' ' +e.producto.unidad.nombre}"></td>
+											<td th:if="${session.empleadologueado.usuario.rol.nombre == 'Administrador'}"
+												th:text="${e.producto.stockminimo+ ' ' +e.producto.unidad.nombre}"></td>
 										</tr>
 									</tbody>
 								</table>

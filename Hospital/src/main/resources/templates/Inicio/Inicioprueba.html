@@ -6,25 +6,40 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" th:href="@{/CSS/bootstrap.min.css}">
 	<link rel="stylesheet" th:href="@{/CSS/bootstrap.css}">
+	<script th:src="@{/js/bootstrap.min.js}"></script>
+	<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
 	<title>Hospital</title>
+	<style>
+		.navbar {
+			background: linear-gradient(90deg, #0f2027 0%, #203a43 50%, rgb(41, 75, 86) 100%);
+		}
+	</style>
 </head>
 
 <body>
 	<header>
-		<nav th:fragment="navbarprueba" class="navbar navbar-expand-lg bg-body-tertiary navbar navbar-dark bg-dark">
-			<div class="d-flex text-white align-items-center">
-				<span class="me-3"
-					th:text="'Hola, ' + ${session.empleadologueado.nombre} + ' (' + ${session.empleadologueado.usuario.rol.nombre} + ')'"></span>
-			</div>
-			<div class="container-fluid">
-				<a class="navbar-brand" th:href="@{/}">Inicio</a>
+		<nav th:fragment="navbarprueba"
+			class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm py-2 px-3 text-center">
+			
+			<div class="d-flex text-white align-items-center me-3 text-dark">
+				<span class="badge bg-info fs-6 py-2 px-3 text-start">
+					<span class="d-block fw-bold"
+						th:text="'Hola, ' +${session.empleadologueado.nombre}"></span>
+					<span class="d-block fw-bold"
+						th:text="${session.empleadologueado.apellido}"></span>
+					<small class="d-block fw-normal opacity-75"
+						th:text="(${session.empleadologueado.usuario.rol.nombre})"></small>
+				</span></div>
+				
+			<div class="container-fluid ">
+				<a class="navbar-brand" th:href="@{/menu}">Menu</a>
 				<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
 					data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
 					aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
 				</button>
-				<div class="collapse navbar-collapse" id="navbarSupportedContent">
-					<ul class="navbar-nav me-auto mb-2 mb-lg-0"
+				<div class="collapse navbar-collapse justify-content-center " id="navbarSupportedContent">
+					<ul class="navbar-nav mx-auto mb-2 mb-lg-0 gap-1"
 						th:if="${session.empleadologueado.usuario.rol.nombre == 'Jefa de Cocina'}">
 						<li class="nav-item">
 							<a class="nav-link active" aria-current="page" th:href="@{/dieta/ControlDieta}">Control de
@@ -43,26 +58,23 @@
 								Producto</a>
 						</li>
 						<li class="nav-item">
-
 							<a class="nav-link active" aria-current="page" th:href="@{/LimpiarControlConsumo}">Control
 								de Consumo</a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link active" aria-current="page" th:href="@{/Limpiarproductos}">Ver
-								entrega</a>
+								entregas</a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link active" aria-current="page"
 								th:href="@{/LimpiarControlSolicitud}">Solicitar Producto</a>
 						</li>
 					</ul>
-					<ul class="navbar-nav me-auto mb-2 mb-lg-0"
+					<ul class="navbar-nav mx-auto mb-2 mb-lg-0 gap-1"
 						th:if="${session.empleadologueado.usuario.rol.nombre == 'Administrador'}">
 						<li class="nav-item">
-
 							<a class="nav-link active" aria-current="page" th:href="@{/proveedor/control}">Control de
 								Proveedor</a>
-
 						</li>
 						<li class="nav-item">
 							<a class="nav-link active" aria-current="page" th:href="@{/Alta/Empleado}">Control de
@@ -71,11 +83,6 @@
 						<li class="nav-item">
 							<a class="nav-link active" aria-current="page" th:href="@{/controlproducto}">Control de
 								Producto</a>
-
-						</li>
-						<li class="nav-item">
-							<a class="nav-link active" aria-current="page" th:href="@{/Limpiarproductos}">Control de
-								Entrega</a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link active" aria-current="page" th:href="@{/LimpiarControlSolicitud}">Control
@@ -89,8 +96,12 @@
 							<a class="nav-link active" aria-current="page" th:href="@{/ListarF}">Control
 								Factura</a>
 						</li>
+						<li class="nav-item">
+							<a class="nav-link active" aria-current="page" th:href="@{/Limpiarproductos}">Control de
+								Entrega</a>
+						</li>
 					</ul>
-					<ul class="navbar-nav me-auto mb-2 mb-lg-0"
+					<ul class="navbar-nav mx-auto mb-2 mb-lg-0 gap-1"
 						th:if="${session.empleadologueado.usuario.rol.nombre == 'Cocinero'}">
 						<li class="nav-item">
 							<a class="nav-link active" aria-current="page" th:href="@{/dieta/ControlDieta}">Control de
@@ -106,37 +117,36 @@
 						</li>
 						<li class="nav-item">
 							<a class="nav-link active" aria-current="page" th:href="@{/Limpiarproductos}">Ver
-								entrega</a>
+								entregas</a>
 						</li>
 					</ul>
-					<ul class="navbar-nav me-auto mb-2 mb-lg-0"
+					<ul class="navbar-nav mx-auto mb-2 mb-lg-0 gap-1"
 						th:if="${session.empleadologueado.usuario.rol.nombre == 'Encargado'}">
 						<li class="nav-item">
-							<a class="nav-link active" aria-current="page" th:href="@{/controlproducto}">Control de
-								Producto</a>
+							<a class="nav-link active" aria-current="page" th:href="@{/controlproducto}">Ver
+								Productos</a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link active" aria-current="page" th:href="@{/Limpiarproductos}">Ver
-								entrega</a>
+								entregas</a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link active" aria-current="page" th:href="@{/ControlSolicitud}">Solicitar
 								Producto</a>
 						</li>
 					</ul>
-					<li class="nav-item">
-						<a class="nav-link active" aria-current="page" th:href="@{/Inicio/Login}">Cerrar Sesion</a>
-					</li>
-
+					<ul class="navbar-nav mb-2 mb-lg-0">
+						<li class="nav-item">
+							<a class="btn btn-outline-danger btn-sm px-3" aria-current="page"
+								th:href="@{/Inicio/Login}">Cerrar
+								Sesion</a>
+						</li>
+					</ul>
 				</div>
 			</div>
 		</nav>
-		<div th:if="${mensaje}" class="alert alert-danger">
-			<p th:text="${mensaje}"></p>
-		</div>
 	</header>
-	<script th:src="@{/js/bootstrap.min.js}"></script>
-	<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+
 </body>
 
 </html>

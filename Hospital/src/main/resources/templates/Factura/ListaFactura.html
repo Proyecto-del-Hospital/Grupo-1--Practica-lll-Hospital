@@ -16,7 +16,9 @@
 	<main class="container my-4">
 		<section>
 			<div>
-
+				<div th:if="${mensaje}" class="alert alert-success text-center">
+					<p th:text="${mensaje}" class="mb-0"></p>
+				</div>
 				<div class="row justify-content-center mb-3">
 					<div class="col-md-11 d-flex justify-content-between align-items-center">
 						<a th:href="@{/ListaPedido}" class="btn btn-secondary">

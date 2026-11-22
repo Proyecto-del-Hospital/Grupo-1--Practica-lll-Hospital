@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ar.com.Practica2027.Hospital.Entity.Det_Consumo;
 import ar.com.Practica2027.Hospital.Entity.Det_Solicitud;
@@ -66,11 +67,11 @@ public class SolicitudController {
 		return "redirect:/ControlSolicitud";
 	}
 	@PostMapping("/GuardarSolicitud")
-	public String GuardarSolicitud(HttpSession session,@RequestParam ("motivo") String motivo) {
+	public String GuardarSolicitud(HttpSession session,@RequestParam ("motivo") String motivo, RedirectAttributes redirect) {
 		List<Det_Solicitud>ListDetallSolicitud=(List<Det_Solicitud>) session.getAttribute("ListaTemporal");
 		Empleado empleadologueado=(Empleado)session.getAttribute("empleadologueado");
-		solicitudService.altaSolicitud(ListDetallSolicitud, empleadologueado, motivo);
-		session.removeAttribute("ListaTemporal");
+		redirect.addFlashAttribute("mensaje", solicitudService.altaSolicitud(ListDetallSolicitud, empleadologueado, motivo));
+		 session.removeAttribute("ListaTemporal");
 		
 	return"redirect:/ControlSolicitud";
 	}

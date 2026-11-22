@@ -165,7 +165,8 @@
 											</tr>
 										</thead>
 										<tbody>
-											<tr th:each="e : ${ListaEntregas}" class="text-center">
+											<tr th:each="e : ${ListaEntregas}" class="text-center" th:if="${session.empleadologueado.usuario.rol.nombre == 'Administrador' 
+											or e.empleado.DNI == session.empleadologueado.usuario.empleado.DNI}">
 												<td th:text="${e.id}"></td>
 												<td th:text="${e.fecha}"></td>
 												<td th:text="${e.hora}"></td>

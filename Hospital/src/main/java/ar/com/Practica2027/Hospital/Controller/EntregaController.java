@@ -15,9 +15,11 @@ import ar.com.Practica2027.Hospital.Entity.Det_Entrega;
 import ar.com.Practica2027.Hospital.Entity.Empleado;
 import ar.com.Practica2027.Hospital.Entity.Entrega;
 import ar.com.Practica2027.Hospital.Entity.Producto;
+import ar.com.Practica2027.Hospital.Entity.Solicitud;
 import ar.com.Practica2027.Hospital.Service.IEmpleado;
 import ar.com.Practica2027.Hospital.Service.IEntrega;
 import ar.com.Practica2027.Hospital.Service.IProducto;
+import ar.com.Practica2027.Hospital.Service.ISolicitud;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -31,6 +33,8 @@ public class EntregaController {
 
 	@Autowired
 	IEmpleado empledoserv;
+	@Autowired
+	ISolicitud solicitudService;
 
 	@GetMapping("/controlentrega")
 	public String controlEntrega(Model model, HttpSession session) {
@@ -65,12 +69,12 @@ public class EntregaController {
 
 	@PostMapping("/Guardarentrega")
 	public String GuardarEntrega(HttpSession session, @RequestParam("fecha") String fecha,
-			@RequestParam("hora") String hora, @RequestParam("id_empleado") int id_empleado, RedirectAttributes redirect) {
+			@RequestParam("hora") String hora, @RequestParam("id_empleado") int id_empleado,
+			RedirectAttributes redirect) {
 		List<Det_Entrega> detallesEntregas = (List<Det_Entrega>) session.getAttribute("ListaTemporalEntrega");
 		session.removeAttribute("ListaTemporalEntrega");
 		Empleado empleadoExistente = empledoserv.buscarporid(id_empleado);
-		redirect.addFlashAttribute("mensaje", entregaserv.CrearEntrega(detallesEntregas, empleadoExistente, fecha, hora));
-		
+		redirect.addFlashAttribute("mensaje",entregaserv.CrearEntrega(0, detallesEntregas, empleadoExistente, fecha, hora));
 		return "redirect:/controlentrega";
 	}
 
@@ -95,18 +99,47 @@ public class EntregaController {
 		session.removeAttribute("ListaTemporalEntrega");
 		return "redirect:/controlentrega";
 	}
-	@GetMapping ("/MostrarDetalle")
-	public String detalles (@RequestParam ("id") int id, Model model) {
-		
+
+	@GetMapping("/MostrarDetalle")
+	public String detalles(@RequestParam("id") int id, Model model) {
+
 		Entrega entrega = entregaserv.BuscarEntregaId(id);
 		model.addAttribute("Entrega", entrega);
-		
+
 		return "Entrega/DetallesEntrega";
 	}
+
 	@PostMapping("/buscarentrega")
-	public String BuscarEntrega (@RequestParam ("fecha") String fecha, Model model) {
+	public String BuscarEntrega(@RequestParam("fecha") String fecha, Model model) {
 		List<Entrega> entregas = entregaserv.buscarEntregas(fecha);
 		model.addAttribute("ListaEntregas", entregas);
 		return "Entrega/ControlEntrega";
 	}
+
+	@GetMapping("/GenerarEntrega")
+	public String MostrarGenerarEntrega(@RequestParam("idSolicitud") int ididSolicitud, Model model) {
+		Solicitud solicitudEncontrado = solicitudService.buscarporid(ididSolicitud);
+		if (solicitudEncontrado == null) {
+			return "redirect:/ControlSolicitud";
+		}
+		model.addAttribute("solicitud", solicitudEncontrado);
+		model.addAttribute("detallesSolicitud", solicitudService.listadedetalles(ididSolicitud));
+		return "Entrega/GenerarEntrega";
+	}
+
+	@PostMapping("/GuardarEntregaDeSolicitud")
+	public String GuardarEntregaDeSolicitud(@RequestParam("idSolicitud") int idSolicitud,
+			@RequestParam("fecha") String fecha, @RequestParam("hora") String hora,
+			@RequestParam("productoIds") List<Integer> productoIds, @RequestParam("cantidades") List<Double> cantidades,
+			HttpSession session, RedirectAttributes redirect) {
+			Solicitud soli = solicitudService.buscarporid(idSolicitud);
+		List<Det_Entrega> detalles = entregaserv.GenerarListaDetalle(productoIds, cantidades);
+		
+		String mensaje = entregaserv.CrearEntrega(idSolicitud, detalles, soli.getEmpleado(), fecha, hora);
+
+		redirect.addFlashAttribute("mensaje", mensaje);
+
+		return "redirect:/ControlSolicitud";
+	}
 }
+		

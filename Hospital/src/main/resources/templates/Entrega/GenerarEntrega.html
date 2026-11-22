@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" th:href="@{/CSS/bootstrap.min.css}">
+	<link rel="stylesheet" th:href="@{/CSS/style.css}">
+	<script src="https://kit.fontawesome.com/57faba85b1.js" crossorigin="anonymous"></script>
+	<title>Generar Entrega de Solicitud</title>
+</head>
+
+<body>
+	<header>
+		<div th:replace="Inicio/Inicioprueba::navbarprueba"></div>
+	</header>
+	<main>
+		<section>
+			<div class="justify-content-center w-100 p-5">
+				<article th:if="${session.empleadologueado.usuario.rol.nombre == 'Administrador'}">
+					<div class="row justify-content-center">
+						<div class="col-md-10">
+							<div th:if="${mensaje}" class="alert alert-info text-center pt-4" role="alert">
+								<p th:text="${mensaje}"></p>
+							</div>
+
+							<div class="shadow-lg p-4 mb-5 bg-body-tertiary rounded">
+								<div class="d-flex justify-content-between align-items-center mb-3">
+									<h2 class="text-info mb-0">
+										Generar Entrega - Solicitud N° <span th:text="${solicitud.id}"></span>
+									</h2>
+									<span class="badge bg-secondary fs-6" th:text="${solicitud.estado.nombre}"
+									th:classappend=" ${solicitud.estado.nombre=='Aceptado' } ? 'bg-success' : (${solicitud.estado.nombre=='Rechazado' }
+										? 'bg-danger' : (${solicitud.estado.nombre=='Pendiente' } ? 'bg-warning text-dark' :
+										(${solicitud.estado.nombre=='En Proceso de Compra' } ? 'bg-info' : 'bg-warning'
+										)))"></span>
+								</div>
+
+
+								<div class="row mb-4 border-bottom pb-3">
+									<div class="col-md-4">
+										<strong>Solicitante:</strong>
+										<span th:text="${solicitud.empleado.nombre}"></span>
+									</div>
+									<div class="col-md-4">
+										<strong> Rol:</strong>
+										<span th:text="${solicitud.empleado.usuario.rol.nombre}"></span>
+									</div>
+									<div class="col-md-4">
+										<strong>Fecha de Solicitud:</strong>
+										<span th:text="${solicitud.fecha}"></span>
+									</div>
+								</div>
+
+
+								<form class="row g-3" method="post" th:action="@{/GuardarEntregaDeSolicitud}">
+									<input type="hidden" name="idSolicitud" th:value="${solicitud.id}">
+
+									<div class="col-md-6">
+										<label class="form-label fw-bold">Fecha de Entrega</label>
+										<input type="date" class="form-control form-control-sm" name="fecha" required>
+									</div>
+									<div class="col-md-6">
+										<label class="form-label fw-bold">Hora</label>
+										<input type="time" class="form-control form-control-sm" name="hora" required>
+									</div>
+
+									<div class="col-12 mt-4">
+										<h4 class="text-center text-info pb-2">Detalle de Productos Solicitados</h4>
+										<div class="table-responsive">
+											<table
+												class="table table-bordered table-striped table-hover tabla-pacientes mb-0 align-middle">
+												<thead class="table-dark">
+													<tr class="text-center">
+														<th>Producto</th>
+														<th>Tipo</th>
+														<th>Unidad</th>
+														<th>Stock Depósito</th>
+														<th>Cantidad Solicitada</th>
+														<th>Ya Entregado</th>
+														<th>Faltante</th>
+														<th>Cantidad a Entregar</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr th:each="d : ${detallesSolicitud}" class="text-center">
+														<td>
+															<span th:text="${d.producto.nombre}"></span>
+
+															<input type="hidden" name="productoIds"
+																th:value="${d.producto.id}">
+														</td>
+														<td th:text="${d.producto.tipo.nombre}"></td>
+														<td th:text="${d.producto.unidad.nombre}"></td>
+														<td>
+															<span class="badge"
+																th:classappend="${d.producto.stockactual > 0} ? 'bg-info text-dark' : 'bg-danger'"
+																th:text="${d.producto.stockactual}"></span>
+														</td>
+														<td class="fw-bold" th:text="${d.cantidad}"></td>
+														<td class="text-success fw-bold"
+															th:text="${d.cantidadEntregado}"></td>
+														<td class="fw-bold"
+															th:classappend="${d.cantidad - d.cantidadEntregado > 0} ? 'text-danger' : 'text-success'"
+															th:text="${d.cantidad - d.cantidadEntregado > 0 ? d.cantidad - d.cantidadEntregado : 0}">
+														</td>
+														<td>
+															<input type="number"
+																class="form-control form-control-sm text-center"
+																name="cantidades" step="any" min="0" th:value="${d.cantidad - d.cantidadEntregado > 0 ?
+																	 (d.cantidad - d.cantidadEntregado <= d.producto.stockactual
+																	 ? d.cantidad - d.cantidadEntregado : d.producto.stockactual)
+																	  : 0}" required>
+														</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
+
+									<div class="col-md-12 mt-4">
+										<button type="button" class="btn btn-success w-100" data-bs-toggle="modal"
+											data-bs-target="#modalConfirmarEntrega">
+											Guardar Entrega
+										</button>
+									</div>
+
+									<div class="modal fade" id="modalConfirmarEntrega" tabindex="-1"
+										aria-labelledby="modalEntregaLabel" aria-hidden="true">
+										<div class="modal-dialog">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h5 class="modal-title" id="modalEntregaLabel">Confirmar Entrega
+													</h5>
+													<button type="button" class="btn-close" data-bs-dismiss="modal"
+														aria-label="Cerrar"></button>
+												</div>
+												<div class="modal-body">
+													¿Estás seguro de que deseas registrar esta entrega y descontar el
+													stock del depósito?
+												</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-secondary"
+														data-bs-dismiss="modal">Cerrar</button>
+													<button type="submit" class="btn btn-success">Confirmar
+														Guardado</button>
+												</div>
+											</div>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</article>
+			</div>
+		</section>
+	</main>
+
+</body>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+
+</html>

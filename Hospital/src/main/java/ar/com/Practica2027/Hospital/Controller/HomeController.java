@@ -11,4 +11,9 @@ public class HomeController {
 		
 		return "redirect:/Inicio/Login";
 	}
+	
+	@GetMapping("/menu")
+	public String MostrarMenu() {
+		return "Inicio/Menu";
+	}
 }

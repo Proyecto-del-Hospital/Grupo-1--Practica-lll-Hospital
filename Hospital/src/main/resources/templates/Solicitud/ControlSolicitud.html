@@ -5,8 +5,6 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" th:href="@{/CSS/bootstrap.min.css}">
-	<link rel="stylesheet" th:href="@{/CSS/style.css}">
-	<script src="https://kit.fontawesome.com/57faba85b1.js" crossorigin="anonymous"></script>
 	<title>Control de Solicitud</title>
 </head>
 
@@ -74,8 +72,10 @@
 											<tr class="text-center">
 												<th>Producto</th>
 												<th>Tipo</th>
-												<th>SubTipo</th>
-												<th>Unidad</th>
+												<th
+													th:if="${session.empleadologueado.usuario.rol.nombre != 'Encargado'}">
+													SubTipo</th>
+												<th>Cantidad</th>
 												<th>Acción</th>
 											</tr>
 										</thead>
@@ -83,8 +83,9 @@
 											<tr th:each="d : ${ListDetallSolicitud}" class="text-center">
 												<td th:text="${d.producto.nombre}"></td>
 												<td th:text="${d.producto.Tipo.nombre}"></td>
-												<td th:text="${d.producto.subtipo.nombre}"></td>
-												<td th:text="${d.cantidad}"></td>
+												<td th:if="${session.empleadologueado.usuario.rol.nombre != 'Encargado'}"
+													th:text="${d.producto.subtipo.nombre}"></td>
+												<td th:text="${d.cantidad+ ' ' +d.producto.unidad.nombre}"></td>
 												<td>
 													<form method="post" th:action="@{/QuitarProductoListaS}">
 														<input type="hidden" name="posicion"
@@ -104,28 +105,32 @@
 										<input type="text" name="motivo" class="form-control"
 											placeholder="Ingrese el motivo de la solicitud" required>
 									</div>
-									<div class="col-12 mt-4">
+									<div class="col-md-12 mt-4">
 										<button type="button" class="btn btn-success w-100" data-bs-toggle="modal"
-											data-bs-target="#modalGuardar">
-											Guardar Solicitud
+											data-bs-target="#modalConfirmarEntrega">
+											Guardar Entrega
 										</button>
 									</div>
-									<div class="modal fade" id="modalGuardar" tabindex="-1"
-										aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+									<div class="modal fade" id="modalConfirmarEntrega" tabindex="-1"
+										aria-labelledby="modalEntregaLabel" aria-hidden="true">
 										<div class="modal-dialog">
 											<div class="modal-content">
 												<div class="modal-header">
-													<h5 class="modal-title" id="exampleModalLabel">Confirmar Solicitud
+													<h5 class="modal-title" id="modalEntregaLabel">Confirmar Entrega
 													</h5>
+													<button type="button" class="btn-close" data-bs-dismiss="modal"
+														aria-label="Cerrar"></button>
 												</div>
 												<div class="modal-body">
-													¿Estás seguro de que deseas guardar la Solicitud?
+													¿Estás seguro de que deseas registrar esta entrega y descontar el
+													stock del depósito?
 												</div>
 												<div class="modal-footer">
 													<button type="button" class="btn btn-secondary"
 														data-bs-dismiss="modal">Cerrar</button>
 													<button type="submit" class="btn btn-success">Confirmar
-														Solicitud</button>
+														Guardado</button>
 												</div>
 											</div>
 										</div>
@@ -147,34 +152,80 @@
 											<tr class="text-center">
 												<th>Fecha</th>
 												<th>Solicitud del Empleado</th>
-												<th>Motivo</th>
+												<th>Motivo de la Solicitud</th>
 												<th>Estado</th>
 												<th>Acciones</th>
 											</tr>
 										</thead>
 										<tbody>
 											<tr th:each="sol : ${listaSolicitudes}" class="text-center" th:if="${session.empleadologueado.usuario.rol.nombre == 'Administrador' 
-or sol.empleado.usuario.rol.nombre == session.empleadologueado.usuario.rol.nombre}">
+											or sol.empleado.DNI == session.empleadologueado.usuario.empleado.DNI}">
 												<td th:text="${sol.fecha}"> </td>
 												<td th:text="${sol.empleado.nombre}"> </td>
 												<td th:text="${sol.motivo}"></td>
 												<td><span class="badge estado-badge" th:classappend="${sol.estado.nombre == 'Aceptado'} ? 'bg-success' :
-	              (${sol.estado.nombre == 'Rechazado'} ? 'bg-danger' :
-			      (${sol.estado.nombre == 'Pendiente'} ? 'bg-warning text-dark' : 'bg-secondary'))"
+												                (${sol.estado.nombre == 'Rechazado'} ? 'bg-danger' :
+												                (${sol.estado.nombre == 'Pendiente'} ? 'bg-warning text-dark' :
+												                (${sol.estado.nombre == 'En Proceso de Compra'} ? 'bg-info' : 'bg-warning')))"
 														th:text="${sol.estado.nombre}"></span></td>
 												<td>
-													<a th:if="${session.empleadologueado.usuario.rol.nombre == 'Administrador' and sol.estado.nombre == 'Pendiente'}"
-														class="btn btn-success btn-sm"
-														th:href="@{/solicitudAceptado(id=${sol.id})}">
-														Aceptar </a>
-													<a th:if="${session.empleadologueado.usuario.rol.nombre == 'Administrador' and sol.estado.nombre == 'Pendiente'}"
-														class="btn btn-danger btn-sm"
-														th:href="@{/solicitudrechazada(id=${sol.id})}">
-														Rechazar </a>
-													<a class="btn btn-warning btn-sm"
-														th:href="@{/detalleSolicitud(id=${sol.id})}"> Ver detalles </a>
-													<a class="btn btn-warning btn-sm" th:if="${session.empleadologueado.usuario.rol.nombre == 'Administrador'}"
-														th:href="@{/GenerarPedido(idSolicitud=${sol.id})}"> Generar Pedido </a>
+													<div class="d-flex flex-wrap justify-content-center"
+														style="gap: 6px;">
+														<a th:if="${session.empleadologueado.usuario.rol.nombre == 'Administrador' and sol.estado.nombre == 'Pendiente'}"
+															class="btn btn-success btn-sm"
+															th:href="@{/solicitudAceptado(id=${sol.id})}">
+															Aceptar
+														</a>
+
+														<button type="button"
+															th:if="${session.empleadologueado.usuario.rol.nombre == 'Administrador' and sol.estado.nombre == 'Pendiente'}"
+															class="btn btn-danger btn-sm" data-bs-toggle="modal"
+															th:data-bs-target="'#modalRechazar' + ${sol.id}">
+															Rechazar
+														</button>
+
+														<div class="modal fade"
+															th:if="${session.empleadologueado.usuario.rol.nombre == 'Administrador' and sol.estado.nombre == 'Pendiente'}"
+															th:id="'modalRechazar' + ${sol.id}" tabindex="-1"
+															aria-hidden="true">
+															<div class="modal-dialog modal-dialog-centered">
+																<div class="modal-content text-start">
+																	<div class="modal-header">
+																		<h5 class="modal-title text-danger">Confirmar
+																			Rechazo</h5>
+
+																	</div>
+																	<div class="modal-body">
+																		¿Estás seguro de que deseas rechazar la
+																		solicitud de <strong
+																			th:text="${sol.empleado.nombre}"></strong>?
+																	</div>
+																	<div class="modal-footer">
+																		<button type="button" class="btn btn-secondary"
+																			data-bs-dismiss="modal">Cerrar</button>
+																		<a class="btn btn-danger"
+																			th:href="@{/solicitudrechazada(id=${sol.id})}">
+																			Confirmar Rechazo
+																		</a>
+																	</div>
+																</div>
+															</div>
+														</div>
+														<a class="btn btn-warning btn-sm"
+															th:href="@{/detalleSolicitud(id=${sol.id})}">
+															Ver detalles
+														</a>
+														<a class="btn btn-primary btn-sm"
+															th:if="${session.empleadologueado.usuario.rol.nombre == 'Administrador'}"
+															th:href="@{/GenerarPedido(idSolicitud=${sol.id})}">
+															Generar Pedido
+														</a>
+														<a class="btn btn-info btn-sm text-white"
+															th:if="${session.empleadologueado.usuario.rol.nombre == 'Administrador'}"
+															th:href="@{/GenerarEntrega(idSolicitud=${sol.id})}">
+															Generar Entrega
+														</a>
+													</div>
 												</td>
 											</tr>
 										</tbody>

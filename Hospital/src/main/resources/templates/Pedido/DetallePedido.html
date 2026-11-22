@@ -52,7 +52,8 @@
 										<strong>Estado:</strong>
 										<p class="mb-0">
 											<span class="badge"
-												th:classappend="${pedido.estado.nombre == 'Pendiente' ? 'bg-warning text-dark' : 'bg-success'}"
+												th:classappend="${pedido.estado.nombre == 'Pendiente' ? 'bg-warning text-dark' :
+												pedido.estado.nombre == 'Recibida Parcialmente' ? 'bg-primary' :'bg-success'}"
 												th:text="${pedido.estado.nombre}">
 											</span>
 										</p>
@@ -84,8 +85,9 @@
 												<td th:text="${det.producto.nombre}"></td>
 
 												<td th:text="${det.producto.tipo.nombre}"></td>
+												<div>
 												<td>
-													<span th:each="detsol: ${detallesSolicitud}" class="text-center"
+													<span  th:each="detsol: ${detallesSolicitud}" class="text-center"
 														th:if="${detsol.producto.id==det.producto.id}"
 														th:text="${detsol.cantidad+ ''+detsol.producto.unidad.nombre}"></span>
 												</td>
@@ -96,6 +98,7 @@
 														th:if="${detsol2.producto.id==det.producto.id}"
 														th:text="${detsol2.cantidad-det.cantidad}"></span>
 												</td>
+												</div>
 											</tr>
 										</tbody>
 									</table>
