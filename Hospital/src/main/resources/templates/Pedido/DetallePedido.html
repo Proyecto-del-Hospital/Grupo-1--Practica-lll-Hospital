@@ -19,9 +19,7 @@
 
 				<div class="row justify-content-center mb-3">
 					<div class="col-md-11 d-flex justify-content-between align-items-center">
-						<a th:href="@{/ControlPedidos}" class="btn btn-secondary">
-							← Volver a Pedidos
-						</a>
+
 						<h4><span class="badge" th:text="${'Pedido #' + pedido.id}"></span></h4>
 
 					</div>
@@ -46,13 +44,13 @@
 									<div class="col-md-3">
 										<strong>Solicitud de:</strong>
 										<p class="mb-0"
-											th:text="${pedido.solicitud != null ? '#' + pedido.solicitud.empleado.nombre : '-'}"></p>
+											th:text="${pedido.solicitud != null ? '#' + pedido.solicitud.empleado.nombre : '-'}">
+										</p>
 									</div>
 									<div class="col-md-3">
 										<strong>Estado:</strong>
 										<p class="mb-0">
-											<span class="badge"
-												th:classappend="${pedido.estado.nombre == 'Pendiente' ? 'bg-warning text-dark' :
+											<span class="badge" th:classappend="${pedido.estado.nombre == 'Pendiente' ? 'bg-warning text-dark' :
 												pedido.estado.nombre == 'Recibida Parcialmente' ? 'bg-primary' :'bg-success'}"
 												th:text="${pedido.estado.nombre}">
 											</span>
@@ -86,18 +84,19 @@
 
 												<td th:text="${det.producto.tipo.nombre}"></td>
 												<div>
-												<td>
-													<span  th:each="detsol: ${detallesSolicitud}" class="text-center"
-														th:if="${detsol.producto.id==det.producto.id}"
-														th:text="${detsol.cantidad+ ''+detsol.producto.unidad.nombre}"></span>
-												</td>
-												<td class="fw-bold"
-													th:text="${det.cantidad+ ' '+det.producto.unidad.nombre}"></td>
-												<td>
-													<span class="text-center" th:each="detsol2: ${detallesSolicitud}"
-														th:if="${detsol2.producto.id==det.producto.id}"
-														th:text="${detsol2.cantidad-det.cantidad}"></span>
-												</td>
+													<td>
+														<span th:each="detsol: ${detallesSolicitud}" class="text-center"
+															th:if="${detsol.producto.id==det.producto.id}"
+															th:text="${detsol.cantidad+ ''+detsol.producto.unidad.nombre}"></span>
+													</td>
+													<td class="fw-bold"
+														th:text="${det.cantidad+ ' '+det.producto.unidad.nombre}"></td>
+													<td>
+														<span class="text-center"
+															th:each="detsol2: ${detallesSolicitud}"
+															th:if="${detsol2.producto.id==det.producto.id}"
+															th:text="${detsol2.cantidad-det.cantidad}"></span>
+													</td>
 												</div>
 											</tr>
 										</tbody>

@@ -22,12 +22,6 @@
 				</div>
 
 				<div class="row justify-content-center mb-3">
-					<div class="col-md-11 d-flex justify-content-between ">
-						<a th:href="@{/ControlSolicitud}" class="btn btn-secondary">
-							← Volver a Solicitudes
-						</a>
-						<h4><span class="badge" th:text="${'Solicitud #' + solicitud.id}"></span></h4>
-					</div>
 				</div>
 				<article class="mb-4">
 					<div class="row justify-content-center">
@@ -65,7 +59,7 @@
 											</tbody>
 										</table>
 									</div>
-									<div class="col-12 mt-4">
+									<div class="col-12 mt-2">
 										<button type="button" class="btn btn-success w-100" data-bs-toggle="modal"
 											data-bs-target="#modalGuardar">
 											Guardar Pedido
