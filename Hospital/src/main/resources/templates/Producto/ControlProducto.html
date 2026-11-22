@@ -131,7 +131,7 @@
 								<tbody>
 									<tr th:each="p : ${ListaProductos}" class="text-center" 
 									th:if="${session.empleadologueado.usuario.rol.nombre == 'Administrador' 
-									 or (session.empleadologueado.usuario.rol.nombre == 'Encargado' and p.tipo.nombre == 'Limpieza')}">>
+									 or (session.empleadologueado.usuario.rol.nombre == 'Encargado' and p.tipo.nombre == 'Limpieza')}">
 										<td th:text="${p.id}"></td>
 										<td th:text="${p.nombre}"></td>
 										<td th:text="${p.tipo.nombre}"></td>
@@ -145,7 +145,8 @@
 										                          (${p.estado.nombre == 'Bajo Stock'} ? 'bg-warning text-dark' : 'bg-secondary'))"
 												th:text="${p.estado.nombre}">
 											</span></td>
-										<td th:if="${session.empleadologueado.usuario.rol.nombre == 'Administrador'}"><a
+										<td th:if="${session.empleadologueado.usuario.rol.nombre == 'Administrador'}">
+											<a
 												class="btn btn-primary btn-sm"
 												th:if="${session.empleadologueado.usuario.rol.nombre == 'Administrador' }"
 												th:href="@{/producto/formularioM(id=${p.id})}">Modificar</a>
