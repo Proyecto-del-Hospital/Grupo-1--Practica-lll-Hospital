@@ -6,6 +6,16 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" th:href="@{/CSS/bootstrap.min.css}">
 	<title>Control de Solicitud</title>
+	<style>
+					body {
+						background: linear-gradient(135deg, #07506a 0%, #44a9b1 50%, #45adad 100%);
+						background-position: center;
+									background-attachment: fixed;
+									background-repeat: no-repeat;
+					}
+	             footer{position:absolute;
+					width:100%}
+				</style>
 </head>
 
 <body>
@@ -20,9 +30,9 @@
 					<p th:text="${mensaje}" class="mb-0"></p>
 				</div>
 				<article class="mb-4" th:if="${(session.empleadologueado.usuario.rol.nombre != 'Administrador')}">
-					<div class="row justify-content-center">
+					<div class="row justify-content-center ">
 						<div class="col-md-11">
-							<div class="shadow-lg p-4 bg-body-tertiary rounded">
+							<div class="shadow-lg p-4 bg-body-tertiary rounded bg-white border border-dark border-2">
 								<h3 class="mb-4 text-center text-info">Control de Solicitud - Agregar Productos</h3>
 								<form class="row g-3" method="post" th:action="@{/Agregar}">
 									<div class="col-md-6">
@@ -54,7 +64,7 @@
 				<article class="mb-4" th:if="${(session.empleadologueado.usuario.rol.nombre != 'Administrador')}">
 					<div class="row justify-content-center">
 						<div class="col-md-11">
-							<div class="shadow-lg p-4 bg-body-tertiary rounded">
+							<div class="shadow-lg p-4 bg-body-tertiary rounded bg-white border border-dark border-2">
 								<h3 class="text-center text-info pb-3"> Productos Seleccionados </h3>
 
 								<div class="table-responsive mb-4">
@@ -135,7 +145,7 @@
 				<article class="mb-4">
 					<div class="row justify-content-center">
 						<div class="col-md-12">
-							<div class="shadow-lg p-4 bg-body-tertiary rounded">
+							<div class="shadow-lg p-4 bg-body-tertiary rounded bg-white border border-dark border-2">
 								<h3 class="text-center text-info pb-3"> Solicitudes Registradas </h3>
 								<div class="table-responsive">
 									<table class="table table-bordered table-striped table-hover align-middle mb-0">
@@ -232,9 +242,11 @@
 					</div>
 				</article>
 			</div>
+			
 		</section>
 	</main>
 </body>
+
 <script th:src="@{/js/bootstrap.min.js}"></script>
 <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
 

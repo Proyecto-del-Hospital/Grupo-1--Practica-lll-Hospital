@@ -7,6 +7,16 @@
 	<link rel="stylesheet" th:href="@{/CSS/bootstrap.min.css}">
 	<link rel="stylesheet" th:href="@{/CSS/bootstrap.css}">
 	<title>Control de Entrega</title>
+	
+	<style>
+					body {
+						background: linear-gradient(135deg, #07506a 0%, #44a9b1 50%, #45adad 100%);
+						background-position: center;
+									background-attachment: fixed;
+									background-repeat: no-repeat;
+					}
+	             
+				</style>
 </head>
 
 <body>
@@ -18,14 +28,14 @@
 			<div class="justify-content-center w-100 p-5">
 
 				<article>
-					<div class="row justify-content-center">
+					<div class="row justify-content-center ">
 						<div class="col-md-8">
 							<div th:if="${mensaje}" class="alert alert-info text-center pt-4">
 								<p th:text="${mensaje}">
 								</p>
 							</div>
-							<div class="shadow-lg p-2 bg-body-tertiary rounded">
-								<h3 class="mb-4 text-center text-info">Registrar Consumo de Insumos</h3>
+							<div class="shadow-lg p-2 bg-body-tertiary rounded bg-white border border-dark border-2 ">
+								<h3 class="mb-4 text-center text-info ">Registrar Consumo de Insumos</h3>
 								<form class="row g-2" method="post" th:action="@{/agregarProductoConsumo}">
 									<div class="col-md-6">
 										<label class="form-label fw-bold">Producto</label>
@@ -54,7 +64,7 @@
 				<article>
 					<div class="row justify-content-center">
 						<div class="col-md-8">
-							<div class="align-items-center shadow-lg p-3 mb-5 bg-body-tertiary rounded">
+							<div class="align-items-center shadow-lg p-3 mb-5 bg-body-tertiary rounded bg-white border border-dark border-2 ">
 								<div class="table-responsive">
 									<table class="table table-bordered table-striped table-hover tabla-pacientes mb-0">
 										<h2 class="text-center text-info pb-2">Insumos Utilizados</h2>
@@ -88,9 +98,9 @@
 					</div>
 				</article>
 				<article>
-					<div class="row justify-content-center">
+					<div class="row justify-content-center ">
 						<div class="col-md-8">
-							<div class="shadow-lg p-2 bg-body-tertiary rounded">
+							<div class="shadow-lg p-2 bg-body-tertiary rounded bg-white border border-dark border-2 ">
 								<h3 class="mb-4 text-center text-info">Guardar Consumo</h3>
 								<form class="row g-2" method="post" th:action="@{/GuardarConsumo}">
 									<div class="col-md-5">
@@ -139,7 +149,7 @@
 				<article>
 					<div class="row justify-content-center">
 						<div class="col-8 md-4">
-							<div class="shadow-lg p-4 bg-body-tertiary rounded">
+							<div class="shadow-lg p-4 bg-body-tertiary rounded bg-white border border-dark border-2 ">
 								<h3 class="text-center text-info pb-3"> Solicitudes Registradas </h3>
 								<div class="table-responsive">
 									<table class="table table-bordered table-striped table-hover align-middle mb-0">
@@ -167,7 +177,9 @@
 			</div>
 		</section>
 	</main>
+	
 </body>
+
 <script th:src="@{/js/bootstrap.min.js}"></script>
 <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
 

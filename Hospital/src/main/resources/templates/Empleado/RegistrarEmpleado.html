@@ -6,6 +6,12 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" th:href="@{/CSS/bootstrap.min.css}">
 	<title>Control de Dieta</title>
+	<style>
+				body {
+					background: linear-gradient(135deg, #022665 0%, #3794f1 70%, #759fee 100%);
+				}
+
+			</style>
 </head>
 
 <body>
@@ -14,16 +20,15 @@
 	</header>
 	<main>
 		<section>
-			<div class="justify-content-center pt-3 pl-5 pr-5">
 				<article>
-					<div class="row justify-content-center">
+					<div class="row justify-content-center mt-5">
 						<div class="col-md-8">
 							<div th:if="${mensaje}" class="alert alert-success text-center">
 								<p th:text="${mensaje}">
 								</p>
 							</div>
-							<div class="shadow-lg p-2 bg-body-tertiary rounded">
-								<h3 class="mb-4 text-center text-primary"> Registrar Empleado</h3>
+							<div class="shadow-lg p-2 bg-body-tertiary rounded bg-white border border-dark border-2 ">
+								<h3 class="mb-4 text-center text-primary pt-2"> Registrar Empleado</h3>
 								<form class="row g-2" method="post"
 									th:action="${editar == null }? @{/GuardarEmpleado} : @{/guardar/empleado/modificado}"
 									th:object="${empleado}">
@@ -160,7 +165,7 @@
 				</article>
 				<article class="mt-4">
 
-					<div class="align-items-center shadow-lg p-3 mb-5 bg-body-tertiary rounded">
+					<div class="align-items-center shadow-lg p-3 mb-5 bg-body-tertiary rounded bg-white border border-dark border-2 ">
 
 						<form class="d-flex me-2 mb-3" th:action="@{/Empleado/buscar}" method="post">
 							<input class="form-control me-2" type="text" name="DNI"

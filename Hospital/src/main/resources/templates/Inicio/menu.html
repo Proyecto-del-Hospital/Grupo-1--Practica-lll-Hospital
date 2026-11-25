@@ -28,8 +28,8 @@
 			<span class="badge bg-info fs-6 py-2 px-3 text-start">
 				<span class="d-block fw-bold" th:text="'Hola, ' +${session.empleadologueado.nombre}"></span>
 				<span class="d-block fw-bold" th:text="${session.empleadologueado.apellido}"></span>
-				<small class="d-block fw-normal opacity-75"
-					th:text="(${session.empleadologueado.usuario.rol.nombre})"></small>
+				<span class="d-block fw-normal text-muted"
+					th:text="(${session.empleadologueado.usuario.rol.nombre})"></span>
 			</span>
 		</div>
 	</header>
@@ -172,11 +172,20 @@
 				</article>
 			</div>
 			<div class="col-md-4 col-sm-6 mb-4">
+							<article class="h-100 text-center p-3 bg-" style=" background-color: transparent;">
+								<div class="card-body d-flex flex-column align-items-center justify-content-center ">
+									<div class="mb-3 fs-1 text-primary"></div>
+									<h2 class="card-title h5">
+								</h2>
+						</div>
+					</article>
+			</div>
+			<div class="col-md-4 col-sm-6 mb-4">
 				<article class="card h-100 shadow-lg text-center p-3">
 					<div class="card-body d-flex flex-column align-items-center justify-content-center">
 						<div class="mb-3 fs-1 text-primary"></div>
 						<h2 class="card-title h5">
-							<a class=" text-dark stretched-link" th:href="@{/Inicio/Login}">Cerrar
+							<a class=" text-danger stretched-link" th:href="@{/Inicio/Login}">Cerrar
 								Sesion</a>
 						</h2>
 					</div>
@@ -186,20 +195,10 @@
 		</section>
 	</main>
 
-	<footer class="text-white text-center py-3 mt-auto shadow-lg">
-		<div class="container d-flex flex-column flex-md-row justify-content-between align-items-center">
-			<div class="d-flex align-items-center mb-2 mb-md-0">
-				<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
-					class="bi bi-c-circle me-2" viewBox="0 0 16 16">
-					<path
-						d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8m15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.146 4.992c-1.212 0-1.927.92-1.927 2.502v1.06c0 1.571.703 2.462 1.927 2.462.979 0 1.641-.586 1.729-1.418h1.295v.093c-.1 1.448-1.354 2.467-3.03 2.467-2.091 0-3.269-1.336-3.269-3.603V7.482c0-2.261 1.201-3.638 3.27-3.638 1.681 0 2.935 1.054 3.029 2.572v.088H9.875c-.088-.879-.768-1.512-1.729-1.512" />
-				</svg>
-				<span> 2026 <strong>Sistema de Gestión Hospitalaria</strong></span>
-			</div>
-		</div>
-	</footer>
+	
 
 	<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
-</body>
 
+	<footer><div th:replace="Inicio/Inicioprueba::footer"></div></footer>
+</body>
 </html>

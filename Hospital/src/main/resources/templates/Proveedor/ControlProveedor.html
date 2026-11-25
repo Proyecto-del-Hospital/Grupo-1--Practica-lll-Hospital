@@ -7,6 +7,12 @@
 	<link rel="stylesheet" th:href="@{/CSS/style.css}">
 	<script src="https://kit.fontawesome.com/57faba85b1.js" crossorigin="anonymous"></script>
 	<title>Control de Proveedor</title>
+	<style>
+					body {
+						background: linear-gradient(135deg, #022665 0%, #3794f1 70%, #759fee 100%);
+					}
+
+				</style>
 </head>
 <body>
 	<header>
@@ -22,8 +28,8 @@
 										<p th:text="${mensaje}">
 										</p>
 										</div>
-							<div class="card shadow-sm p-4">
-								<h3 class="mb-4 text-center">Registrar Proveedor</h3>
+							<div class="card shadow-sm p-4 bg-white border border-dark border-2">
+								<h3 class="mb-4 text-center text-primary">Registrar Proveedor</h3>
 								<form class="row g-2" method="post" th:action="@{/proveedor/crear}"
 									th:object="${proveedor}">
 									<div class="col-md-6">
@@ -82,7 +88,7 @@
 				</article>
 				<br><br>
 				<article>
-					<div class="align-items-center shadow-lg p-3 mb-5 bg-body-tertiary rounded">
+					<div class="align-items-center shadow-lg p-3 mb-5 bg-body-tertiary rounded bg-white border border-dark border-2">
 						<form class="d-flex me-2" th:action="@{/proveedor/buscar}" method="post">
 													<input class="form-control me-2" type="text" name="dni" placeholder="Buscar por DNI">
 													<button class="btn btn-outline-success" type="submit">Buscar</button>
@@ -137,4 +143,5 @@
 		</section>
 	</main>
 </body>
+
 </html>
