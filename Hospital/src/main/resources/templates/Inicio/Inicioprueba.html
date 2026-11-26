@@ -25,9 +25,7 @@
 				<span class="badge bg-info fs-6 py-2 px-3 text-start">
 					<span class="d-block fw-bold" th:text="'Hola, ' +${session.empleadologueado.nombre}"></span>
 					<span class="d-block fw-bold" th:text="${session.empleadologueado.apellido}"></span>
-					<span class="d-block fw-normal opacity-75"
-						th:text="(${session.empleadologueado.usuario.rol.nombre})"></span>
-				</span>
+					<span class="text-muted" th:text="('('+${session.empleadologueado.usuario.rol.nombre}+')')"></span>
 			</div>
 
 			<div class="container-fluid ">

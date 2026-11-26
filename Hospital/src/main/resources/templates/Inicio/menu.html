@@ -28,166 +28,158 @@
 			<span class="badge bg-info fs-6 py-2 px-3 text-start">
 				<span class="d-block fw-bold" th:text="'Hola, ' +${session.empleadologueado.nombre}"></span>
 				<span class="d-block fw-bold" th:text="${session.empleadologueado.apellido}"></span>
-				<span class="d-block fw-normal text-muted"
-					th:text="(${session.empleadologueado.usuario.rol.nombre})"></span>
+				<span class="text-muted" th:text="('('+${session.empleadologueado.usuario.rol.nombre}+')')"></span>
 			</span>
 		</div>
 	</header>
 
 	<main class="container my-auto py-4 my-5" th:with="rol=${session.empleadologueado.usuario.rol.nombre}">
+		<div class="text-center text-dark mb-4">
+			<h3 class="fw-bold mb-1">SISTEMA DE GESTIÓN</h3>
+			<h5 class="fw-normal mb-0">Hospitalaria</h5>
+		</div>
 		<section class="row">
 
-
 			<div class="col-md-4 col-sm-6 mb-4" th:if="${rol == 'Jefa de Cocina' or rol == 'Cocinero'}">
-				<article class="card h-100 shadow-lg text-center p-3">
-					<div class="card-body d-flex flex-column align-items-center justify-content-center">
-						<div class="mb-3 fs-1 text-primary"></div>
-						<h2 class="card-title h5">
-							<a class=" text-dark stretched-link" th:href="@{/dieta/ControlDieta}">Control de Dieta</a>
-						</h2>
+				<article class="card h-100 shadow-lg text-center p-3  border border-dark border-2">
+					<div class="card-body d-flex flex-column">
+						<h5 class="card-title m-3">
+							<a class=" text-dark stretched-link" th:href="@{/dieta/ControlDieta}">Control de
+								Dieta</a>
+						</h5>
 					</div>
 				</article>
 			</div>
 			<div class="col-md-4 col-sm-6 mb-4" th:if="${rol == 'Jefa de Cocina'}">
-				<article class="card h-100 shadow-lg text-center p-3">
-					<div class="card-body d-flex flex-column align-items-center justify-content-center">
-						<div class="mb-3 fs-1 text-primary"></div>
-						<h2 class="card-title h5">
+
+				<article class="card h-100 shadow-lg text-center p-3  border border-dark border-2">
+					<div class="card-body d-flex flex-column">
+						<h5 class="card-title m-3">
 							<a class=" text-dark stretched-link" th:href="@{/paciente/formulario}">Control de
 								Paciente</a>
-						</h2>
+						</h5>
 					</div>
 				</article>
 			</div>
 			<div class="col-md-4 col-sm-6 mb-4" th:if="${rol == 'Jefa de Cocina' or rol == 'Administrador'}">
-				<article class="card h-100 shadow-lg text-center p-3">
-					<div class="card-body d-flex flex-column align-items-center justify-content-center">
-						<div class="mb-3 fs-1 text-primary"></div>
-						<h2 class="card-title h5">
-							<a class=" text-dark stretched-link" th:href="@{/Alta/Empleado}">Control
-								de Empleado</a>
-						</h2>
+				<article class="card h-100 shadow-lg text-center p-3 border border-dark border-2 ">
+					<div class="card-body d-flex flex-column">
+						<h5 class="card-title m-3">
+							<a class=" text-dark stretched-link" th:href="@{/Alta/Empleado}">Control de Empleado</a>
+						</h5>
 					</div>
 				</article>
+
 			</div>
 			<div class="col-md-4 col-sm-6 mb-4" th:if="${rol == 'Administrador'}">
-				<article class="card h-100 shadow-lg text-center p-3">
-					<div class="card-body d-flex flex-column align-items-center justify-content-center">
-						<div class="mb-3 fs-1 text-primary"></div>
-						<h2 class="card-title h5">
+				<article class="card h-100 shadow-lg text-center p-3 border border-dark border-2 ">
+					<div class="card-body d-flex flex-column">
+						<h5 class="card-title m-3">
 							<a class=" text-dark stretched-link" th:href="@{/proveedor/control}">Control de
 								Proveedor</a>
-						</h2>
+						</h5>
 					</div>
 				</article>
 			</div>
 			<div class="col-md-4 col-sm-6 mb-4" th:if="${rol == 'Jefa de Cocina' or rol == 'Cocinero'}">
-				<article class="card h-100 shadow-lg text-center p-3">
-					<div class="card-body d-flex flex-column align-items-center justify-content-center">
-						<div class="mb-3 fs-1 text-primary"></div>
-						<h2 class="card-title h5">
-							<a class=" text-dark stretched-link" th:href="@{/controlproductoC}">Control de Producto</a>
-						</h2>
+				<article class="card h-100 shadow-lg text-center p-3 border border-dark border-2 ">
+					<div class="card-body d-flex flex-column">
+						<h5 class="card-title m-3">
+							<a class=" text-dark stretched-link" th:href="@{/controlproductoC}">Control de
+								Producto</a>
+						</h5>
 					</div>
 				</article>
 			</div>
 			<div class="col-md-4 col-sm-6 mb-4" th:if="${rol == 'Administrador' or rol == 'Encargado'}">
-				<article class="card h-100 shadow-lg text-center p-3">
-					<div class="card-body d-flex flex-column align-items-center justify-content-center">
-						<div class="mb-3 fs-1 text-primary"></div>
-						<h2 class="card-title h5">
+				<article class="card h-100 shadow-lg text-center border border-dark border-2 p-3">
+					<div class="card-body d-flex flex-column">
+						<h5 class="card-title m-3">
 							<a class=" text-dark stretched-link" th:href="@{/controlproducto}"
 								th:text="${rol == 'Encargado' ? 'Ver Productos' : 'Control de Producto'}">Control de
 								Producto</a>
-						</h2>
+						</h5>
 					</div>
 				</article>
 			</div>
 			<div class="col-md-4 col-sm-6 mb-4" th:if="${rol == 'Jefa de Cocina' or rol == 'Cocinero'}">
-				<article class="card h-100 shadow-lg text-center p-3">
-					<div class="card-body d-flex flex-column align-items-center justify-content-center">
-						<div class="mb-3 fs-3 text-primary"></div>
-						<h2 class="card-title h5">
+				<article class="card h-100 shadow-lg text-center p-3  border border-dark border-2">
+					<div class="card-body d-flex flex-column">
+						<h5 class="card-title m-3">
 							<a class=" text-dark stretched-link" th:href="@{/LimpiarControlConsumo}">Control de
 								Consumo</a>
-						</h2>
+						</h5>
 					</div>
 				</article>
 			</div>
 			<div class="col-md-4 col-sm-6 mb-4"
 				th:if="${rol == 'Jefa de Cocina' or rol == 'Administrador' or rol == 'Cocinero' or rol == 'Encargado'}">
-				<article class="card h-100 shadow-lg text-center p-3">
-					<div class="card-body d-flex flex-column align-items-center justify-content-center">
-						<div class="mb-3 fs-1 text-primary"></div>
-						<h2 class="card-title h5">
+				<article class="card h-100 shadow-lg text-center p-3  border border-dark border-2">
+					<div class="card-body d-flex flex-column">
+						<h5 class="card-title m-3">
 							<a class=" text-dark stretched-link" th:href="@{/Limpiarproductos}"
 								th:text="${rol == 'Administrador' ? 'Control de Entrega' : 'Ver entregas'}">Ver
 								entregas</a>
-						</h2>
+						</h5>
 					</div>
 				</article>
 			</div>
 			<div class="col-md-4 col-sm-6 mb-4" th:if="${rol == 'Jefa de Cocina' or rol == 'Administrador'}">
-				<article class="card h-100 shadow-lg text-center p-3">
-					<div class="card-body d-flex flex-column align-items-center justify-content-center">
-						<div class="mb-3 fs-1 text-primary"></div>
-						<h2 class="card-title h5">
+				<article class="card h-100 shadow-lg text-center p-3  border border-dark border-2">
+					<div class="card-body d-flex flex-column">
+						<h5 class="card-title m-3">
 							<a class=" text-dark stretched-link" th:href="@{/LimpiarControlSolicitud}"
 								th:text="${rol == 'Administrador' ? 'Control Solicitud' : 'Solicitar Producto'}">Solicitar
 								Producto</a>
-						</h2>
+						</h5>
 					</div>
 				</article>
 			</div>
 			<div class="col-md-4 col-sm-6 mb-4" th:if="${rol == 'Encargado'}">
-				<article class="card h-100 shadow-lg text-center p-3">
-					<div class="card-body d-flex flex-column align-items-center justify-content-center">
-						<div class="mb-3 fs-1 text-primary"></div>
-						<h2 class="card-title h5">
+				<article class="card h-100 shadow-lg text-center p-3  border border-dark border-2">
+					<div class="card-body d-flex flex-column">
+						<h5 class="card-title m-3">
 							<a class=" text-dark stretched-link" th:href="@{/ControlSolicitud}">Solicitar Producto</a>
-						</h2>
+						</h5>
 					</div>
 				</article>
 			</div>
 			<div class="col-md-4 col-sm-6 mb-4" th:if="${rol == 'Administrador'}">
-				<article class="card h-100 shadow-lg text-center p-3">
-					<div class="card-body d-flex flex-column align-items-center justify-content-center">
-						<div class="mb-3 fs-1 text-primary"></div>
-						<h2 class="card-title h5">
+				<article class="card h-100 shadow-lg text-center p-3 border border-dark border-2 ">
+					<div class="card-body d-flex flex-column">
+						<h5 class="card-title m-3">
 							<a class=" text-dark stretched-link" th:href="@{/ListaPedido}">Control
 								Pedido</a>
-						</h2>
+						</h5>
 					</div>
 				</article>
 			</div>
 			<div class="col-md-4 col-sm-6 mb-4" th:if="${rol == 'Administrador'}">
-				<article class="card h-100 shadow-lg text-center p-3">
-					<div class="card-body d-flex flex-column align-items-center justify-content-center">
-						<div class="mb-3 fs-1 text-primary"></div>
-						<h2 class="card-title h5">
+				<article class="card h-100 shadow-lg text-center p-3  border border-dark border-2">
+					<div class="card-body d-flex flex-column">
+						<h5 class="card-title m-3">
 							<a class=" text-dark stretched-link" th:href="@{/ListarF}">Control
 								Factura</a>
+						</h5>
+					</div>
+				</article>
+			</div>
+			<div class="col-md-4 col-sm-6 mb-4">
+				<article class="h-100 text-center p-3 bg-" style=" background-color: transparent;">
+					<div class="card-body d-flex flex-column align-items-center justify-content-center ">
+						<div class="mb-3 fs-1 text-primary"></div>
+						<h2 class="card-title h5">
 						</h2>
 					</div>
 				</article>
 			</div>
 			<div class="col-md-4 col-sm-6 mb-4">
-							<article class="h-100 text-center p-3 bg-" style=" background-color: transparent;">
-								<div class="card-body d-flex flex-column align-items-center justify-content-center ">
-									<div class="mb-3 fs-1 text-primary"></div>
-									<h2 class="card-title h5">
-								</h2>
-						</div>
-					</article>
-			</div>
-			<div class="col-md-4 col-sm-6 mb-4">
-				<article class="card h-100 shadow-lg text-center p-3">
-					<div class="card-body d-flex flex-column align-items-center justify-content-center">
-						<div class="mb-3 fs-1 text-primary"></div>
-						<h2 class="card-title h5">
+				<article class="card h-100 shadow-lg text-center p-3  border border-dark border-2">
+					<div class="card-body d-flex flex-column">
+						<h5 class="card-title m-3">
 							<a class=" text-danger stretched-link" th:href="@{/Inicio/Login}">Cerrar
 								Sesion</a>
-						</h2>
+							</h2>
 					</div>
 				</article>
 			</div>
@@ -195,10 +187,13 @@
 		</section>
 	</main>
 
-	
+
 
 	<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
 
-	<footer><div th:replace="Inicio/Inicioprueba::footer"></div></footer>
+	<footer>
+		<div th:replace="Inicio/Inicioprueba::footer"></div>
+	</footer>
 </body>
+
 </html>

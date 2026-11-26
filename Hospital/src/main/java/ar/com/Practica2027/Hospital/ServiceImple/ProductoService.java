@@ -106,6 +106,11 @@ public class ProductoService implements IProducto {
 				prodCocina.setSubtipo(subtipo);
 				prodCocina.setUnidad(unidad);
 				Estado estado = estadoRepo.findBynombre("Bajo Stock");
+				if (estado == null) {
+					estado = new Estado();
+					estado.setNombre("Bajo Stock");
+					estadoRepo.save(estado);
+				}
 				prodCocina.setEstado(estado);
 
 				productocRepo.save(prodCocina);
