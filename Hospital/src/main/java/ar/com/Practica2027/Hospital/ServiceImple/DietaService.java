@@ -58,9 +58,9 @@ public class DietaService implements IDieta {
 	}
 
 	@Override
-	public String CrearDieta(Dieta dieta, List<Integer> patologiasid, String SalaNueva, Integer SalaId) {
+	public String CrearDieta(Dieta dieta, List<Integer> patologiasid, String SalaNueva, Integer SalaId, Paciente paciente) {
 
-		if (dieta.getPaciente() == null || dieta.getPaciente().getId() == 0) {
+		if (paciente == null) {
 			return "Debe seleccionar un paciente válido.";
 		}
 		if (patologiasid == null || patologiasid.isEmpty()) {
@@ -97,8 +97,6 @@ public class DietaService implements IDieta {
 			estado.setNombre("Habilitada");
 			estadoRep.save(estado);
 		}
-
-		Paciente paciente = dieta.getPaciente();
 		dieta.setPaciente(paciente);
 		dieta.setEstado(estado);
 		dietaRep.save(dieta);
@@ -137,14 +135,13 @@ public class DietaService implements IDieta {
 	}
 
 	@Override
-	public String ModificarDieta(Dieta dieta, List<Integer> patologiasid, String SalaNueva, Integer SalaId) {
+	public String ModificarDieta(Dieta dieta, List<Integer> patologiasid, String SalaNueva, Integer SalaId, Paciente paciente) {
 		Dieta dietaExistente = dietaRep.findByid(dieta.getId());
 		if (dietaExistente != null) {
 
-			if (dieta.getPaciente() == null || dieta.getPaciente().getId() == 0) {
+			if (paciente == null) {
 				return "Debe seleccionar un paciente válido. o Habilitar al Paciente";
 			}
-			Paciente paciente = dieta.getPaciente();
 			dietaExistente.setPaciente(paciente);
 			if (SalaId != null && SalaNueva != null && !SalaNueva.isEmpty()) {
 				return "No puede seleccionar una sala y escribir una nueva al mismo tiempo";

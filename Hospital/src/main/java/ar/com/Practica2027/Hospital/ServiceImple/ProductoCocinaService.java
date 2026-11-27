@@ -12,6 +12,7 @@ import ar.com.Practica2027.Hospital.Entity.Tipo;
 import ar.com.Practica2027.Hospital.Entity.Unidad;
 import ar.com.Practica2027.Hospital.Repository.IEstadoRepository;
 import ar.com.Practica2027.Hospital.Repository.IProductoCocinaRepository;
+import ar.com.Practica2027.Hospital.Repository.IProductoRepository;
 import ar.com.Practica2027.Hospital.Repository.ISubTipoRepository;
 import ar.com.Practica2027.Hospital.Repository.ITipoRepository;
 import ar.com.Practica2027.Hospital.Repository.IUnidadRepository;
@@ -33,6 +34,9 @@ public class ProductoCocinaService implements IProductoCocina {
 
 	@Autowired
 	private IEstadoRepository estadoRepo;
+	
+	@Autowired
+	IProductoRepository productoRepo;
 
 	@Override
 	public String crearProductoCocina(ProductoCocina productoC) {
@@ -89,6 +93,28 @@ public class ProductoCocinaService implements IProductoCocina {
 		productoC.setUnidad(unidad);
 
 		productocRepo.save(productoC);
+		
+		Producto existente = productoRepo.findBynombre(productoC.getNombre());
+		
+		if (existente == null) {
+			Producto producto = new Producto();
+			producto.setNombre(productoC.getNombre());
+			producto.setStockactual(0d);
+			producto.setStockminimo(productoC.getStockminimo());
+			producto.setMotivo(productoC.getMotivo());
+			producto.setTipo(tipo);
+			producto.setSubtipo(subtipo);
+			producto.setUnidad(unidad);
+			Estado estado = estadoRepo.findBynombre("Bajo Stock");
+			if (estado == null) {
+				estado = new Estado();
+				estado.setNombre("Bajo Stock");
+				estadoRepo.save(estado);
+			}
+			producto.setEstado(estado);
+			
+			productoRepo.save(producto);
+		}
 
 		return "Producto creado correctamente";
 	}

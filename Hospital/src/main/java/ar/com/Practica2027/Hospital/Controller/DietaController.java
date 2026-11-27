@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ar.com.Practica2027.Hospital.Entity.Dieta;
+import ar.com.Practica2027.Hospital.Entity.Paciente;
 import ar.com.Practica2027.Hospital.Entity.Patologia;
 import ar.com.Practica2027.Hospital.Service.IDieta;
 import ar.com.Practica2027.Hospital.Service.IPaciente;
@@ -25,15 +26,18 @@ public class DietaController {
 	IPaciente pacienteService;
 
 	@PostMapping("/dieta/crear")
-	public String GuardarDieta(Model model, Dieta dieta,@RequestParam(name = "patologiasIds", required = false) List<Integer> patologiasIds,
-			@RequestParam(required = false) String SalaNueva, @RequestParam(required = false) Integer SalaId, RedirectAttributes redirect) {
-		String mensaje = dietaService.CrearDieta(dieta, patologiasIds, SalaNueva, SalaId);
-		
+	public String GuardarDieta(Model model, Dieta dieta,
+			@RequestParam(name = "patologiasIds", required = false) List<Integer> patologiasIds,
+			@RequestParam(required = false) String SalaNueva, @RequestParam(required = false) Integer SalaId,
+			RedirectAttributes redirect, @RequestParam("id_paciente") int id_paciente) {
+		Paciente paciente = pacienteService.BuscarPacienteXid(id_paciente);
+		String mensaje = dietaService.CrearDieta(dieta, patologiasIds, SalaNueva, SalaId, paciente);
+
 		redirect.addFlashAttribute("mensaje", mensaje);
-		
+
 		return "redirect:/dieta/ControlDieta";
 	}
- 
+
 	@GetMapping("/dieta/ControlDieta")
 	public String ControlDieta(Model model) {
 		model.addAttribute("dieta", new Dieta());
@@ -57,30 +61,29 @@ public class DietaController {
 
 	@GetMapping("/dieta/editar")
 	public String FormularioModificarDieta(@RequestParam("id") int id, Model model) {
-		Dieta dieta = dietaService.BuscarDietaXid(id); 
+		Dieta dieta = dietaService.BuscarDietaXid(id);
 		model.addAttribute("dieta", dieta);
 		model.addAttribute("Editar", "Editando");
-		
+
 		model.addAttribute("ListaPacientes", pacienteService.ListarPacientes());
 		model.addAttribute("listaPatologias", dietaService.ListarPatologias());
 		model.addAttribute("listaSalas", dietaService.ListarSala());
 		model.addAttribute("listaDietas", dietaService.ListarDieta());
-		
-		return "Dieta/ControlDieta"; 
+
+		return "Dieta/ControlDieta";
 	}
 
 	@PostMapping("/dieta/editar/crear")
-	public String ModificarDieta(Model model,Dieta dieta, 
-			@RequestParam(required = false) List<Integer> patologiasIds,
-			@RequestParam(required = false) String SalaNueva, 
-			@RequestParam(required = false) Integer SalaId,RedirectAttributes redirect) {
-		
-		String mensaje=dietaService.ModificarDieta(dieta, patologiasIds, SalaNueva, SalaId);
+	public String ModificarDieta(Model model, Dieta dieta, @RequestParam(required = false) List<Integer> patologiasIds,
+			@RequestParam(required = false) String SalaNueva, @RequestParam(required = false) Integer SalaId,
+			RedirectAttributes redirect, @RequestParam("id_paciente") int id_paciente) {
+		Paciente paciente = pacienteService.BuscarPacienteXid(id_paciente);
+		String mensaje = dietaService.ModificarDieta(dieta, patologiasIds, SalaNueva, SalaId, paciente);
 		redirect.addFlashAttribute("mensaje", mensaje);
-		
-		return "redirect:/dieta/ControlDieta"; 
+
+		return "redirect:/dieta/ControlDieta";
 	}
-	
+
 	@GetMapping("patologia/formulario")
 	public String FormularioPatologia(Model model) {
 		model.addAttribute("patologia", new Patologia());
@@ -89,14 +92,14 @@ public class DietaController {
 
 	@PostMapping("patologia/crear")
 	public String GuardarPatologia(Patologia patologia, RedirectAttributes redirect) {
-		
+
 		redirect.addFlashAttribute("mensaje", dietaService.CrearPatologia(patologia));
-		
+
 		return "redirect:/patologia/formulario";
 	}
-	
+
 	@GetMapping("/dieta/filtrar")
-	public String FiltrarDieta(Model model,@RequestParam String estado) {
+	public String FiltrarDieta(Model model, @RequestParam String estado) {
 		List<Dieta> listarDietas = dietaService.BuscarPorEstado(estado);
 		model.addAttribute("dieta", new Dieta());
 		model.addAttribute("listaDietas", listarDietas);
@@ -105,7 +108,7 @@ public class DietaController {
 		model.addAttribute("listaSalas", dietaService.ListarSala());
 		return "Dieta/ControlDieta";
 	}
-	
+
 	@GetMapping("/movimientos/dieta")
 	public String ListaMovimentoDieta(@RequestParam("id") int id, Model model) {
 		Dieta MiDieta = dietaService.BuscarDietaXid(id);
@@ -114,14 +117,13 @@ public class DietaController {
 		model.addAttribute("ListaMovimientos", dietaService.ListarMovimientoDietas(id));
 		return "Dieta/DetallesDietas";
 	}
-	
+
 	@GetMapping("/dieta/cambiarEstado")
-	public String CambiarEstadoDieta(Dieta dieta,RedirectAttributes redirect) {
-		
-		String mensaje=dietaService.CambiarEstado(dieta);
+	public String CambiarEstadoDieta(Dieta dieta, RedirectAttributes redirect) {
+
+		String mensaje = dietaService.CambiarEstado(dieta);
 		redirect.addFlashAttribute("mensaje", mensaje);
-	return "redirect:/dieta/ControlDieta";
-	}
-	
+		return "redirect:/dieta/ControlDieta";
 	}
 
+}

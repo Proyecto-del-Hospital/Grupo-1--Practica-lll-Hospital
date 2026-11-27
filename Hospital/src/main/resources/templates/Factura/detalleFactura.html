@@ -6,6 +6,14 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" th:href="@{/CSS/bootstrap.min.css}">
 	<title>Detalle del Pedido</title>
+	<style>
+		body {
+			background: linear-gradient(135deg, #022665 0%, #3794f1 70%, #759fee 100%);
+			background-position: center;
+			background-attachment: fixed;
+			background-repeat: no-repeat;
+		}
+	</style>
 </head>
 
 <body>
@@ -15,10 +23,10 @@
 
 	<main class="container my-4">
 		<section>
-			<div class="justify-content-center pt-3 pl-5 pr-5">
+			<div class="justify-content-center pt-3">
 
 				<div class="row justify-content-center mb-3">
-					<div class="col-md-11 d-flex justify-content-between align-items-center">
+					<div class="col-md-12 text-white d-flex justify-content-between align-items-center">
 						<h4><span class="badge" th:text="${'Factura #' + factura.id}"></span></h4>
 
 					</div>
@@ -26,8 +34,8 @@
 
 				<article class="mb-4" th:if="${session.empleadologueado.usuario.rol.nombre == 'Administrador'}">
 					<div class="row justify-content-center">
-						<div class="col-md-11">
-							<div class="shadow-lg p-4 bg-body-tertiary rounded">
+						<div class="col-md-12">
+							<div class="shadow-lg p-4 bg-body-tertiary rounded bg-white border border-dark border-2">
 								<h3 class="text-center text-primary pb-3"
 									th:text="${'Detalle de la Factura #' + factura.id}"></h3>
 								<div class="mb-4 p-3 bg-white border rounded">
@@ -57,7 +65,8 @@
 											<tr class="text-center">
 												<th>Producto</th>
 												<th>Tipo</th>
-												<th>Cantidad Pedida</th>
+												<th>Cantidad Solicitada</th>
+												<th>Cantidad a Comprar</th>
 												<th>Cantidad Comprada</th>
 												<th>Cantidad Faltante</th>
 												<th>Precio Unitario</th>
@@ -69,10 +78,17 @@
 												<td th:text="${det.producto.nombre}"></td>
 												<td th:text="${det.producto.tipo.nombre}"></td>
 												<td>
+													<span
+														th:each="detSol: ${factura.pedido.solicitud.detallesSolicitudes}"
+														class="text-center"
+														th:if="${detSol.producto.id==det.producto.id}"
+														th:text="${detSol.cantidad+ ' ' + detSol.producto.unidad.nombre}"></span>
+												</td>
+												<td>
 													<span th:each="detped: ${factura.pedido.detallesPedidos}"
 														class="text-center"
 														th:if="${detped.producto.id==det.producto.id}"
-														th:text="${detped.cantidad+ ''+detped.producto.unidad.nombre}"></span>
+														th:text="${detped.cantidad + ' ' + detped.producto.unidad.nombre}"></span>
 												</td>
 												<td class="fw-bold"
 													th:text="${det.cantidad+ ' '+det.producto.unidad.nombre}"></td>
